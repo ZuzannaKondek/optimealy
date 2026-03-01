@@ -1,0 +1,4043 @@
+[
+  {
+    "name": "Chicken Breast",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 165,
+      "protein": 31,
+      "carbs": 0,
+      "fat": 3.6,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 3,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Ground Beef",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 250,
+      "protein": 26,
+      "carbs": 0,
+      "fat": 15,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 2,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Salmon Fillet",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 208,
+      "protein": 20,
+      "carbs": 0,
+      "fat": 12,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 2,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Tuna Steak",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 184,
+      "protein": 30,
+      "carbs": 0,
+      "fat": 6,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 2,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Turkey Breast",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 135,
+      "protein": 30,
+      "carbs": 0,
+      "fat": 1,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 3,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Pork Tenderloin",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 143,
+      "protein": 26,
+      "carbs": 0,
+      "fat": 3.5,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 3,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Lamb Chops",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 294,
+      "protein": 25,
+      "carbs": 0,
+      "fat": 21,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 3,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Shrimp",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 99,
+      "protein": 24,
+      "carbs": 0,
+      "fat": 0.3,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 2,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Cod Fillet",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 82,
+      "protein": 18,
+      "carbs": 0,
+      "fat": 0.7,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 2,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Eggs",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 155,
+      "protein": 13,
+      "carbs": 1.1,
+      "fat": 11,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 30,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Chicken Thighs",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 209,
+      "protein": 26,
+      "carbs": 0,
+      "fat": 10,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 3,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Beef Steak",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 271,
+      "protein": 25,
+      "carbs": 0,
+      "fat": 19,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 3,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Chicken Wings",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 203,
+      "protein": 19,
+      "carbs": 0,
+      "fat": 13,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 3,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Ground Turkey",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 189,
+      "protein": 27,
+      "carbs": 0,
+      "fat": 8,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 2,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Duck Breast",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 337,
+      "protein": 19,
+      "carbs": 0,
+      "fat": 28,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 3,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Mackerel",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 262,
+      "protein": 19,
+      "carbs": 0,
+      "fat": 20,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 2,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Sardines",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 208,
+      "protein": 25,
+      "carbs": 0,
+      "fat": 11,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Anchovies",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 210,
+      "protein": 28,
+      "carbs": 0,
+      "fat": 9,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Tofu",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 76,
+      "protein": 8,
+      "carbs": 1.9,
+      "fat": 4.8,
+      "fiber": 0.3
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Tempeh",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 192,
+      "protein": 19,
+      "carbs": 9,
+      "fat": 11,
+      "fiber": 9
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Chickpeas",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 164,
+      "protein": 8.9,
+      "carbs": 27,
+      "fat": 2.6,
+      "fiber": 7.6
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Black Beans",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 132,
+      "protein": 8.9,
+      "carbs": 24,
+      "fat": 0.5,
+      "fiber": 8.7
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Lentils",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 116,
+      "protein": 9,
+      "carbs": 20,
+      "fat": 0.4,
+      "fiber": 7.9
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Kidney Beans",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 127,
+      "protein": 8.7,
+      "carbs": 23,
+      "fat": 0.5,
+      "fiber": 6.4
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Pinto Beans",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 143,
+      "protein": 9,
+      "carbs": 26,
+      "fat": 0.9,
+      "fiber": 9
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Greek Yogurt",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 59,
+      "protein": 10,
+      "carbs": 3.6,
+      "fat": 0.4,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Cottage Cheese",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 98,
+      "protein": 11,
+      "carbs": 3.4,
+      "fat": 4.3,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Mozzarella",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 280,
+      "protein": 18,
+      "carbs": 3.1,
+      "fat": 22,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Feta Cheese",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 264,
+      "protein": 14,
+      "carbs": 4,
+      "fat": 21,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 30,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Parmesan",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 431,
+      "protein": 38,
+      "carbs": 4.1,
+      "fat": 29,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 180,
+    "perishability": "stable"
+  },
+  {
+    "name": "Lettuce",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 15,
+      "protein": 1.4,
+      "carbs": 2.9,
+      "fat": 0.2,
+      "fiber": 1.3
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Tomatoes",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 18,
+      "protein": 0.9,
+      "carbs": 3.9,
+      "fat": 0.2,
+      "fiber": 1.2
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Onion",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 40,
+      "protein": 1.1,
+      "carbs": 9.3,
+      "fat": 0.1,
+      "fiber": 1.7
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 30,
+    "perishability": "stable"
+  },
+  {
+    "name": "Garlic",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 149,
+      "protein": 6.4,
+      "carbs": 33,
+      "fat": 0.5,
+      "fiber": 2.1
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 60,
+    "perishability": "stable"
+  },
+  {
+    "name": "Carrots",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 41,
+      "protein": 0.9,
+      "carbs": 10,
+      "fat": 0.2,
+      "fiber": 2.8
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Broccoli",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 34,
+      "protein": 2.8,
+      "carbs": 7,
+      "fat": 0.4,
+      "fiber": 2.6
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Spinach",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 23,
+      "protein": 2.9,
+      "carbs": 3.6,
+      "fat": 0.4,
+      "fiber": 2.2
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Bell Peppers",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 31,
+      "protein": 1,
+      "carbs": 7,
+      "fat": 0.3,
+      "fiber": 2.5
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Cucumber",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 16,
+      "protein": 0.7,
+      "carbs": 4,
+      "fat": 0.1,
+      "fiber": 0.5
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Zucchini",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 17,
+      "protein": 1.2,
+      "carbs": 3.4,
+      "fat": 0.3,
+      "fiber": 1
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Eggplant",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 25,
+      "protein": 1,
+      "carbs": 6,
+      "fat": 0.2,
+      "fiber": 3
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Mushrooms",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 22,
+      "protein": 3.1,
+      "carbs": 3.3,
+      "fat": 0.3,
+      "fiber": 1
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Cauliflower",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 25,
+      "protein": 1.9,
+      "carbs": 5,
+      "fat": 0.3,
+      "fiber": 2
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Cabbage",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 25,
+      "protein": 1.3,
+      "carbs": 6,
+      "fat": 0.1,
+      "fiber": 2.5
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Kale",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 49,
+      "protein": 4.3,
+      "carbs": 9,
+      "fat": 0.9,
+      "fiber": 2
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Arugula",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 25,
+      "protein": 2.6,
+      "carbs": 3.7,
+      "fat": 0.7,
+      "fiber": 1.6
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Celery",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 16,
+      "protein": 0.7,
+      "carbs": 3,
+      "fat": 0.2,
+      "fiber": 1.6
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Asparagus",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 20,
+      "protein": 2.2,
+      "carbs": 3.9,
+      "fat": 0.1,
+      "fiber": 2.1
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Green Beans",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 31,
+      "protein": 1.8,
+      "carbs": 7,
+      "fat": 0.2,
+      "fiber": 2.7
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Peas",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 81,
+      "protein": 5.4,
+      "carbs": 14,
+      "fat": 0.4,
+      "fiber": 5.1
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Corn",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 86,
+      "protein": 3.3,
+      "carbs": 19,
+      "fat": 1.2,
+      "fiber": 2.7
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Potatoes",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 77,
+      "protein": 2,
+      "carbs": 17,
+      "fat": 0.1,
+      "fiber": 2.2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 30,
+    "perishability": "stable"
+  },
+  {
+    "name": "Sweet Potatoes",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 86,
+      "protein": 1.6,
+      "carbs": 20,
+      "fat": 0.1,
+      "fiber": 3
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 30,
+    "perishability": "stable"
+  },
+  {
+    "name": "Radishes",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 16,
+      "protein": 0.7,
+      "carbs": 3.4,
+      "fat": 0.1,
+      "fiber": 1.6
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Beets",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 43,
+      "protein": 1.6,
+      "carbs": 10,
+      "fat": 0.2,
+      "fiber": 2.8
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Turnips",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 28,
+      "protein": 0.9,
+      "carbs": 6,
+      "fat": 0.1,
+      "fiber": 1.8
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Leeks",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 61,
+      "protein": 1.5,
+      "carbs": 14,
+      "fat": 0.3,
+      "fiber": 1.8
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Fennel",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 31,
+      "protein": 1.2,
+      "carbs": 7,
+      "fat": 0.2,
+      "fiber": 3.1
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Brussels Sprouts",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 43,
+      "protein": 3.4,
+      "carbs": 9,
+      "fat": 0.3,
+      "fiber": 3.8
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Artichokes",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 47,
+      "protein": 3.3,
+      "carbs": 11,
+      "fat": 0.2,
+      "fiber": 5.4
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Okra",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 33,
+      "protein": 1.9,
+      "carbs": 7,
+      "fat": 0.2,
+      "fiber": 3.2
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Bok Choy",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 13,
+      "protein": 1.5,
+      "carbs": 2.2,
+      "fat": 0.2,
+      "fiber": 1
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Swiss Chard",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 19,
+      "protein": 1.8,
+      "carbs": 3.7,
+      "fat": 0.2,
+      "fiber": 1.6
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Collard Greens",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 32,
+      "protein": 3,
+      "carbs": 5.4,
+      "fat": 0.6,
+      "fiber": 4
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Mustard Greens",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 27,
+      "protein": 2.9,
+      "carbs": 4.7,
+      "fat": 0.4,
+      "fiber": 3.2
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Watercress",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 11,
+      "protein": 2.3,
+      "carbs": 1.3,
+      "fat": 0.1,
+      "fiber": 0.5
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Romaine Lettuce",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 17,
+      "protein": 1.2,
+      "carbs": 3.3,
+      "fat": 0.3,
+      "fiber": 2.1
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Iceberg Lettuce",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 14,
+      "protein": 0.9,
+      "carbs": 3,
+      "fat": 0.1,
+      "fiber": 1.2
+    },
+    "common_package_sizes": [
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Red Cabbage",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 31,
+      "protein": 1.4,
+      "carbs": 7,
+      "fat": 0.2,
+      "fiber": 2.1
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Butternut Squash",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 45,
+      "protein": 1,
+      "carbs": 12,
+      "fat": 0.1,
+      "fiber": 2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 60,
+    "perishability": "stable"
+  },
+  {
+    "name": "Blueberries",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 57,
+      "protein": 0.7,
+      "carbs": 14.5,
+      "fat": 0.3,
+      "fiber": 2.4
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Strawberries",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 32,
+      "protein": 0.7,
+      "carbs": 7.7,
+      "fat": 0.3,
+      "fiber": 2
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Bananas",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 89,
+      "protein": 1.1,
+      "carbs": 23,
+      "fat": 0.3,
+      "fiber": 2.6
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Apples",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 52,
+      "protein": 0.3,
+      "carbs": 14,
+      "fat": 0.2,
+      "fiber": 2.4
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 30,
+    "perishability": "stable"
+  },
+  {
+    "name": "Oranges",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 47,
+      "protein": 0.9,
+      "carbs": 12,
+      "fat": 0.1,
+      "fiber": 2.4
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Grapes",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 69,
+      "protein": 0.7,
+      "carbs": 18,
+      "fat": 0.2,
+      "fiber": 0.9
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Mangoes",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 60,
+      "protein": 0.8,
+      "carbs": 15,
+      "fat": 0.4,
+      "fiber": 1.6
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Pineapple",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 50,
+      "protein": 0.5,
+      "carbs": 13,
+      "fat": 0.1,
+      "fiber": 1.4
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Peaches",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 39,
+      "protein": 0.9,
+      "carbs": 10,
+      "fat": 0.3,
+      "fiber": 1.5
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Pears",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 57,
+      "protein": 0.4,
+      "carbs": 15,
+      "fat": 0.1,
+      "fiber": 3.1
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Cherries",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 63,
+      "protein": 1,
+      "carbs": 16,
+      "fat": 0.2,
+      "fiber": 2.1
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Raspberries",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 52,
+      "protein": 1.2,
+      "carbs": 12,
+      "fat": 0.7,
+      "fiber": 6.5
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 3,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Blackberries",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 43,
+      "protein": 1.4,
+      "carbs": 10,
+      "fat": 0.5,
+      "fiber": 5.3
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 3,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Cranberries",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 46,
+      "protein": 0.4,
+      "carbs": 12,
+      "fat": 0.1,
+      "fiber": 4.6
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 30,
+    "perishability": "stable"
+  },
+  {
+    "name": "Kiwi",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 61,
+      "protein": 1.1,
+      "carbs": 15,
+      "fat": 0.5,
+      "fiber": 3
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Lemons",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 29,
+      "protein": 1.1,
+      "carbs": 9,
+      "fat": 0.3,
+      "fiber": 2.8
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 30,
+    "perishability": "stable"
+  },
+  {
+    "name": "Limes",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 30,
+      "protein": 0.7,
+      "carbs": 11,
+      "fat": 0.2,
+      "fiber": 2.8
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 21,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Avocado",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 160,
+      "protein": 2,
+      "carbs": 9,
+      "fat": 15,
+      "fiber": 7
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Watermelon",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 30,
+      "protein": 0.6,
+      "carbs": 8,
+      "fat": 0.2,
+      "fiber": 0.4
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Cantaloupe",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 34,
+      "protein": 0.8,
+      "carbs": 8,
+      "fat": 0.2,
+      "fiber": 0.9
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Honeydew",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 36,
+      "protein": 0.5,
+      "carbs": 9,
+      "fat": 0.1,
+      "fiber": 0.8
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Plums",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 46,
+      "protein": 0.7,
+      "carbs": 11,
+      "fat": 0.3,
+      "fiber": 1.4
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Apricots",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 48,
+      "protein": 1.4,
+      "carbs": 11,
+      "fat": 0.4,
+      "fiber": 2
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Nectarines",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 44,
+      "protein": 1.1,
+      "carbs": 11,
+      "fat": 0.3,
+      "fiber": 1.7
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Pomegranate",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 83,
+      "protein": 1.7,
+      "carbs": 19,
+      "fat": 1.2,
+      "fiber": 4
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 30,
+    "perishability": "stable"
+  },
+  {
+    "name": "Papaya",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 43,
+      "protein": 0.5,
+      "carbs": 11,
+      "fat": 0.3,
+      "fiber": 1.7
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Coconut",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 354,
+      "protein": 3.3,
+      "carbs": 15,
+      "fat": 33,
+      "fiber": 9
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 30,
+    "perishability": "stable"
+  },
+  {
+    "name": "Dates",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 282,
+      "protein": 2.5,
+      "carbs": 75,
+      "fat": 0.4,
+      "fiber": 8
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 180,
+    "perishability": "stable"
+  },
+  {
+    "name": "Figs",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 74,
+      "protein": 0.8,
+      "carbs": 19,
+      "fat": 0.3,
+      "fiber": 2.9
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Grapefruit",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 42,
+      "protein": 0.8,
+      "carbs": 11,
+      "fat": 0.1,
+      "fiber": 1.6
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Oats",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 389,
+      "protein": 16.9,
+      "carbs": 66.3,
+      "fat": 6.9,
+      "fiber": 10.6
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Spaghetti",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 371,
+      "protein": 13,
+      "carbs": 75,
+      "fat": 1.5,
+      "fiber": 3.2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Brown Rice",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 111,
+      "protein": 2.6,
+      "carbs": 23,
+      "fat": 0.9,
+      "fiber": 1.8
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "White Rice",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 130,
+      "protein": 2.7,
+      "carbs": 28,
+      "fat": 0.3,
+      "fiber": 0.4
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Quinoa",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 368,
+      "protein": 14,
+      "carbs": 64,
+      "fat": 6,
+      "fiber": 7
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Barley",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 123,
+      "protein": 2.3,
+      "carbs": 28,
+      "fat": 0.4,
+      "fiber": 3.8
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Bulgur",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 83,
+      "protein": 3.1,
+      "carbs": 19,
+      "fat": 0.2,
+      "fiber": 4.5
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Couscous",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 112,
+      "protein": 3.8,
+      "carbs": 23,
+      "fat": 0.2,
+      "fiber": 1.4
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Farro",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 127,
+      "protein": 5,
+      "carbs": 25,
+      "fat": 1.2,
+      "fiber": 3.5
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Millet",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 378,
+      "protein": 11,
+      "carbs": 73,
+      "fat": 4.2,
+      "fiber": 8.5
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Wheat Flour",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 364,
+      "protein": 10,
+      "carbs": 76,
+      "fat": 1,
+      "fiber": 2.7
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Whole Wheat Flour",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 340,
+      "protein": 13.7,
+      "carbs": 72,
+      "fat": 2.5,
+      "fiber": 10.7
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Bread",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 265,
+      "protein": 9,
+      "carbs": 49,
+      "fat": 3.2,
+      "fiber": 2.7
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Whole Grain Bread",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 247,
+      "protein": 13,
+      "carbs": 41,
+      "fat": 4.2,
+      "fiber": 7
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Pita Bread",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 275,
+      "protein": 9.1,
+      "carbs": 56,
+      "fat": 1.2,
+      "fiber": 2.2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Tortillas",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 218,
+      "protein": 5.7,
+      "carbs": 45,
+      "fat": 2.3,
+      "fiber": 2.4
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Penne Pasta",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 371,
+      "protein": 13,
+      "carbs": 75,
+      "fat": 1.5,
+      "fiber": 3.2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Fusilli Pasta",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 371,
+      "protein": 13,
+      "carbs": 75,
+      "fat": 1.5,
+      "fiber": 3.2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Macaroni",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 371,
+      "protein": 13,
+      "carbs": 75,
+      "fat": 1.5,
+      "fiber": 3.2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Orzo",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 371,
+      "protein": 13,
+      "carbs": 75,
+      "fat": 1.5,
+      "fiber": 3.2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Linguine",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 371,
+      "protein": 13,
+      "carbs": 75,
+      "fat": 1.5,
+      "fiber": 3.2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Fettuccine",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 371,
+      "protein": 13,
+      "carbs": 75,
+      "fat": 1.5,
+      "fiber": 3.2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Risotto Rice",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 130,
+      "protein": 2.7,
+      "carbs": 28,
+      "fat": 0.3,
+      "fiber": 0.4
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Wild Rice",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 101,
+      "protein": 4,
+      "carbs": 21,
+      "fat": 0.3,
+      "fiber": 1.8
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Buckwheat",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 343,
+      "protein": 13.3,
+      "carbs": 72,
+      "fat": 3.4,
+      "fiber": 10
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Milk",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 42,
+      "protein": 3.4,
+      "carbs": 5,
+      "fat": 1,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Greek Yogurt",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 59,
+      "protein": 10,
+      "carbs": 3.6,
+      "fat": 0.4,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Cottage Cheese",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 98,
+      "protein": 11,
+      "carbs": 3.4,
+      "fat": 4.3,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Mozzarella",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 280,
+      "protein": 18,
+      "carbs": 3.1,
+      "fat": 22,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Feta Cheese",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 264,
+      "protein": 14,
+      "carbs": 4,
+      "fat": 21,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 30,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Parmesan",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 431,
+      "protein": 38,
+      "carbs": 4.1,
+      "fat": 29,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 180,
+    "perishability": "stable"
+  },
+  {
+    "name": "Cheddar Cheese",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 402,
+      "protein": 25,
+      "carbs": 1.3,
+      "fat": 33,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 60,
+    "perishability": "stable"
+  },
+  {
+    "name": "Swiss Cheese",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 380,
+      "protein": 27,
+      "carbs": 1.5,
+      "fat": 28,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 60,
+    "perishability": "stable"
+  },
+  {
+    "name": "Goat Cheese",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 364,
+      "protein": 22,
+      "carbs": 2.5,
+      "fat": 30,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Butter",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 717,
+      "protein": 0.9,
+      "carbs": 0.1,
+      "fat": 81,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 30,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Heavy Cream",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 345,
+      "protein": 2.8,
+      "carbs": 2.8,
+      "fat": 37,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Sour Cream",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 198,
+      "protein": 2.4,
+      "carbs": 4.6,
+      "fat": 20,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Cream Cheese",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 342,
+      "protein": 6.2,
+      "carbs": 4.1,
+      "fat": 34,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Ricotta",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 174,
+      "protein": 11,
+      "carbs": 3,
+      "fat": 13,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Yogurt",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 59,
+      "protein": 10,
+      "carbs": 3.6,
+      "fat": 0.4,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Black Pepper",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 251,
+      "protein": 10,
+      "carbs": 64,
+      "fat": 3.3,
+      "fiber": 25
+    },
+    "common_package_sizes": [
+      100,
+      250
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Salt",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 0,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 0,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      100,
+      250
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 3650,
+    "perishability": "stable"
+  },
+  {
+    "name": "Paprika",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 282,
+      "protein": 14,
+      "carbs": 54,
+      "fat": 12,
+      "fiber": 34
+    },
+    "common_package_sizes": [
+      100,
+      250
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Cumin",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 375,
+      "protein": 18,
+      "carbs": 44,
+      "fat": 22,
+      "fiber": 11
+    },
+    "common_package_sizes": [
+      100,
+      250
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Turmeric",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 354,
+      "protein": 7.8,
+      "carbs": 65,
+      "fat": 10,
+      "fiber": 21
+    },
+    "common_package_sizes": [
+      100,
+      250
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Cinnamon",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 247,
+      "protein": 4,
+      "carbs": 81,
+      "fat": 1.2,
+      "fiber": 54
+    },
+    "common_package_sizes": [
+      100,
+      250
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Ginger",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 80,
+      "protein": 1.8,
+      "carbs": 18,
+      "fat": 0.8,
+      "fiber": 2
+    },
+    "common_package_sizes": [
+      100,
+      250
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 30,
+    "perishability": "stable"
+  },
+  {
+    "name": "Garlic Powder",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 331,
+      "protein": 16.8,
+      "carbs": 73,
+      "fat": 0.5,
+      "fiber": 2.1
+    },
+    "common_package_sizes": [
+      100,
+      250
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Onion Powder",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 341,
+      "protein": 10,
+      "carbs": 79,
+      "fat": 1,
+      "fiber": 15
+    },
+    "common_package_sizes": [
+      100,
+      250
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Oregano",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 265,
+      "protein": 9,
+      "carbs": 69,
+      "fat": 4.3,
+      "fiber": 43
+    },
+    "common_package_sizes": [
+      100,
+      250
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Basil",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 22,
+      "protein": 3.2,
+      "carbs": 2.6,
+      "fat": 0.6,
+      "fiber": 1.6
+    },
+    "common_package_sizes": [
+      50,
+      100
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Thyme",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 101,
+      "protein": 5.6,
+      "carbs": 24,
+      "fat": 1.7,
+      "fiber": 14
+    },
+    "common_package_sizes": [
+      50,
+      100
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Rosemary",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 131,
+      "protein": 3.3,
+      "carbs": 21,
+      "fat": 5.9,
+      "fiber": 14
+    },
+    "common_package_sizes": [
+      50,
+      100
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Parsley",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 36,
+      "protein": 3,
+      "carbs": 6,
+      "fat": 0.8,
+      "fiber": 3.3
+    },
+    "common_package_sizes": [
+      50,
+      100
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Cilantro",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 23,
+      "protein": 2.1,
+      "carbs": 3.7,
+      "fat": 0.5,
+      "fiber": 2.8
+    },
+    "common_package_sizes": [
+      50,
+      100
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Bay Leaves",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 313,
+      "protein": 7.6,
+      "carbs": 75,
+      "fat": 8.4,
+      "fiber": 26
+    },
+    "common_package_sizes": [
+      100,
+      250
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Chili Powder",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 282,
+      "protein": 14,
+      "carbs": 54,
+      "fat": 12,
+      "fiber": 34
+    },
+    "common_package_sizes": [
+      100,
+      250
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Cayenne Pepper",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 318,
+      "protein": 12,
+      "carbs": 57,
+      "fat": 17,
+      "fiber": 27
+    },
+    "common_package_sizes": [
+      100,
+      250
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Coriander",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 298,
+      "protein": 12,
+      "carbs": 55,
+      "fat": 18,
+      "fiber": 42
+    },
+    "common_package_sizes": [
+      100,
+      250
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Cardamom",
+    "category": "spice",
+    "nutritional_info_per_100g": {
+      "calories": 311,
+      "protein": 11,
+      "carbs": 68,
+      "fat": 7,
+      "fiber": 28
+    },
+    "common_package_sizes": [
+      100,
+      250
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Lemon Juice",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 22,
+      "protein": 0.4,
+      "carbs": 6.9,
+      "fat": 0.2,
+      "fiber": 0.3
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 30,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Tomato Sauce",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 29,
+      "protein": 1.6,
+      "carbs": 6.7,
+      "fat": 0.2,
+      "fiber": 1.5
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Honey",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 304,
+      "protein": 0.3,
+      "carbs": 82.4,
+      "fat": 0,
+      "fiber": 0.2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Soy Sauce",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 53,
+      "protein": 8.1,
+      "carbs": 4.9,
+      "fat": 0.1,
+      "fiber": 0.8
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Balsamic Vinegar",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 88,
+      "protein": 0.5,
+      "carbs": 17,
+      "fat": 0,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Apple Cider Vinegar",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 21,
+      "protein": 0,
+      "carbs": 0.9,
+      "fat": 0,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Worcestershire Sauce",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 78,
+      "protein": 0,
+      "carbs": 19,
+      "fat": 0,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Hot Sauce",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 6,
+      "protein": 0.2,
+      "carbs": 1.3,
+      "fat": 0.1,
+      "fiber": 0.5
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Mustard",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 66,
+      "protein": 3.7,
+      "carbs": 5.8,
+      "fat": 3.7,
+      "fiber": 3.3
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Ketchup",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 112,
+      "protein": 1.7,
+      "carbs": 26,
+      "fat": 0.1,
+      "fiber": 0.4
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Mayonnaise",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 680,
+      "protein": 1,
+      "carbs": 0.6,
+      "fat": 75,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 60,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Tahini",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 595,
+      "protein": 17,
+      "carbs": 21,
+      "fat": 54,
+      "fiber": 9
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Fish Sauce",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 35,
+      "protein": 5.5,
+      "carbs": 3.5,
+      "fat": 0,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Miso Paste",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 199,
+      "protein": 12,
+      "carbs": 26,
+      "fat": 6,
+      "fiber": 5
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Sriracha",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 15,
+      "protein": 0.8,
+      "carbs": 3.2,
+      "fat": 0.1,
+      "fiber": 0.5
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Olive Oil",
+    "category": "oil",
+    "nutritional_info_per_100g": {
+      "calories": 884,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 100,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Coconut Oil",
+    "category": "oil",
+    "nutritional_info_per_100g": {
+      "calories": 862,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 100,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Vegetable Oil",
+    "category": "oil",
+    "nutritional_info_per_100g": {
+      "calories": 884,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 100,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Sesame Oil",
+    "category": "oil",
+    "nutritional_info_per_100g": {
+      "calories": 884,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 100,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Avocado Oil",
+    "category": "oil",
+    "nutritional_info_per_100g": {
+      "calories": 884,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 100,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Water",
+    "category": "beverage",
+    "nutritional_info_per_100g": {
+      "calories": 0,
+      "protein": 0,
+      "carbs": 0,
+      "fat": 0,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Orange Juice",
+    "category": "beverage",
+    "nutritional_info_per_100g": {
+      "calories": 45,
+      "protein": 0.7,
+      "carbs": 10,
+      "fat": 0.2,
+      "fiber": 0.2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Apple Juice",
+    "category": "beverage",
+    "nutritional_info_per_100g": {
+      "calories": 46,
+      "protein": 0.1,
+      "carbs": 11,
+      "fat": 0.1,
+      "fiber": 0.2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Coconut Water",
+    "category": "beverage",
+    "nutritional_info_per_100g": {
+      "calories": 19,
+      "protein": 0.7,
+      "carbs": 4,
+      "fat": 0.2,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 30,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Almond Milk",
+    "category": "beverage",
+    "nutritional_info_per_100g": {
+      "calories": 17,
+      "protein": 0.6,
+      "carbs": 1.5,
+      "fat": 1.1,
+      "fiber": 0.2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Soy Milk",
+    "category": "beverage",
+    "nutritional_info_per_100g": {
+      "calories": 33,
+      "protein": 2.9,
+      "carbs": 1.8,
+      "fat": 1.8,
+      "fiber": 0.6
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Oat Milk",
+    "category": "beverage",
+    "nutritional_info_per_100g": {
+      "calories": 47,
+      "protein": 1.3,
+      "carbs": 7,
+      "fat": 1.5,
+      "fiber": 0.8
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 7,
+    "perishability": "moderate"
+  },
+  {
+    "name": "Chicken Broth",
+    "category": "beverage",
+    "nutritional_info_per_100g": {
+      "calories": 15,
+      "protein": 1.2,
+      "carbs": 0.8,
+      "fat": 0.5,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Vegetable Broth",
+    "category": "beverage",
+    "nutritional_info_per_100g": {
+      "calories": 12,
+      "protein": 0.6,
+      "carbs": 1.2,
+      "fat": 0.2,
+      "fiber": 0.2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Beef Broth",
+    "category": "beverage",
+    "nutritional_info_per_100g": {
+      "calories": 16,
+      "protein": 1.4,
+      "carbs": 0.5,
+      "fat": 0.6,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Nuts Mixed",
+    "category": "other",
+    "nutritional_info_per_100g": {
+      "calories": 607,
+      "protein": 20,
+      "carbs": 21,
+      "fat": 54,
+      "fiber": 7
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 180,
+    "perishability": "stable"
+  },
+  {
+    "name": "Almonds",
+    "category": "other",
+    "nutritional_info_per_100g": {
+      "calories": 579,
+      "protein": 21,
+      "carbs": 22,
+      "fat": 50,
+      "fiber": 12
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 180,
+    "perishability": "stable"
+  },
+  {
+    "name": "Walnuts",
+    "category": "other",
+    "nutritional_info_per_100g": {
+      "calories": 654,
+      "protein": 15,
+      "carbs": 14,
+      "fat": 65,
+      "fiber": 6.7
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 180,
+    "perishability": "stable"
+  },
+  {
+    "name": "Cashews",
+    "category": "other",
+    "nutritional_info_per_100g": {
+      "calories": 553,
+      "protein": 18,
+      "carbs": 30,
+      "fat": 44,
+      "fiber": 3.3
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 180,
+    "perishability": "stable"
+  },
+  {
+    "name": "Peanuts",
+    "category": "other",
+    "nutritional_info_per_100g": {
+      "calories": 567,
+      "protein": 26,
+      "carbs": 16,
+      "fat": 49,
+      "fiber": 8.5
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 180,
+    "perishability": "stable"
+  },
+  {
+    "name": "Sunflower Seeds",
+    "category": "other",
+    "nutritional_info_per_100g": {
+      "calories": 584,
+      "protein": 21,
+      "carbs": 20,
+      "fat": 51,
+      "fiber": 8.6
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 180,
+    "perishability": "stable"
+  },
+  {
+    "name": "Pumpkin Seeds",
+    "category": "other",
+    "nutritional_info_per_100g": {
+      "calories": 559,
+      "protein": 30,
+      "carbs": 10,
+      "fat": 49,
+      "fiber": 6
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 180,
+    "perishability": "stable"
+  },
+  {
+    "name": "Chia Seeds",
+    "category": "other",
+    "nutritional_info_per_100g": {
+      "calories": 486,
+      "protein": 17,
+      "carbs": 42,
+      "fat": 31,
+      "fiber": 34
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Flax Seeds",
+    "category": "other",
+    "nutritional_info_per_100g": {
+      "calories": 534,
+      "protein": 18,
+      "carbs": 29,
+      "fat": 42,
+      "fiber": 27
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Sesame Seeds",
+    "category": "other",
+    "nutritional_info_per_100g": {
+      "calories": 573,
+      "protein": 18,
+      "carbs": 23,
+      "fat": 50,
+      "fiber": 12
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Dried Cranberries",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 308,
+      "protein": 0.1,
+      "carbs": 82,
+      "fat": 1.4,
+      "fiber": 5
+    },
+    "common_package_sizes": [
+      200,
+      400
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 180,
+    "perishability": "stable"
+  },
+  {
+    "name": "Lasagna Noodles",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 371,
+      "protein": 13,
+      "carbs": 75,
+      "fat": 1.5,
+      "fiber": 3
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Mint",
+    "category": "herb",
+    "nutritional_info_per_100g": {
+      "calories": 44,
+      "protein": 3.8,
+      "carbs": 8.4,
+      "fat": 0.7,
+      "fiber": 6.8
+    },
+    "common_package_sizes": [
+      25,
+      50
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Granola",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 471,
+      "protein": 10.1,
+      "carbs": 64.4,
+      "fat": 20.3,
+      "fiber": 8.9
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 180,
+    "perishability": "stable"
+  },
+  {
+    "name": "Flour",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 364,
+      "protein": 10.3,
+      "carbs": 76.3,
+      "fat": 1,
+      "fiber": 2.7
+    },
+    "common_package_sizes": [
+      500,
+      1000,
+      2000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Maple Syrup",
+    "category": "condiment",
+    "nutritional_info_per_100g": {
+      "calories": 260,
+      "protein": 0,
+      "carbs": 67,
+      "fat": 0.2,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "ml",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Cheese",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 402,
+      "protein": 25,
+      "carbs": 1.3,
+      "fat": 33,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      200,
+      400,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 30,
+    "perishability": "perishable"
+  },
+  {
+    "name": "Peanut Butter",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 588,
+      "protein": 25,
+      "carbs": 20,
+      "fat": 50,
+      "fiber": 6
+    },
+    "common_package_sizes": [
+      340,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 180,
+    "perishability": "stable"
+  },
+  {
+    "name": "Berries",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 57,
+      "protein": 0.7,
+      "carbs": 14.5,
+      "fat": 0.3,
+      "fiber": 2.4
+    },
+    "common_package_sizes": [
+      125,
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Dried Fruit",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 249,
+      "protein": 2.3,
+      "carbs": 65.8,
+      "fat": 0.4,
+      "fiber": 7.3
+    },
+    "common_package_sizes": [
+      200,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Rice",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 130,
+      "protein": 2.7,
+      "carbs": 28.2,
+      "fat": 0.3,
+      "fiber": 0.4
+    },
+    "common_package_sizes": [
+      500,
+      1000,
+      2000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Noodles",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 138,
+      "protein": 4.5,
+      "carbs": 25.2,
+      "fat": 2.1,
+      "fiber": 1.2
+    },
+    "common_package_sizes": [
+      250,
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Pasta",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 371,
+      "protein": 13,
+      "carbs": 75,
+      "fat": 1.5,
+      "fiber": 3.2
+    },
+    "common_package_sizes": [
+      500,
+      1000
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 730,
+    "perishability": "stable"
+  },
+  {
+    "name": "Dark Chocolate",
+    "category": "snack",
+    "nutritional_info_per_100g": {
+      "calories": 546,
+      "protein": 4.9,
+      "carbs": 61.2,
+      "fat": 31.3,
+      "fiber": 7
+    },
+    "common_package_sizes": [
+      100,
+      200
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 365,
+    "perishability": "stable"
+  },
+  {
+    "name": "Whipped Cream",
+    "category": "dairy",
+    "nutritional_info_per_100g": {
+      "calories": 257,
+      "protein": 1.9,
+      "carbs": 12.5,
+      "fat": 22.2,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      200,
+      400
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Apple",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 52,
+      "protein": 0.3,
+      "carbs": 14,
+      "fat": 0.2,
+      "fiber": 2.4
+    },
+    "common_package_sizes": [
+      150,
+      200
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 14,
+    "perishability": "perishable"
+  },
+  {
+    "name": "Ham",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 145,
+      "protein": 21,
+      "carbs": 1.5,
+      "fat": 5.5,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      100,
+      200,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "perishable"
+  },
+  {
+    "name": "Mixed Greens",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 23,
+      "protein": 2.5,
+      "carbs": 3.6,
+      "fat": 0.3,
+      "fiber": 2.2
+    },
+    "common_package_sizes": [
+      150,
+      300
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 5,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Cherry Tomatoes",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 18,
+      "protein": 0.9,
+      "carbs": 3.9,
+      "fat": 0.2,
+      "fiber": 1.2
+    },
+    "common_package_sizes": [
+      250,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "perishable"
+  },
+  {
+    "name": "Tortilla",
+    "category": "grain",
+    "nutritional_info_per_100g": {
+      "calories": 304,
+      "protein": 8,
+      "carbs": 49,
+      "fat": 8,
+      "fiber": 3
+    },
+    "common_package_sizes": [
+      300,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 30,
+    "perishability": "stable"
+  },
+  {
+    "name": "Hummus",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 166,
+      "protein": 8,
+      "carbs": 14,
+      "fat": 10,
+      "fiber": 6
+    },
+    "common_package_sizes": [
+      200,
+      400
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "perishable"
+  },
+  {
+    "name": "Tuna",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 116,
+      "protein": 26,
+      "carbs": 0,
+      "fat": 1,
+      "fiber": 0
+    },
+    "common_package_sizes": [
+      150,
+      200
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 1095,
+    "perishability": "stable"
+  },
+  {
+    "name": "Almond Butter",
+    "category": "protein",
+    "nutritional_info_per_100g": {
+      "calories": 614,
+      "protein": 21,
+      "carbs": 18,
+      "fat": 56,
+      "fiber": 10
+    },
+    "common_package_sizes": [
+      340,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 180,
+    "perishability": "stable"
+  }
+]

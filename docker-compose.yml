@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:16-alpine
+    container_name: optimealy-db
+    environment:
+      POSTGRES_DB: optimeal_db
+      POSTGRES_USER: optimeal_user
+      POSTGRES_PASSWORD: optimeal_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U optimeal_user -d optimeal_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - optimealy-network
+
+  # Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: optimealy-backend
+    environment:
+      DATABASE_URL: "postgresql://optimeal_user:optimeal_password@db:5432/optimeal_db"
+      SECRET_KEY: "dev-secret-key-change-in-production"
+      ALGORITHM: "HS256"
+      ACCESS_TOKEN_EXPIRE_MINUTES: "30"
+      ENVIRONMENT: "development"
+      CORS_ORIGINS: '["http://localhost:3000","http://localhost:8081","http://localhost:19006","http://localhost:19000"]'
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/data:/app/data
+    networks:
+      - optimealy-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  optimealy-network:
+    driver: bridge
