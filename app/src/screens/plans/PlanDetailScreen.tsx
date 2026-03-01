@@ -105,7 +105,6 @@ export const PlanDetailScreen: React.FC = () => {
       <Text style={styles.title}>
         {selectedPlan.name || `${selectedPlan.start_date} • ${selectedPlan.duration_days} days`}
       </Text>
-      <Text style={styles.subtitle}>Status: {selectedPlan.optimization_status}</Text>
 
       <View style={styles.metrics}>
         <Text style={styles.metric}>Target: {selectedPlan.target_calories_per_day} kcal/day</Text>
@@ -114,9 +113,6 @@ export const PlanDetailScreen: React.FC = () => {
         ) : null}
         {selectedPlan.waste_reduction_percentage != null ? (
           <Text style={styles.metric}>Waste reduction: {selectedPlan.waste_reduction_percentage}%</Text>
-        ) : null}
-        {selectedPlan.estimated_total_cost != null ? (
-          <Text style={styles.metric}>Estimated cost: ${Number(selectedPlan.estimated_total_cost).toFixed(2)}</Text>
         ) : null}
 
         <TouchableOpacity

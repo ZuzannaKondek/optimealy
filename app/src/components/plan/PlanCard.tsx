@@ -11,8 +11,6 @@ type Props = {
 export const PlanCard: React.FC<Props> = ({ plan, onPress }) => {
   const wasteText =
     plan.estimated_food_waste_g != null ? `${Math.round(plan.estimated_food_waste_g)}g waste` : 'Waste: —';
-  const costText =
-    plan.estimated_total_cost != null ? `$${Number(plan.estimated_total_cost).toFixed(2)}` : 'Cost: —';
 
   // Display execution status when available (draft/active/completed/cancelled), else optimization status
   const displayStatus =
@@ -63,7 +61,6 @@ export const PlanCard: React.FC<Props> = ({ plan, onPress }) => {
 
       <View style={styles.footerRow}>
         <Text style={styles.footerItem}>{wasteText}</Text>
-        <Text style={styles.footerItem}>{costText}</Text>
       </View>
     </TouchableOpacity>
   );
