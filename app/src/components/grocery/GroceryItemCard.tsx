@@ -17,6 +17,8 @@ export const GroceryItemCard: React.FC<Props> = ({ item }) => {
 
   const showExactBadge = item.exact_quantity === true;
   const waste = Math.round(item.estimated_item_waste_g);
+  const toBuy = Math.max(0, item.purchase_quantity_g - item.estimated_item_waste_g);
+  const owned = Math.max(0, Math.round(item.required_quantity_g - toBuy));
 
   return (
     <View style={[styles.card, isAlreadyOwned && styles.cardOwned]}>
@@ -31,8 +33,9 @@ export const GroceryItemCard: React.FC<Props> = ({ item }) => {
       </View>
 
       <Text style={styles.meta}>
-        Buy: {Math.round(item.purchase_quantity_g)} {item.purchase_unit} • Need:{' '}
+        Buy: {Math.round(item.purchase_quantity_g)} {item.purchase_unit} • Total need:{' '}
         {Math.round(item.required_quantity_g)}g
+        {owned > 0 && <Text style={styles.ownedHint}> • In pantry: {owned}g</Text>}
         {showExactBadge && <Text style={styles.exactBadge}> • Exact weight</Text>}
       </Text>
 
@@ -133,10 +136,13 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontWeight: typography.fontWeight.semiBold,
   },
+  ownedHint: {
+    fontSize: typography.fontSize.xs,
+    color: colors.textTertiary,
+  },
   usedIn: {
     marginTop: spacing.sm,
     fontSize: typography.fontSize.sm,
     color: colors.textTertiary,
   },
 });
-

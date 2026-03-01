@@ -4,7 +4,8 @@ from __future__ import annotations
 
 from collections import defaultdict
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple
+import math
+from typing import Any, Dict, List, Optional
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -15,20 +16,23 @@ from src.models.meal_plan import DailyMenu, MealPlan, Meal
 from src.models.recipe import Recipe
 from src.models.recipe_ingredient import RecipeIngredient
 from src.models.product import Product
+from src.models.user_pantry_item import UserPantryItem
 
 
 class GroceryService:
     """Service for generating and retrieving grocery lists."""
 
     @staticmethod
-    def _get_owned_quantities_g(meal_plan: MealPlan) -> Dict[str, float]:
-        constraints = meal_plan.user_constraints or {}
-        owned = constraints.get("ingredients_to_have") or []
+    async def _get_owned_quantities_g(db: AsyncSession, user_id: Any) -> Dict[str, float]:
+        pantry_stmt = select(UserPantryItem).where(UserPantryItem.user_id == user_id)
+        pantry_result = await db.execute(pantry_stmt)
+        pantry_items = pantry_result.scalars().all()
+
         owned_by_product_id: Dict[str, float] = {}
-        for item in owned:
+        for item in pantry_items:
             try:
-                product_id = str(item.get("product_id"))
-                qty_g = float(item.get("quantity_g") or 0)
+                product_id = str(item.product_id)
+                qty_g = float(item.quantity_g or 0)
                 if product_id:
                     owned_by_product_id[product_id] = owned_by_product_id.get(
                         product_id, 0.0
@@ -45,6 +49,7 @@ class GroceryService:
 
         Assumptions (MVP):
         - Product.common_package_sizes is a list of numeric sizes in grams.
+        - Any package size can be bought multiple times.
         """
         if required_g <= 0:
             return 0.0
@@ -60,10 +65,8 @@ class GroceryService:
         if not sizes:
             return float(required_g)
 
-        for s in sizes:
-            if s >= required_g:
-                return float(s)
-        return float(sizes[-1])
+        best_purchase = min(math.ceil(required_g / s) * s for s in sizes)
+        return float(best_purchase)
 
     @staticmethod
     def _estimate_cost(purchase_g: float, product: Product) -> Optional[float]:
@@ -130,7 +133,7 @@ class GroceryService:
                 required_by_product_id[product_id] += max(qty, 0.0)
                 products_by_id[product_id] = ri.product
 
-        owned_by_product_id = GroceryService._get_owned_quantities_g(meal_plan)
+        owned_by_product_id = await GroceryService._get_owned_quantities_g(db, meal_plan.user_id)
 
         # Find or create GroceryList
         existing_stmt = (
@@ -176,8 +179,11 @@ class GroceryService:
                 purchase_g = to_buy_required_g
                 waste_g = 0.0
             else:
-                purchase_g = GroceryService._match_package_size_g(
-                    to_buy_required_g, product.common_package_sizes
+                purchase_g = max(
+                    to_buy_required_g,
+                    GroceryService._match_package_size_g(
+                        to_buy_required_g, product.common_package_sizes
+                    ),
                 )
                 waste_g = max(0.0, purchase_g - to_buy_required_g)
             estimated_cost = GroceryService._estimate_cost(purchase_g, product)
