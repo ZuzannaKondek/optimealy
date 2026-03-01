@@ -30,7 +30,9 @@ class GroceryService:
                 product_id = str(item.get("product_id"))
                 qty_g = float(item.get("quantity_g") or 0)
                 if product_id:
-                    owned_by_product_id[product_id] = owned_by_product_id.get(product_id, 0.0) + max(qty_g, 0.0)
+                    owned_by_product_id[product_id] = owned_by_product_id.get(
+                        product_id, 0.0
+                    ) + max(qty_g, 0.0)
             except Exception:
                 # Ignore malformed entries
                 continue
@@ -131,8 +133,10 @@ class GroceryService:
         owned_by_product_id = GroceryService._get_owned_quantities_g(meal_plan)
 
         # Find or create GroceryList
-        existing_stmt = select(GroceryList).where(GroceryList.meal_plan_id == meal_plan.id).options(
-            selectinload(GroceryList.items)
+        existing_stmt = (
+            select(GroceryList)
+            .where(GroceryList.meal_plan_id == meal_plan.id)
+            .options(selectinload(GroceryList.items))
         )
         existing_result = await db.execute(existing_stmt)
         grocery_list = existing_result.scalar_one_or_none()
@@ -167,8 +171,15 @@ class GroceryService:
             if exclude_owned and status == "already_have":
                 continue
 
-            purchase_g = GroceryService._match_package_size_g(to_buy_required_g, product.common_package_sizes)
-            waste_g = max(0.0, purchase_g - to_buy_required_g)
+            # Use exact quantity if product allows it (e.g., loose produce sold by weight)
+            if product.allows_exact_quantity:
+                purchase_g = to_buy_required_g
+                waste_g = 0.0
+            else:
+                purchase_g = GroceryService._match_package_size_g(
+                    to_buy_required_g, product.common_package_sizes
+                )
+                waste_g = max(0.0, purchase_g - to_buy_required_g)
             estimated_cost = GroceryService._estimate_cost(purchase_g, product)
 
             if estimated_cost is not None:
@@ -198,4 +209,3 @@ class GroceryService:
         await db.refresh(grocery_list)
 
         return grocery_list
-

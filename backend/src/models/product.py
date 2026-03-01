@@ -1,4 +1,5 @@
 """Product model for the ingredient/product database."""
+
 from datetime import datetime
 from typing import Optional, List, TYPE_CHECKING
 from uuid import uuid4
@@ -43,6 +44,10 @@ class Product(Base):
         ARRAY(Numeric(10, 2)),
         nullable=False,
         default=list,
+    )
+    allows_exact_quantity: Mapped[bool] = mapped_column(
+        nullable=False,
+        default=False,
     )
     standard_unit: Mapped[str] = mapped_column(String(20), nullable=False)
 

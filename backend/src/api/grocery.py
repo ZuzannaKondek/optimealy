@@ -34,6 +34,9 @@ class GroceryItemResponse(BaseModel):
     estimated_item_waste_g: float
     status: str
     used_in_recipes: Optional[List[dict]] = None
+    exact_quantity: bool = (
+        False  # True if product can be bought in exact weight (e.g., loose produce)
+    )
 
 
 class GroceryListResponse(BaseModel):
@@ -116,10 +119,13 @@ async def get_grocery_list(
                 required_quantity_g=float(item.required_quantity_g),
                 purchase_quantity_g=float(item.purchase_quantity_g),
                 purchase_unit=item.purchase_unit,
-                estimated_item_cost=float(item.estimated_item_cost) if item.estimated_item_cost is not None else None,
+                estimated_item_cost=float(item.estimated_item_cost)
+                if item.estimated_item_cost is not None
+                else None,
                 estimated_item_waste_g=float(item.estimated_item_waste_g),
                 status=item.status,
                 used_in_recipes=used or None,
+                exact_quantity=product.allows_exact_quantity if product else False,
             )
         )
 
@@ -139,4 +145,3 @@ async def get_grocery_list(
         estimated_total_waste_g=float(grocery_list.estimated_total_waste_g or 0.0),
         items=items,
     )
-
