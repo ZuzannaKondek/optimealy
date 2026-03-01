@@ -25,7 +25,7 @@ export const GroceryListScreen: React.FC = () => {
       setIsLoading(true);
       setError(null);
       try {
-        const list = await planService.getGroceryList(planId, { groupBy: 'category', excludeOwned: false });
+        const list = await planService.getGroceryList(planId, { groupBy: 'category' });
         if (!cancelled) setGroceryList(list);
       } catch (e: any) {
         if (!cancelled) setError(e?.response?.data?.detail || 'Failed to load grocery list');
@@ -71,7 +71,6 @@ export const GroceryListScreen: React.FC = () => {
       <Text style={styles.title}>Grocery List</Text>
       <Text style={styles.subtitle}>
         Items: {groceryList.total_items} • Waste: {Math.round(groceryList.estimated_total_waste_g)}g
-        {groceryList.estimated_total_cost != null ? ` • Cost: $${Number(groceryList.estimated_total_cost).toFixed(2)}` : ''}
       </Text>
 
       {categories.map((category) => (

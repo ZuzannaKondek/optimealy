@@ -8,31 +8,40 @@ type Props = {
 };
 
 export const GroceryItemCard: React.FC<Props> = ({ item }) => {
-  const statusLabel = item.status === 'already_have' ? 'Already have' : item.status === 'purchased' ? 'Purchased' : 'Needed';
+  const isAlreadyOwned = item.status === 'already_have';
+  const statusLabel = isAlreadyOwned ? 'Already have' : item.status === 'purchased' ? 'Purchased' : 'Needed';
 
   const recipes = item.used_in_recipes ?? [];
   const recipePreview = recipes.slice(0, 2).map((r) => r.recipe_name).join(', ');
   const moreCount = recipes.length > 2 ? recipes.length - 2 : 0;
 
+  const showExactBadge = item.exact_quantity === true;
+  const waste = Math.round(item.estimated_item_waste_g);
+
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, isAlreadyOwned && styles.cardOwned]}>
       <View style={styles.headerRow}>
-        <Text style={styles.title}>{item.product_name}</Text>
-        <Text style={styles.status}>{statusLabel}</Text>
+        {isAlreadyOwned && (
+          <View style={styles.checkmark}>
+            <Text style={styles.checkmarkText}>✓</Text>
+          </View>
+        )}
+        <Text style={[styles.title, isAlreadyOwned && styles.titleOwned]}>{item.product_name}</Text>
+        <Text style={[styles.status, isAlreadyOwned && styles.statusOwned]}>{statusLabel}</Text>
       </View>
 
       <Text style={styles.meta}>
         Buy: {Math.round(item.purchase_quantity_g)} {item.purchase_unit} • Need:{' '}
         {Math.round(item.required_quantity_g)}g
+        {showExactBadge && <Text style={styles.exactBadge}> • Exact weight</Text>}
       </Text>
 
       <View style={styles.footerRow}>
-        <Text style={styles.footerText}>
-          Waste: {Math.round(item.estimated_item_waste_g)}g
-        </Text>
-        <Text style={styles.footerText}>
-          {item.estimated_item_cost != null ? `$${Number(item.estimated_item_cost).toFixed(2)}` : 'Cost: —'}
-        </Text>
+        {waste > 0 ? (
+          <Text style={styles.wasteText}>Waste: {waste}g</Text>
+        ) : (
+          <Text style={styles.noWasteText}>No waste</Text>
+        )}
       </View>
 
       {recipes.length > 0 ? (
@@ -54,6 +63,11 @@ const styles = StyleSheet.create({
     padding: spacing.md,
     marginBottom: spacing.sm,
   },
+  cardOwned: {
+    backgroundColor: '#f0fff4',
+    borderColor: colors.success,
+    borderWidth: 2,
+  },
   headerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -61,17 +75,37 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
     marginBottom: spacing.xs,
   },
+  checkmark: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: colors.success,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: spacing.xs,
+  },
+  checkmarkText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: typography.fontWeight.bold,
+  },
   title: {
     flex: 1,
     fontSize: typography.fontSize.md,
     fontWeight: typography.fontWeight.semiBold,
     color: colors.textPrimary,
   },
+  titleOwned: {
+    color: colors.success,
+  },
   status: {
     fontSize: typography.fontSize.xs,
     color: colors.textSecondary,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
+  },
+  statusOwned: {
+    color: colors.success,
   },
   meta: {
     fontSize: typography.fontSize.sm,
@@ -85,6 +119,19 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: typography.fontSize.sm,
     color: colors.textSecondary,
+  },
+  wasteText: {
+    fontSize: typography.fontSize.sm,
+    color: colors.error,
+  },
+  noWasteText: {
+    fontSize: typography.fontSize.sm,
+    color: colors.success,
+  },
+  exactBadge: {
+    fontSize: typography.fontSize.xs,
+    color: colors.primary,
+    fontWeight: typography.fontWeight.semiBold,
   },
   usedIn: {
     marginTop: spacing.sm,
