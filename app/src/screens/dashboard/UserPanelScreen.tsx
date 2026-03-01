@@ -21,12 +21,6 @@ export const UserPanelScreen: React.FC = () => {
 
       <View style={styles.actions}>
         <Button title="Create New Plan" onPress={() => navigation.navigate('Create' as never)} />
-        <Button
-          title="Settings"
-          variant="secondary"
-          onPress={() => navigation.navigate('Settings' as never)}
-          style={{ marginTop: spacing.sm }}
-        />
       </View>
 
       <Text style={styles.sectionTitle}>Recent Plans</Text>
@@ -85,4 +79,3 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
   },
 });
-
