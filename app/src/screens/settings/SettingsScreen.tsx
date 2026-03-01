@@ -125,14 +125,6 @@ export const SettingsScreen: React.FC = () => {
         />
       </SettingsSection>
 
-      <SettingsSection title="Meal Planning">
-        <SettingRow
-          title="My Pantry"
-          subtitle="Manage items you already have"
-          onPress={() => navigation.navigate('Pantry' as never)}
-        />
-      </SettingsSection>
-
       <SettingsSection title="Info">
         <SettingRow
           title="O serwisie"

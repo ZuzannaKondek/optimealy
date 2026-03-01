@@ -26,8 +26,9 @@ const linking: LinkingOptions<ReactNavigation.RootParamList> = {
           Tabs: {
             screens: {
               Home: 'home',
+              Today: 'today',
               Plans: 'plans',
-              Create: 'create',
+              Pantry: 'pantry',
               Settings: 'settings',
             },
           },

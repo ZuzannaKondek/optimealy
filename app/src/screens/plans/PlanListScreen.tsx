@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, FlatList, RefreshControl, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { usePlans } from '../../hooks/usePlans';
 import { PlanCard } from '../../components/plan/PlanCard';
@@ -8,7 +8,7 @@ import { colors, spacing, typography } from '../../theme';
 const PAGE_SIZE = 10;
 
 export const PlanListScreen: React.FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const { plans, isLoading, error, fetchPlans } = usePlans();
 
   const [isRefreshing, setIsRefreshing] = React.useState(false);
@@ -40,6 +40,19 @@ export const PlanListScreen: React.FC = () => {
     const newLen = usePlans.getState().plans.length;
     setHasMore(newLen - prevLen === PAGE_SIZE);
   };
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('CreatePlan')}
+          style={styles.headerButton}
+        >
+          <Text style={styles.headerButtonText}>+ Create</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
@@ -76,7 +89,13 @@ export const PlanListScreen: React.FC = () => {
           ListEmptyComponent={
             !isLoading ? (
               <View style={styles.center}>
-                <Text style={styles.emptyText}>No meal plans yet. Create one from the “Create” tab.</Text>
+                <Text style={styles.emptyText}>No meal plans yet.</Text>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('CreatePlan')}
+                  style={styles.createButton}
+                >
+                  <Text style={styles.createButtonText}>Create Your First Plan</Text>
+                </TouchableOpacity>
               </View>
             ) : null
           }
@@ -127,6 +146,26 @@ const styles = StyleSheet.create({
   footer: {
     paddingVertical: spacing.md,
     alignItems: 'center',
+  },
+  headerButton: {
+    marginRight: spacing.md,
+  },
+  headerButtonText: {
+    color: colors.white,
+    fontSize: typography.fontSize.md,
+    fontWeight: typography.fontWeight.semiBold,
+  },
+  createButton: {
+    marginTop: spacing.md,
+    backgroundColor: colors.primary,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    borderRadius: 8,
+  },
+  createButtonText: {
+    color: colors.white,
+    fontSize: typography.fontSize.md,
+    fontWeight: typography.fontWeight.semiBold,
   },
 });
 

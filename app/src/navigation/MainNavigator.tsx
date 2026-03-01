@@ -2,7 +2,7 @@
  * Main App Navigator
  * OptiMeal Mobile App
  * 
- * Navigation for authenticated users (Tabs: Home, Plans, Create, Settings).
+ * Navigation for authenticated users (Tabs: Home, Today, Plans, Pantry, Settings).
  */
 
 import React from 'react';
@@ -26,8 +26,6 @@ import { ChangePasswordScreen } from '../screens/settings/ChangePasswordScreen';
 import { AboutScreen } from '../screens/settings/AboutScreen';
 import { PantryScreen } from '../screens/pantry/PantryScreen';
 import { TodayScreen } from '../screens/today/TodayScreen';
-
-const CreatePlanScreen: React.FC = () => <PlanCreationScreen />;
 
 const Tabs: React.FC = () => {
   return (
@@ -76,11 +74,11 @@ const Tabs: React.FC = () => {
         }}
       />
       <Tab.Screen
-        name="Create"
-        component={CreatePlanScreen}
+        name="Pantry"
+        component={PantryScreen}
         options={{
-          title: 'Create Plan',
-          tabBarLabel: 'Create',
+          title: 'My Pantry',
+          tabBarLabel: 'Pantry',
         }}
       />
       <Tab.Screen
@@ -110,6 +108,14 @@ export const MainNavigator: React.FC = () => {
       }}
     >
       <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
+      <Stack.Screen 
+        name="CreatePlan" 
+        component={PlanCreationScreen} 
+        options={{ 
+          title: 'Create Plan',
+          headerBackTitle: 'Back',
+        }} 
+      />
       <Stack.Screen 
         name="PlanDetail" 
         component={PlanDetailScreen} 
