@@ -22,12 +22,6 @@ export const UserPanelScreen: React.FC = () => {
       <View style={styles.actions}>
         <Button title="Create New Plan" onPress={() => navigation.navigate('Create' as never)} />
         <Button
-          title="View All Plans"
-          variant="secondary"
-          onPress={() => navigation.navigate('Plans' as never)}
-          style={{ marginTop: spacing.sm }}
-        />
-        <Button
           title="Settings"
           variant="secondary"
           onPress={() => navigation.navigate('Settings' as never)}
