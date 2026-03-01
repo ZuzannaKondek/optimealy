@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { usePlans } from '../../hooks/usePlans';
 import { DayCard } from '../../components/plan/DayCard';
 import { colors, spacing, typography } from '../../theme';
-import apiClient from '../../services/api';
+import { planService } from '../../services/planService';
 
 type RouteParams = {
   planId: string;
@@ -22,7 +22,7 @@ export const PlanDetailScreen: React.FC = () => {
   const handleActivatePlan = async () => {
     try {
       setIsActivating(true);
-      await apiClient.post(`/meal-plans/${planId}/activate`);
+      await planService.activatePlan(planId);
       Alert.alert(
         'Plan Activated! 🎉',
         'Your meal plan is now active. All grocery items have been added to your pantry.',
@@ -62,9 +62,9 @@ export const PlanDetailScreen: React.FC = () => {
           text: 'Cancel Plan',
           style: 'destructive',
           onPress: async () => {
-            try {
-              setIsCancelling(true);
-              await apiClient.post(`/meal-plans/${planId}/cancel`);
+              try {
+                setIsCancelling(true);
+                await planService.cancelPlan(planId);
               Alert.alert('Plan Cancelled', 'Your plan has been cancelled successfully.');
               await fetchPlanDetail(planId);
             } catch (err: any) {
@@ -279,4 +279,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-

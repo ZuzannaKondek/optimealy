@@ -5,16 +5,9 @@
  */
 
 import { useState, useCallback } from 'react';
-import apiClient from '../services/api';
+import { pantryService } from '../services/pantryService';
 import { productService, type ProductSearchResult } from '../services/productService';
-
-export interface PantryItem {
-  product_id: string;
-  product_name: string;
-  quantity_g: number;
-  category: string;
-  expiry_date?: string; // ISO date string
-}
+import type { PantryItem } from '../types/models';
 
 export interface PantryStaple {
   product_id: string;
@@ -46,10 +39,10 @@ export const usePantry = () => {
     setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
     try {
-      const response = await apiClient.get('/users/pantry');
+      const pantryItems = await pantryService.getPantry();
       setState((prev) => ({
         ...prev,
-        items: response.data,
+        items: pantryItems,
         isLoading: false,
       }));
     } catch (error: any) {
@@ -69,10 +62,10 @@ export const usePantry = () => {
     setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
     try {
-      const response = await apiClient.get('/users/pantry/staples');
+      const staples = await pantryService.getPantryStaples();
       setState((prev) => ({
         ...prev,
-        staples: response.data,
+        staples,
         isLoading: false,
       }));
     } catch (error: any) {
@@ -92,9 +85,7 @@ export const usePantry = () => {
     setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
     try {
-      await apiClient.put('/users/pantry', {
-        items: items,
-      });
+      await pantryService.updatePantry(items);
       
       // Refresh pantry after update
       await fetchPantry();

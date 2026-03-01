@@ -10,7 +10,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import apiClient from '../../services/api';
+import { planService } from '../../services/planService';
 import { colors, typography, spacing } from '../../theme';
 
 interface TodayMeal {
@@ -47,8 +47,7 @@ export const TodayScreen: React.FC = () => {
       setError(null);
       
       // Fetch active plan
-      const planResponse = await apiClient.get('/meal-plans/active');
-      const plan = planResponse.data;
+      const plan = await planService.getActivePlan();
       
       if (!plan) {
         setActivePlan(null);
@@ -60,8 +59,8 @@ export const TodayScreen: React.FC = () => {
       setActivePlan(plan);
       
       // Fetch today's meals
-      const mealsResponse = await apiClient.get(`/meal-plans/${plan.id}/today`);
-      setTodayMeals(mealsResponse.data);
+      const todayMeals = await planService.getTodayMeals(plan.id);
+      setTodayMeals(todayMeals);
     } catch (err: any) {
       console.error('Failed to load today data:', err);
       setError(err.message || 'Failed to load data');
@@ -86,7 +85,7 @@ export const TodayScreen: React.FC = () => {
     if (meal.is_completed) {
       // Uncomplete
       try {
-        await apiClient.delete(`/meal-plans/meals/${meal.id}/complete`);
+        await planService.toggleMealComplete(meal.id, false);
         // Optimistic update
         setTodayMeals(prev =>
           prev.map(m =>
@@ -103,7 +102,7 @@ export const TodayScreen: React.FC = () => {
     } else {
       // Complete
       try {
-        await apiClient.post(`/meal-plans/meals/${meal.id}/complete`);
+        await planService.toggleMealComplete(meal.id, true);
         // Optimistic update
         setTodayMeals(prev =>
           prev.map(m =>

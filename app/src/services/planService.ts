@@ -53,12 +53,13 @@ export const planService = {
     limit: number = 10,
     offset: number = 0
   ): Promise<MealPlanSummary[]> {
-    const params = new URLSearchParams();
-    if (status) params.append('status', status);
-    params.append('limit', limit.toString());
-    params.append('offset', offset.toString());
-
-    const response = await apiClient.get<MealPlanSummary[]>(`/meal-plans?${params.toString()}`);
+    const response = await apiClient.get<MealPlanSummary[]>('/meal-plans', {
+      params: {
+        ...(status && { status }),
+        ...(limit != null && { limit }),
+        ...(offset != null && { offset }),
+      },
+    });
     return response.data;
   },
 
@@ -102,12 +103,40 @@ export const planService = {
     planId: string,
     options?: { groupBy?: 'category' | 'aisle' | 'recipe'; excludeOwned?: boolean }
   ): Promise<GroceryList> {
-    const params = new URLSearchParams();
-    if (options?.groupBy) params.append('group_by', options.groupBy);
-    if (options?.excludeOwned) params.append('exclude_owned', 'true');
+    const response = await apiClient.get<GroceryList>(`/meal-plans/${planId}/grocery`, {
+      params: {
+        ...(options?.groupBy && { group_by: options.groupBy }),
+        ...(options?.excludeOwned && { exclude_owned: true }),
+      },
+    });
+    return response.data;
+  },
 
-    const suffix = params.toString() ? `?${params.toString()}` : '';
-    const response = await apiClient.get<GroceryList>(`/meal-plans/${planId}/grocery${suffix}`);
+  async getActivePlan(): Promise<MealPlanSummary | null> {
+    const response = await apiClient.get<MealPlanSummary>('/meal-plans/active');
+    return response.data;
+  },
+
+  async getTodayMeals(planId: string): Promise<any> {
+    const response = await apiClient.get<any>(`/meal-plans/${planId}/today`);
+    return response.data;
+  },
+
+  async toggleMealComplete(mealId: string, completed: boolean): Promise<void> {
+    if (completed) {
+      await apiClient.post(`/meal-plans/meals/${mealId}/complete`);
+      return;
+    }
+    await apiClient.delete(`/meal-plans/meals/${mealId}/complete`);
+  },
+
+  async activatePlan(planId: string): Promise<MealPlanDetail> {
+    const response = await apiClient.post<MealPlanDetail>(`/meal-plans/${planId}/activate`);
+    return response.data;
+  },
+
+  async cancelPlan(planId: string): Promise<MealPlanDetail> {
+    const response = await apiClient.post<MealPlanDetail>(`/meal-plans/${planId}/cancel`);
     return response.data;
   },
 };

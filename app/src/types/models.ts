@@ -14,6 +14,7 @@ import type {
   CreateMealPlanRequest,
   GroceryList,
   GroceryItem,
+  ISODateString,
 } from '../../shared/types/api-contracts';
 
 // Re-export shared types
@@ -51,4 +52,24 @@ export interface PlanCreationState {
   status: 'idle' | 'creating' | 'completed' | 'failed';
   error: string | null;
   createdPlanId: string | null;
+}
+
+export interface PantryItem {
+  id?: string;
+  product_id: string;
+  product_name: string;
+  category: string;
+  quantity_g: number;
+  expiry_date?: ISODateString;
+}
+
+export interface CreatePantryItemRequest {
+  product_id: string;
+  quantity_g: number;
+  expiry_date?: ISODateString;
+}
+
+export interface UpdatePantryItemRequest {
+  quantity_g?: number;
+  expiry_date?: ISODateString;
 }
