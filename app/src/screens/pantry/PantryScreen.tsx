@@ -1,12 +1,12 @@
 /**
  * Pantry Management Screen
  * OptiMeal Mobile App
- * 
+ *
  * Screen for managing user's pantry items (ingredients they already have).
  * Helps reduce waste calculations by accounting for existing inventory.
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -16,16 +16,25 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
+  FlatList,
+  Keyboard,
 } from 'react-native';
 import { usePantry, type PantryStaple } from '../../hooks/usePantry';
+import { productService, type ProductSearchResult } from '../../services/productService';
 import { colors, spacing, typography } from '../../theme';
 
 export const PantryScreen: React.FC = () => {
-  const { items, staples, isLoading, error, fetchPantry, fetchStaples, updatePantry } = usePantry();
+  const { items, staples, isLoading, error, fetchPantry, fetchStaples, updatePantry, searchProducts } = usePantry();
   
-  // Track quantities per product ID
-  const [quantities, setQuantities] = useState<Map<string, number>>(new Map());
+  // Track quantities per product ID with optional expiry date
+  const [quantities, setQuantities] = useState<Map<string, { quantity: number; expiryDate?: string }>>(new Map());
   const [isSaving, setIsSaving] = useState(false);
+
+  // Search state
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<ProductSearchResult[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [showSearchResults, setShowSearchResults] = useState(false);
 
   // Load pantry and staples on mount
   useEffect(() => {
@@ -41,12 +50,38 @@ export const PantryScreen: React.FC = () => {
 
   // Update quantities map when items load
   useEffect(() => {
-    const newQuantities = new Map<string, number>();
+    const newQuantities = new Map<string, { quantity: number; expiryDate?: string }>();
     items.forEach((item) => {
-      newQuantities.set(item.product_id, item.quantity_g);
+      newQuantities.set(item.product_id, { 
+        quantity: item.quantity_g, 
+        expiryDate: item.expiry_date 
+      });
     });
     setQuantities(newQuantities);
   }, [items]);
+
+  // Debounced search
+  useEffect(() => {
+    if (!searchQuery || searchQuery.trim().length < 2) {
+      setSearchResults([]);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      setIsSearching(true);
+      try {
+        const results = await searchProducts(searchQuery);
+        setSearchResults(results);
+        setShowSearchResults(true);
+      } catch (err) {
+        console.error('Search failed:', err);
+      } finally {
+        setIsSearching(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery, searchProducts]);
 
   const toggleItem = (productId: string, defaultQuantity: number) => {
     setQuantities((prev) => {
@@ -54,7 +89,7 @@ export const PantryScreen: React.FC = () => {
       if (newMap.has(productId)) {
         newMap.delete(productId);
       } else {
-        newMap.set(productId, defaultQuantity);
+        newMap.set(productId, { quantity: defaultQuantity });
       }
       return newMap;
     });
@@ -63,8 +98,9 @@ export const PantryScreen: React.FC = () => {
   const updateQuantity = (productId: string, quantity: number) => {
     setQuantities((prev) => {
       const newMap = new Map(prev);
+      const existing = newMap.get(productId);
       if (quantity > 0) {
-        newMap.set(productId, quantity);
+        newMap.set(productId, { quantity, expiryDate: existing?.expiryDate });
       } else {
         newMap.delete(productId);
       }
@@ -72,12 +108,39 @@ export const PantryScreen: React.FC = () => {
     });
   };
 
+  const updateExpiryDate = (productId: string, expiryDate: string) => {
+    setQuantities((prev) => {
+      const newMap = new Map(prev);
+      const existing = newMap.get(productId);
+      if (existing) {
+        newMap.set(productId, { ...existing, expiryDate: expiryDate || undefined });
+      }
+      return newMap;
+    });
+  };
+
+  const addSearchedProduct = (product: ProductSearchResult) => {
+    setQuantities((prev) => {
+      const newMap = new Map(prev);
+      if (!newMap.has(product.product_id)) {
+        // Default to 500g or common package size
+        newMap.set(product.product_id, { quantity: 500 });
+      }
+      return newMap;
+    });
+    setSearchQuery('');
+    setSearchResults([]);
+    setShowSearchResults(false);
+    Keyboard.dismiss();
+  };
+
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      const itemsArray = Array.from(quantities.entries()).map(([product_id, quantity_g]) => ({
+      const itemsArray = Array.from(quantities.entries()).map(([product_id, data]) => ({
         product_id,
-        quantity_g,
+        quantity_g: data.quantity,
+        expiry_date: data.expiryDate,
       }));
       
       await updatePantry(itemsArray);
@@ -106,13 +169,62 @@ export const PantryScreen: React.FC = () => {
     );
   }
 
+  // Get products that are in the pantry (either from search or staples)
+  const pantryProducts = [
+    ...staples.filter(s => quantities.has(s.product_id)).map(s => ({
+      product_id: s.product_id,
+      product_name: s.product_name,
+      category: s.category,
+      icon: s.icon,
+      isStaple: true,
+    })),
+    ...Array.from(quantities.entries())
+      .filter(([id]) => !staples.find(s => s.product_id === id))
+      .map(([product_id]) => ({
+        product_id,
+        product_name: searchResults.find(r => r.product_id === product_id)?.product_name || 'Unknown',
+        category: searchResults.find(r => r.product_id === product_id)?.category || 'other',
+        icon: '🥫',
+        isStaple: false,
+      }))
+  ];
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.content}>
         <Text style={styles.title}>My Pantry</Text>
         <Text style={styles.subtitle}>
-          Select items you currently have. This helps reduce waste calculations.
+          Add items you have at home. This helps reduce waste and grocery costs.
         </Text>
+
+        {/* Search Bar */}
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search for a product..."
+            placeholderTextColor={colors.textTertiary}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            onFocus={() => searchResults.length > 0 && setShowSearchResults(true)}
+          />
+          {isSearching && <ActivityIndicator size="small" color={colors.primary} style={styles.searchLoader} />}
+        </View>
+
+        {/* Search Results Dropdown */}
+        {showSearchResults && searchResults.length > 0 && (
+          <View style={styles.searchResultsContainer}>
+            {searchResults.map((product) => (
+              <TouchableOpacity
+                key={product.product_id}
+                style={styles.searchResultItem}
+                onPress={() => addSearchedProduct(product)}
+              >
+                <Text style={styles.searchResultName}>{product.product_name}</Text>
+                <Text style={styles.searchResultCategory}>{product.category}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
 
         <View style={styles.counterContainer}>
           <Text style={styles.counterText}>
@@ -120,17 +232,62 @@ export const PantryScreen: React.FC = () => {
           </Text>
         </View>
 
-        <View style={styles.grid}>
-          {staples.map((staple) => (
-            <PantryItemCard
-              key={staple.product_id}
-              staple={staple}
-              quantity={quantities.get(staple.product_id)}
-              onToggle={() => toggleItem(staple.product_id, staple.default_quantity_g)}
-              onQuantityChange={(qty) => updateQuantity(staple.product_id, qty)}
-            />
-          ))}
-        </View>
+        {/* Pantry Items */}
+        {pantryProducts.length > 0 ? (
+          <View style={styles.itemsList}>
+            {pantryProducts.map((product) => (
+              <PantryItemCard
+                key={product.product_id}
+                productId={product.product_id}
+                productName={product.product_name}
+                category={product.category}
+                icon={product.icon}
+                quantity={quantities.get(product.product_id)?.quantity}
+                expiryDate={quantities.get(product.product_id)?.expiryDate}
+                onToggle={() => toggleItem(product.product_id, 500)}
+                onQuantityChange={(qty) => updateQuantity(product.product_id, qty)}
+                onExpiryDateChange={(date) => updateExpiryDate(product.product_id, date)}
+              />
+            ))}
+          </View>
+        ) : (
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyIcon}>🛒</Text>
+            <Text style={styles.emptyText}>
+              Search for products above to add them to your pantry
+            </Text>
+          </View>
+        )}
+
+        {/* Quick Add Section - Available Staples */}
+        {staples.length > 0 && (
+          <View style={styles.staplesSection}>
+            <Text style={styles.sectionTitle}>Quick Add from Staples</Text>
+            <View style={styles.staplesGrid}>
+              {staples.map((staple) => (
+                <TouchableOpacity
+                  key={staple.product_id}
+                  style={[
+                    styles.stapleChip,
+                    quantities.has(staple.product_id) && styles.stapleChipSelected
+                  ]}
+                  onPress={() => toggleItem(staple.product_id, staple.default_quantity_g)}
+                >
+                  <Text style={styles.stapleIcon}>{staple.icon}</Text>
+                  <Text 
+                    style={[
+                      styles.stapleName,
+                      quantities.has(staple.product_id) && styles.stapleNameSelected
+                    ]}
+                    numberOfLines={1}
+                  >
+                    {staple.product_name}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+        )}
       </ScrollView>
 
       <View style={styles.footer}>
@@ -151,80 +308,124 @@ export const PantryScreen: React.FC = () => {
 };
 
 interface PantryItemCardProps {
-  staple: PantryStaple;
+  productId: string;
+  productName: string;
+  category: string;
+  icon: string;
   quantity: number | undefined;
+  expiryDate: string | undefined;
   onToggle: () => void;
   onQuantityChange: (quantity: number) => void;
+  onExpiryDateChange: (date: string) => void;
 }
 
 const PantryItemCard: React.FC<PantryItemCardProps> = ({ 
-  staple, 
-  quantity, 
+  productName,
+  category,
+  icon,
+  quantity,
+  expiryDate,
   onToggle, 
-  onQuantityChange 
+  onQuantityChange,
+  onExpiryDateChange 
 }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [tempValue, setTempValue] = useState('');
+  const [isEditingQty, setIsEditingQty] = useState(false);
+  const [tempQty, setTempQty] = useState('');
+  const [isEditingExpiry, setIsEditingExpiry] = useState(false);
+  const [tempExpiry, setTempExpiry] = useState('');
   const isSelected = quantity !== undefined && quantity > 0;
 
-  const handleQuantityPress = () => {
+  const handleQtyPress = () => {
     if (isSelected) {
-      setTempValue(quantity?.toString() || '');
-      setIsEditing(true);
+      setTempQty(quantity?.toString() || '');
+      setIsEditingQty(true);
     }
   };
 
-  const handleQuantitySubmit = () => {
-    const newQty = parseFloat(tempValue);
+  const handleQtySubmit = () => {
+    const newQty = parseFloat(tempQty);
     if (!isNaN(newQty) && newQty > 0) {
       onQuantityChange(newQty);
     }
-    setIsEditing(false);
+    setIsEditingQty(false);
+  };
+
+  const handleExpiryPress = () => {
+    if (isSelected) {
+      setTempExpiry(expiryDate || '');
+      setIsEditingExpiry(true);
+    }
+  };
+
+  const handleExpirySubmit = () => {
+    // Validate date format (YYYY-MM-DD)
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (dateRegex.test(tempExpiry)) {
+      onExpiryDateChange(tempExpiry);
+    } else if (tempExpiry === '') {
+      onExpiryDateChange('');
+    }
+    setIsEditingExpiry(false);
   };
 
   return (
-    <TouchableOpacity
-      style={[styles.card, isSelected && styles.cardSelected]}
-      onPress={isEditing ? undefined : onToggle}
-      activeOpacity={0.7}
-    >
-      <Text style={styles.icon}>{staple.icon}</Text>
-      <Text style={[styles.productName, isSelected && styles.productNameSelected]} numberOfLines={1}>
-        {staple.product_name}
-      </Text>
-      
-      {isSelected ? (
-        <>
-          {isEditing ? (
-            <TextInput
-              style={styles.quantityInput}
-              value={tempValue}
-              onChangeText={setTempValue}
-              onBlur={handleQuantitySubmit}
-              onSubmitEditing={handleQuantitySubmit}
-              keyboardType="numeric"
-              autoFocus
-              selectTextOnFocus
-            />
-          ) : (
-            <TouchableOpacity onPress={handleQuantityPress}>
-              <Text style={styles.quantityText}>{Math.round(quantity || 0)}g</Text>
-            </TouchableOpacity>
-          )}
-          <TouchableOpacity 
-            style={styles.checkmarkContainer}
-            onPress={(e) => {
-              e.stopPropagation();
-              onToggle();
-            }}
-          >
-            <Text style={styles.checkmark}>✓</Text>
-          </TouchableOpacity>
-        </>
-      ) : (
-        <Text style={styles.addText}>Add</Text>
+    <View style={[styles.itemCard, isSelected && styles.itemCardSelected]}>
+      <View style={styles.itemHeader}>
+        <Text style={styles.itemIcon}>{icon}</Text>
+        <View style={styles.itemInfo}>
+          <Text style={styles.itemName} numberOfLines={1}>{productName}</Text>
+          <Text style={styles.itemCategory}>{category}</Text>
+        </View>
+        <TouchableOpacity onPress={onToggle} style={styles.removeButton}>
+          <Text style={styles.removeButtonText}>×</Text>
+        </TouchableOpacity>
+      </View>
+
+      {isSelected && (
+        <View style={styles.itemDetails}>
+          <View style={styles.quantityRow}>
+            <Text style={styles.detailLabel}>Amount:</Text>
+            {isEditingQty ? (
+              <TextInput
+                style={styles.detailInput}
+                value={tempQty}
+                onChangeText={setTempQty}
+                onBlur={handleQtySubmit}
+                onSubmitEditing={handleQtySubmit}
+                keyboardType="numeric"
+                autoFocus
+                selectTextOnFocus
+              />
+            ) : (
+              <TouchableOpacity onPress={handleQtyPress}>
+                <Text style={styles.detailValue}>{Math.round(quantity || 0)}g</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+
+          <View style={styles.expiryRow}>
+            <Text style={styles.detailLabel}>Expiry:</Text>
+            {isEditingExpiry ? (
+              <TextInput
+                style={styles.detailInput}
+                value={tempExpiry}
+                onChangeText={setTempExpiry}
+                onBlur={handleExpirySubmit}
+                onSubmitEditing={handleExpirySubmit}
+                placeholder="YYYY-MM-DD"
+                placeholderTextColor={colors.textTertiary}
+              />
+            ) : (
+              <TouchableOpacity onPress={handleExpiryPress}>
+                <Text style={[styles.detailValue, !expiryDate && styles.detailPlaceholder]}>
+                  {expiryDate || 'Add date'}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
       )}
-    </TouchableOpacity>
+    </View>
   );
 };
 
@@ -238,6 +439,7 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: spacing.screenPadding,
+    paddingBottom: spacing.xl,
   },
   centerContainer: {
     flex: 1,
@@ -267,8 +469,49 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     marginBottom: spacing.lg,
   },
-  counterContainer: {
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: colors.surface,
+    borderRadius: spacing.borderRadius,
+    paddingHorizontal: spacing.md,
+    marginBottom: spacing.sm,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  searchInput: {
+    flex: 1,
+    height: 44,
+    fontSize: typography.fontSize.md,
+    color: colors.textPrimary,
+  },
+  searchLoader: {
+    marginLeft: spacing.sm,
+  },
+  searchResultsContainer: {
+    backgroundColor: colors.surface,
+    borderRadius: spacing.borderRadius,
+    borderWidth: 1,
+    borderColor: colors.border,
+    marginBottom: spacing.md,
+    maxHeight: 200,
+  },
+  searchResultItem: {
+    padding: spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  searchResultName: {
+    fontSize: typography.fontSize.md,
+    color: colors.textPrimary,
+    fontWeight: typography.fontWeight.medium,
+  },
+  searchResultCategory: {
+    fontSize: typography.fontSize.sm,
+    color: colors.textSecondary,
+  },
+  counterContainer: {
+    backgroundColor: colors.primary + '15',
     padding: spacing.md,
     borderRadius: spacing.borderRadius,
     marginBottom: spacing.lg,
@@ -276,83 +519,147 @@ const styles = StyleSheet.create({
   },
   counterText: {
     fontSize: typography.fontSize.md,
-    fontWeight: typography.fontWeight.medium,
+    fontWeight: typography.fontWeight.semiBold,
     color: colors.primary,
   },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    marginBottom: spacing.xl,
+  itemsList: {
+    marginBottom: spacing.lg,
   },
-  card: {
-    width: '48%',
+  itemCard: {
     backgroundColor: colors.surface,
     borderRadius: spacing.borderRadius,
     padding: spacing.md,
     marginBottom: spacing.md,
-    alignItems: 'center',
     borderWidth: 2,
     borderColor: colors.border,
-    minHeight: 100,
-    justifyContent: 'center',
   },
-  cardSelected: {
+  itemCardSelected: {
     borderColor: colors.primary,
-    backgroundColor: `${colors.primary}10`,
   },
-  icon: {
-    fontSize: 32,
-    marginBottom: spacing.xs,
+  itemHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  productName: {
-    fontSize: typography.fontSize.sm,
-    color: colors.textSecondary,
-    textAlign: 'center',
-    fontWeight: typography.fontWeight.medium,
+  itemIcon: {
+    fontSize: 28,
+    marginRight: spacing.sm,
   },
-  productNameSelected: {
+  itemInfo: {
+    flex: 1,
+  },
+  itemName: {
+    fontSize: typography.fontSize.md,
     color: colors.textPrimary,
     fontWeight: typography.fontWeight.semiBold,
   },
-  checkmarkContainer: {
-    position: 'absolute',
-    top: spacing.xs,
-    right: spacing.xs,
-    backgroundColor: colors.primary,
-    borderRadius: 12,
-    width: 24,
-    height: 24,
+  itemCategory: {
+    fontSize: typography.fontSize.sm,
+    color: colors.textSecondary,
+    textTransform: 'capitalize',
+  },
+  removeButton: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: colors.error + '20',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  checkmark: {
-    color: colors.white,
-    fontSize: 16,
+  removeButtonText: {
+    fontSize: 20,
+    color: colors.error,
     fontWeight: typography.fontWeight.bold,
   },
-  quantityText: {
-    fontSize: typography.fontSize.sm,
-    color: colors.primary,
-    fontWeight: typography.fontWeight.semiBold,
-    marginTop: spacing.xs,
-    textAlign: 'center',
+  itemDetails: {
+    marginTop: spacing.md,
+    paddingTop: spacing.md,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
   },
-  quantityInput: {
+  quantityRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.sm,
+  },
+  expiryRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  detailLabel: {
+    fontSize: typography.fontSize.sm,
+    color: colors.textSecondary,
+    width: 60,
+  },
+  detailValue: {
     fontSize: typography.fontSize.sm,
     color: colors.primary,
     fontWeight: typography.fontWeight.semiBold,
-    marginTop: spacing.xs,
-    textAlign: 'center',
+  },
+  detailPlaceholder: {
+    color: colors.textTertiary,
+    fontStyle: 'italic',
+  },
+  detailInput: {
+    fontSize: typography.fontSize.sm,
+    color: colors.primary,
+    fontWeight: typography.fontWeight.semiBold,
     borderBottomWidth: 1,
     borderBottomColor: colors.primary,
     paddingVertical: 2,
-    minWidth: 50,
+    minWidth: 80,
   },
-  addText: {
-    fontSize: typography.fontSize.xs,
-    color: colors.textTertiary,
-    marginTop: spacing.xs,
+  emptyState: {
+    alignItems: 'center',
+    paddingVertical: spacing.xl,
+  },
+  emptyIcon: {
+    fontSize: 48,
+    marginBottom: spacing.md,
+  },
+  emptyText: {
+    fontSize: typography.fontSize.md,
+    color: colors.textSecondary,
+    textAlign: 'center',
+  },
+  staplesSection: {
+    marginTop: spacing.md,
+  },
+  sectionTitle: {
+    fontSize: typography.fontSize.md,
+    fontWeight: typography.fontWeight.semiBold,
+    color: colors.textPrimary,
+    marginBottom: spacing.md,
+  },
+  staplesGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  stapleChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.surface,
+    borderRadius: 20,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    marginRight: spacing.sm,
+    marginBottom: spacing.sm,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  stapleChipSelected: {
+    backgroundColor: colors.primary + '20',
+    borderColor: colors.primary,
+  },
+  stapleIcon: {
+    fontSize: 16,
+    marginRight: spacing.xs,
+  },
+  stapleName: {
+    fontSize: typography.fontSize.sm,
+    color: colors.textSecondary,
+  },
+  stapleNameSelected: {
+    color: colors.primary,
     fontWeight: typography.fontWeight.medium,
   },
   footer: {

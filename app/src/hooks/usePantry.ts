@@ -6,12 +6,14 @@
 
 import { useState, useCallback } from 'react';
 import apiClient from '../services/api';
+import { productService, type ProductSearchResult } from '../services/productService';
 
 export interface PantryItem {
   product_id: string;
   product_name: string;
   quantity_g: number;
   category: string;
+  expiry_date?: string; // ISO date string
 }
 
 export interface PantryStaple {
@@ -86,7 +88,7 @@ export const usePantry = () => {
   /**
    * Update user's pantry with items and quantities
    */
-  const updatePantry = useCallback(async (items: Array<{product_id: string, quantity_g: number}>) => {
+  const updatePantry = useCallback(async (items: Array<{product_id: string, quantity_g: number, expiry_date?: string}>) => {
     setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
     try {
@@ -108,10 +110,23 @@ export const usePantry = () => {
     }
   }, [fetchPantry]);
 
+  /**
+   * Search products by name
+   */
+  const searchProducts = useCallback(async (query: string): Promise<ProductSearchResult[]> => {
+    try {
+      return await productService.searchProducts(query);
+    } catch (error: any) {
+      console.error('Product search failed:', error);
+      return [];
+    }
+  }, []);
+
   return {
     ...state,
     fetchPantry,
     fetchStaples,
     updatePantry,
+    searchProducts,
   };
 };
