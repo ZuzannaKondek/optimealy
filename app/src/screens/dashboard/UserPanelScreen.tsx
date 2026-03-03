@@ -20,7 +20,7 @@ export const UserPanelScreen: React.FC = () => {
       <Text style={styles.subtitle}>Twoje ostatnie plany posiłków i szybkie akcje.</Text>
 
       <View style={styles.actions}>
-        <Button title="Utwórz nowy plan" onPress={() => navigation.navigate('Create' as never)} />
+        <Button title="Utwórz nowy plan" onPress={() => navigation.navigate('CreatePlan' as never)} />
       </View>
 
       <Text style={styles.sectionTitle}>Ostatnie plany</Text>

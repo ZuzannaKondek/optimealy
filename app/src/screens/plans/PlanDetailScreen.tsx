@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { usePlans } from '../../hooks/usePlans';
 import { DayCard } from '../../components/plan/DayCard';
@@ -15,9 +15,10 @@ export const PlanDetailScreen: React.FC = () => {
   const route = useRoute();
   const { planId } = (route.params as RouteParams) ?? {};
 
-  const { selectedPlan, isLoadingDetail, error, fetchPlanDetail } = usePlans();
+  const { selectedPlan, isLoadingDetail, error, fetchPlanDetail, fetchPlans } = usePlans();
   const [isActivating, setIsActivating] = useState(false);
-  const [isCancelling, setIsCancelling] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const handleActivatePlan = async () => {
     try {
@@ -49,33 +50,27 @@ export const PlanDetailScreen: React.FC = () => {
     }
   };
 
-  const handleCancelPlan = async () => {
-    Alert.alert(
-      'Anulować plan?',
-      'Twoja spiżarnia zachowa obecny stan z pozostałymi składnikami.',
-      [
-        {
-          text: 'Zachowaj plan',
-          style: 'cancel',
-        },
-        {
-          text: 'Anuluj plan',
-          style: 'destructive',
-          onPress: async () => {
-              try {
-                setIsCancelling(true);
-                await planService.cancelPlan(planId);
-              Alert.alert('Plan anulowany', 'Twój plan został anulowany.');
-              await fetchPlanDetail(planId);
-            } catch (err: any) {
-              Alert.alert('Błąd', err.response?.data?.detail || 'Nie udało się anulować planu');
-            } finally {
-              setIsCancelling(false);
-            }
-          },
-        },
-      ]
-    );
+  const handleDeletePlan = () => {
+    console.log('Opening delete confirmation');
+    setShowDeleteConfirm(true);
+  };
+
+  const confirmDelete = async () => {
+    console.log('Delete confirmed, planId:', planId);
+    setShowDeleteConfirm(false);
+    try {
+      setIsDeleting(true);
+      console.log('Calling deletePlan...');
+      await planService.deletePlan(planId);
+      console.log('Delete successful');
+      // Refresh plans list first, then navigate
+      await fetchPlans();
+      console.log('Navigating to HomeMain');
+      navigation.navigate('HomeMain' as never);
+    } catch (err: any) {
+      console.log('Delete error:', err);
+      setIsDeleting(false);
+    }
   };
 
   React.useEffect(() => {
@@ -134,18 +129,6 @@ export const PlanDetailScreen: React.FC = () => {
           </TouchableOpacity>
         )}
 
-        {selectedPlan.execution_status === 'active' && (
-          <TouchableOpacity
-            style={[styles.cancelButton, isCancelling && styles.buttonDisabled]}
-            onPress={handleCancelPlan}
-            disabled={isCancelling}
-          >
-            <Text style={styles.cancelButtonText}>
-              {isCancelling ? 'Anulowanie...' : 'Anuluj plan'}
-            </Text>
-          </TouchableOpacity>
-        )}
-
         {(selectedPlan.execution_status === 'completed' || selectedPlan.execution_status === 'cancelled') && (
           <View style={styles.statusBadge}>
             <Text style={styles.statusBadgeText}>
@@ -154,6 +137,20 @@ export const PlanDetailScreen: React.FC = () => {
           </View>
         )}
       </View>
+
+      {/* Delete Plan Button - works for all statuses */}
+      <TouchableOpacity
+        style={[styles.deleteButton, isDeleting && styles.buttonDisabled]}
+        onPress={() => {
+          console.log('Delete button pressed');
+          handleDeletePlan();
+        }}
+        disabled={isDeleting}
+      >
+        <Text style={styles.deleteButtonText}>
+          {isDeleting ? 'Usuwanie...' : 'Usuń plan'}
+        </Text>
+      </TouchableOpacity>
 
       <Text style={styles.sectionTitle}>Dni</Text>
       {selectedPlan.daily_menus.map((day) => (
@@ -168,6 +165,30 @@ export const PlanDetailScreen: React.FC = () => {
           }
         />
       ))}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Usunąć plan?</Text>
+            <Text style={styles.modalText}>Ta operacja jest nieodwracalna. Plan zostanie trwale usunięty.</Text>
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={styles.modalCancelButton}
+                onPress={() => setShowDeleteConfirm(false)}
+              >
+                <Text style={styles.modalCancelText}>Anuluj</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.modalDeleteButton}
+                onPress={confirmDelete}
+              >
+                <Text style={styles.modalDeleteText}>Usuń</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      )}
     </ScrollView>
   );
 };
@@ -241,18 +262,6 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.md,
     fontWeight: typography.fontWeight.bold,
   },
-  cancelButton: {
-    marginTop: spacing.sm,
-    backgroundColor: colors.error,
-    borderRadius: spacing.borderRadius,
-    paddingVertical: spacing.sm,
-    alignItems: 'center',
-  },
-  cancelButtonText: {
-    color: colors.white,
-    fontSize: typography.fontSize.md,
-    fontWeight: typography.fontWeight.semiBold,
-  },
   buttonDisabled: {
     opacity: 0.5,
   },
@@ -268,6 +277,19 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.md,
     fontWeight: typography.fontWeight.semiBold,
   },
+  deleteButton: {
+    marginTop: spacing.lg,
+    backgroundColor: colors.error,
+    borderRadius: spacing.borderRadius,
+    paddingVertical: spacing.md,
+    alignItems: 'center',
+    marginBottom: spacing.lg,
+  },
+  deleteButtonText: {
+    color: colors.white,
+    fontSize: typography.fontSize.md,
+    fontWeight: typography.fontWeight.bold,
+  },
   sectionTitle: {
     fontSize: typography.fontSize.lg,
     fontWeight: typography.fontWeight.semiBold,
@@ -277,5 +299,67 @@ const styles = StyleSheet.create({
   errorText: {
     color: colors.error,
     textAlign: 'center',
+  },
+  // Delete confirmation modal
+  modalOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: spacing.lg,
+  },
+  modalContent: {
+    backgroundColor: colors.surface,
+    borderRadius: spacing.borderRadius,
+    padding: spacing.lg,
+    width: '100%',
+    maxWidth: 320,
+  },
+  modalTitle: {
+    fontSize: typography.fontSize.xl,
+    fontWeight: typography.fontWeight.bold,
+    color: colors.textPrimary,
+    marginBottom: spacing.sm,
+    textAlign: 'center',
+  },
+  modalText: {
+    fontSize: typography.fontSize.md,
+    color: colors.textSecondary,
+    marginBottom: spacing.lg,
+    textAlign: 'center',
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    gap: spacing.md,
+    justifyContent: 'center',
+  },
+  modalCancelButton: {
+    flex: 1,
+    padding: spacing.md,
+    borderRadius: spacing.borderRadius,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignItems: 'center',
+  },
+  modalCancelText: {
+    fontSize: typography.fontSize.md,
+    color: colors.textPrimary,
+    fontWeight: typography.fontWeight.medium,
+  },
+  modalDeleteButton: {
+    flex: 1,
+    padding: spacing.md,
+    borderRadius: spacing.borderRadius,
+    backgroundColor: colors.error,
+    alignItems: 'center',
+  },
+  modalDeleteText: {
+    fontSize: typography.fontSize.md,
+    color: colors.white,
+    fontWeight: typography.fontWeight.semiBold,
   },
 });

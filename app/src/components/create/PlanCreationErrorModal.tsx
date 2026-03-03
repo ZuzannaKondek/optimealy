@@ -17,12 +17,12 @@ import {
 import { colors, spacing, typography } from '../../theme';
 
 const WHAT_YOU_CAN_DO = [
-  'Relax your daily calorie target (e.g. 800–5000 kcal).',
-  'Soften or remove strict macro targets (protein/carbs/fat).',
-  'Shorten the plan duration (e.g. 1–7 days) to reduce constraints.',
-  'Select fewer meal types (e.g. only breakfast and dinner) if you have limited recipes.',
-  'Reduce excluded ingredients so more recipes are available.',
-  'Add more recipes in Settings so the algorithm has more options.',
+  'Złóż swój dzienny cel kaloryczny (np. 800–5000 kcal).',
+  'Złagodź lub usuń ścisłe cele makroskładników (białko/węglowodany/tłuszcze).',
+  'Skróć czas trwania planu (np. 1–7 dni), aby zmniejszyć ograniczenia.',
+  'Wybierz mniej typów posiłków (np. tylko śniadanie i obiad), jeśli masz ograniczoną liczbę przepisów.',
+  'Zmniejsz liczbę wykluczonych składników, aby było więcej dostępnych przepisów.',
+  'Dodaj więcej przepisów w ustawieniach, aby algorytm miał więcej opcji.',
 ];
 
 export interface PlanCreationErrorModalProps {
@@ -50,9 +50,9 @@ export const PlanCreationErrorModal: React.FC<PlanCreationErrorModalProps> = ({
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
           >
-            <Text style={styles.title}>Couldn’t create your plan</Text>
+            <Text style={styles.title}>Nie udało się utworzyć planu</Text>
             <Text style={styles.message}>{message}</Text>
-            <Text style={styles.sectionTitle}>What you can do</Text>
+            <Text style={styles.sectionTitle}>Co możesz zrobić</Text>
             {WHAT_YOU_CAN_DO.map((item, i) => (
               <Text key={i} style={styles.bullet}>
                 • {item}
@@ -64,7 +64,7 @@ export const PlanCreationErrorModal: React.FC<PlanCreationErrorModalProps> = ({
             onPress={onDismiss}
             activeOpacity={0.8}
           >
-            <Text style={styles.buttonText}>Try again</Text>
+            <Text style={styles.buttonText}>Spróbuj ponownie</Text>
           </TouchableOpacity>
         </Pressable>
       </Pressable>

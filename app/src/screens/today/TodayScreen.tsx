@@ -210,6 +210,7 @@ export const TodayScreen: React.FC = () => {
       </View>
 
       <View style={styles.mealsContainer}>
+        <Text style={styles.hintText}>Kliknij na posiłek, aby zaznaczyć lub odznaczyć</Text>
         {todayMeals.map((meal) => (
           <TouchableOpacity
             key={meal.id}
@@ -319,6 +320,13 @@ const styles = StyleSheet.create({
   },
   mealsContainer: {
     padding: spacing.md,
+  },
+  hintText: {
+    fontSize: typography.fontSize.sm,
+    color: colors.textTertiary,
+    textAlign: 'center',
+    marginBottom: spacing.md,
+    fontStyle: 'italic',
   },
   mealCard: {
     flexDirection: 'row',

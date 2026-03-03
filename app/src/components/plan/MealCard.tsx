@@ -7,11 +7,11 @@ import { useAuth } from '../../context/AuthContext';
 
 // Display labels for meal types
 const MEAL_TYPE_LABELS: Record<string, string> = {
-  breakfast: 'Breakfast',
-  second_breakfast: '2nd Breakfast',
-  dinner: 'Dinner',
-  dessert: 'Dessert',
-  supper: 'Supper',
+  breakfast: 'Śniadanie',
+  second_breakfast: '2. Śniadanie',
+  dinner: 'Obiad',
+  dessert: 'Deser',
+  supper: 'Kolacja',
 };
 
 type Props = {
@@ -36,13 +36,13 @@ export const MealCard: React.FC<Props> = ({ meal, isDishBasedPlan = false }) => 
   // Format quantity display based on plan type
   let quantityText: string;
   if (isDish) {
-    quantityText = '1 dish';
+    quantityText = '1 danie';
   } else {
     // Format servings nicely (remove trailing zeros for decimals)
     const servingsFormatted = meal.servings % 1 === 0 
       ? meal.servings.toString() 
       : meal.servings.toFixed(1).replace(/\.0$/, '');
-    quantityText = `${servingsFormatted} serving${meal.servings !== 1 ? 's' : ''}`;
+    quantityText = `${servingsFormatted} porcja${meal.servings !== 1 ? 'e' : ''}`;
   }
 
   return (
@@ -55,7 +55,7 @@ export const MealCard: React.FC<Props> = ({ meal, isDishBasedPlan = false }) => 
       <Text style={styles.title}>{meal.recipe_name}</Text>
 
       {meal.dish_weight_g != null && (
-        <Text style={styles.dishWeight}>Dish weight: {Math.round(meal.dish_weight_g)}g</Text>
+        <Text style={styles.dishWeight}>Waga dania: {Math.round(meal.dish_weight_g)}g</Text>
       )}
 
       <View style={styles.metricsRow}>

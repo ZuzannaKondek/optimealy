@@ -22,11 +22,11 @@ const OPTIONAL_MEAL_TYPES: MealType[] = ['second_breakfast', 'dessert'];
 
 // Display labels for meal types
 const MEAL_TYPE_LABELS: Record<MealType, string> = {
-  breakfast: 'Breakfast',
-  second_breakfast: '2nd Breakfast',
-  dinner: 'Dinner',
-  dessert: 'Dessert',
-  supper: 'Supper',
+  breakfast: 'Śniadanie',
+  second_breakfast: '2. Śniadanie',
+  dinner: 'Obiad',
+  dessert: 'Deser',
+  supper: 'Kolacja',
 };
 
 type Props = {
@@ -59,9 +59,9 @@ export const MealTypeSelector: React.FC<Props> = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Select Meal Types</Text>
+      <Text style={styles.label}>Wybierz typy posiłków</Text>
       <Text style={styles.helpText}>
-        Minimum: Breakfast, Dinner, Supper (required)
+        Minimum: Śniadanie, Obiad, Kolacja (wymagane)
       </Text>
       
       <View style={styles.grid}>

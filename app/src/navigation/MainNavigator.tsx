@@ -3,30 +3,101 @@
  * OptiMeal Mobile App
  * 
  * Navigation for authenticated users (Tabs: Home, Today, Pantry, Settings).
+ * Each tab has its own stack navigator to keep tabs visible on all screens.
  */
 
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Text, StyleSheet } from 'react-native';
 import { colors, spacing, typography } from '../theme';
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
 
+// Home Stack
 import { UserPanelScreen } from '../screens/dashboard/UserPanelScreen';
-
 import { PlanCreationScreen } from '../screens/create/PlanCreationScreen';
 import { PlanDetailScreen } from '../screens/plans/PlanDetailScreen';
 import { DayDetailScreen } from '../screens/plans/DayDetailScreen';
 import { GroceryListScreen } from '../screens/grocery/GroceryListScreen';
+
+const HomeStack = createStackNavigator();
+
+const HomeStackScreen = () => (
+  <HomeStack.Navigator
+    screenOptions={{
+      headerStyle: { backgroundColor: colors.primary },
+      headerTintColor: colors.white,
+      headerTitleStyle: { fontWeight: typography.fontWeight.semiBold },
+      headerBackTitleVisible: false,
+    }}
+  >
+    <HomeStack.Screen name="HomeMain" component={UserPanelScreen} options={{ headerShown: false }} />
+    <HomeStack.Screen name="CreatePlan" component={PlanCreationScreen} options={{ title: 'Utwórz plan' }} />
+    <HomeStack.Screen name="PlanDetail" component={PlanDetailScreen} options={{ title: 'Szczegóły planu' }} />
+    <HomeStack.Screen name="DayDetail" component={DayDetailScreen} options={{ title: 'Szczegóły dnia' }} />
+    <HomeStack.Screen name="GroceryList" component={GroceryListScreen} options={{ title: 'Lista zakupów' }} />
+  </HomeStack.Navigator>
+);
+
+// Today Stack
+import { TodayScreen } from '../screens/today/TodayScreen';
+
+const TodayStack = createStackNavigator();
+
+const TodayStackScreen = () => (
+  <TodayStack.Navigator
+    screenOptions={{
+      headerStyle: { backgroundColor: colors.primary },
+      headerTintColor: colors.white,
+      headerTitleStyle: { fontWeight: typography.fontWeight.semiBold },
+      headerBackTitleVisible: false,
+    }}
+  >
+    <TodayStack.Screen name="TodayMain" component={TodayScreen} options={{ headerShown: false }} />
+  </TodayStack.Navigator>
+);
+
+// Pantry Stack
+import { PantryScreen } from '../screens/pantry/PantryScreen';
+
+const PantryStack = createStackNavigator();
+
+const PantryStackScreen = () => (
+  <PantryStack.Navigator
+    screenOptions={{
+      headerStyle: { backgroundColor: colors.primary },
+      headerTintColor: colors.white,
+      headerTitleStyle: { fontWeight: typography.fontWeight.semiBold },
+      headerBackTitleVisible: false,
+    }}
+  >
+    <PantryStack.Screen name="PantryMain" component={PantryScreen} options={{ headerShown: false }} />
+  </PantryStack.Navigator>
+);
+
+// Settings Stack
 import { SettingsScreen } from '../screens/settings/SettingsScreen';
 import { ChangePasswordScreen } from '../screens/settings/ChangePasswordScreen';
 import { AboutScreen } from '../screens/settings/AboutScreen';
-import { PantryScreen } from '../screens/pantry/PantryScreen';
-import { TodayScreen } from '../screens/today/TodayScreen';
 
-const Tabs: React.FC = () => {
+const SettingsStack = createStackNavigator();
+
+const SettingsStackScreen = () => (
+  <SettingsStack.Navigator
+    screenOptions={{
+      headerStyle: { backgroundColor: colors.primary },
+      headerTintColor: colors.white,
+      headerTitleStyle: { fontWeight: typography.fontWeight.semiBold },
+      headerBackTitleVisible: false,
+    }}
+  >
+    <SettingsStack.Screen name="SettingsMain" component={SettingsScreen} options={{ headerShown: false }} />
+    <SettingsStack.Screen name="ChangePassword" component={ChangePasswordScreen} options={{ title: 'Zmień hasło' }} />
+    <SettingsStack.Screen name="About" component={AboutScreen} options={{ title: 'O serwisie' }} />
+  </SettingsStack.Navigator>
+);
+
+export const MainNavigator: React.FC = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -39,143 +110,37 @@ const Tabs: React.FC = () => {
           paddingBottom: spacing.sm,
           paddingTop: spacing.sm,
         },
-        headerStyle: {
-          backgroundColor: colors.primary,
-        },
-        headerTintColor: colors.white,
-        headerTitleStyle: {
-          fontWeight: typography.fontWeight.semiBold,
-        },
+        headerShown: false,
       }}
     >
       <Tab.Screen
         name="Home"
-        component={UserPanelScreen}
+        component={HomeStackScreen}
         options={{
-          title: 'Pulpit',
           tabBarLabel: 'Pulpit',
         }}
       />
       <Tab.Screen
         name="Today"
-        component={TodayScreen}
+        component={TodayStackScreen}
         options={{
-          title: 'Dzisiaj',
           tabBarLabel: 'Dzisiaj',
         }}
       />
       <Tab.Screen
         name="Pantry"
-        component={PantryScreen}
+        component={PantryStackScreen}
         options={{
-          title: 'Moja spiżarnia',
           tabBarLabel: 'Spiżarnia',
         }}
       />
       <Tab.Screen
         name="Settings"
-        component={SettingsScreen}
+        component={SettingsStackScreen}
         options={{
-          title: 'Ustawienia',
           tabBarLabel: 'Ustawienia',
         }}
       />
     </Tab.Navigator>
   );
 };
-
-export const MainNavigator: React.FC = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: colors.primary,
-        },
-        headerTintColor: colors.white,
-        headerTitleStyle: {
-          fontWeight: typography.fontWeight.semiBold,
-        },
-        headerBackTitleVisible: false,
-      }}
-    >
-      <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
-      <Stack.Screen 
-        name="CreatePlan" 
-        component={PlanCreationScreen} 
-        options={{ 
-          title: 'Utwórz plan',
-          headerBackTitle: 'Wstecz',
-        }} 
-      />
-      <Stack.Screen 
-        name="PlanDetail" 
-        component={PlanDetailScreen} 
-        options={{ 
-          title: 'Szczegóły planu',
-          headerBackTitle: 'Wstecz',
-        }} 
-      />
-      <Stack.Screen 
-        name="DayDetail" 
-        component={DayDetailScreen} 
-        options={{ 
-          title: 'Szczegóły dnia',
-          headerBackTitle: 'Wstecz',
-        }} 
-      />
-      <Stack.Screen 
-        name="GroceryList" 
-        component={GroceryListScreen} 
-        options={{ 
-          title: 'Lista zakupów',
-          headerBackTitle: 'Wstecz',
-        }} 
-      />
-      <Stack.Screen 
-        name="ChangePassword" 
-        component={ChangePasswordScreen} 
-        options={{ 
-          title: 'Zmień hasło',
-          headerBackTitle: 'Wstecz',
-        }} 
-      />
-      <Stack.Screen 
-        name="Pantry" 
-        component={PantryScreen} 
-        options={{ 
-          title: 'Moja spiżarnia',
-          headerBackTitle: 'Wstecz',
-        }} 
-      />
-      <Stack.Screen 
-        name="About" 
-        component={AboutScreen} 
-        options={{ 
-          title: 'O serwisie',
-          headerBackTitle: 'Back',
-        }} 
-      />
-    </Stack.Navigator>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.background,
-    padding: spacing.lg,
-  },
-  title: {
-    fontSize: typography.fontSize.xxl,
-    fontWeight: typography.fontWeight.bold,
-    color: colors.textPrimary,
-    marginBottom: spacing.sm,
-  },
-  subtitle: {
-    fontSize: typography.fontSize.md,
-    color: colors.textSecondary,
-    textAlign: 'center',
-  },
-});
