@@ -144,9 +144,9 @@ export const PantryScreen: React.FC = () => {
       }));
       
       await updatePantry(itemsArray);
-      Alert.alert('Success', 'Pantry updated successfully!');
+      Alert.alert('Sukces', 'Spiżarnia zaktualizowana pomyślnie!');
     } catch (err: any) {
-      Alert.alert('Error', err.message || 'Failed to update pantry');
+      Alert.alert('Błąd', err.message || 'Nie udało się zaktualizować spiżarni');
     } finally {
       setIsSaving(false);
     }
@@ -156,7 +156,7 @@ export const PantryScreen: React.FC = () => {
     return (
       <View style={styles.centerContainer}>
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Loading pantry...</Text>
+        <Text style={styles.loadingText}>Ładowanie spiżarni...</Text>
       </View>
     );
   }
@@ -164,7 +164,7 @@ export const PantryScreen: React.FC = () => {
   if (error && staples.length === 0) {
     return (
       <View style={styles.centerContainer}>
-        <Text style={styles.errorText}>Error: {error}</Text>
+        <Text style={styles.errorText}>Błąd: {error}</Text>
       </View>
     );
   }
@@ -182,7 +182,7 @@ export const PantryScreen: React.FC = () => {
       .filter(([id]) => !staples.find(s => s.product_id === id))
       .map(([product_id]) => ({
         product_id,
-        product_name: searchResults.find(r => r.product_id === product_id)?.product_name || 'Unknown',
+        product_name: searchResults.find(r => r.product_id === product_id)?.product_name || 'Nieznany',
         category: searchResults.find(r => r.product_id === product_id)?.category || 'other',
         icon: '🥫',
         isStaple: false,
@@ -192,16 +192,16 @@ export const PantryScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.content}>
-        <Text style={styles.title}>My Pantry</Text>
+        <Text style={styles.title}>Moja spiżarnia</Text>
         <Text style={styles.subtitle}>
-          Add items you have at home. This helps reduce waste and grocery costs.
+          Dodaj produkty, które masz w domu. To pomoże zmniejszyć marnotrawstwo i koszty zakupów.
         </Text>
 
         {/* Search Bar */}
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
-            placeholder="Search for a product..."
+            placeholder="Wyszukaj produkt..."
             placeholderTextColor={colors.textTertiary}
             value={searchQuery}
             onChangeText={setSearchQuery}
@@ -228,7 +228,7 @@ export const PantryScreen: React.FC = () => {
 
         <View style={styles.counterContainer}>
           <Text style={styles.counterText}>
-            {quantities.size} items in pantry
+            {quantities.size} produktów w spiżarni
           </Text>
         </View>
 
@@ -254,7 +254,7 @@ export const PantryScreen: React.FC = () => {
           <View style={styles.emptyState}>
             <Text style={styles.emptyIcon}>🛒</Text>
             <Text style={styles.emptyText}>
-              Search for products above to add them to your pantry
+              Wyszukaj produkty powyżej, aby dodać je do spiżarni
             </Text>
           </View>
         )}
@@ -262,7 +262,7 @@ export const PantryScreen: React.FC = () => {
         {/* Quick Add Section - Available Staples */}
         {staples.length > 0 && (
           <View style={styles.staplesSection}>
-            <Text style={styles.sectionTitle}>Quick Add from Staples</Text>
+            <Text style={styles.sectionTitle}>Szybkie dodawanie z produktów podstawowych</Text>
             <View style={styles.staplesGrid}>
               {staples.map((staple) => (
                 <TouchableOpacity
@@ -299,7 +299,7 @@ export const PantryScreen: React.FC = () => {
           {isSaving ? (
             <ActivityIndicator color={colors.white} />
           ) : (
-            <Text style={styles.saveButtonText}>Save Changes</Text>
+            <Text style={styles.saveButtonText}>Zapisz zmiany</Text>
           )}
         </TouchableOpacity>
       </View>
@@ -384,7 +384,7 @@ const PantryItemCard: React.FC<PantryItemCardProps> = ({
       {isSelected && (
         <View style={styles.itemDetails}>
           <View style={styles.quantityRow}>
-            <Text style={styles.detailLabel}>Amount:</Text>
+            <Text style={styles.detailLabel}>Ilość:</Text>
             {isEditingQty ? (
               <TextInput
                 style={styles.detailInput}
@@ -404,7 +404,7 @@ const PantryItemCard: React.FC<PantryItemCardProps> = ({
           </View>
 
           <View style={styles.expiryRow}>
-            <Text style={styles.detailLabel}>Expiry:</Text>
+            <Text style={styles.detailLabel}>Data przydatności:</Text>
             {isEditingExpiry ? (
               <TextInput
                 style={styles.detailInput}
@@ -412,13 +412,13 @@ const PantryItemCard: React.FC<PantryItemCardProps> = ({
                 onChangeText={setTempExpiry}
                 onBlur={handleExpirySubmit}
                 onSubmitEditing={handleExpirySubmit}
-                placeholder="YYYY-MM-DD"
+                placeholder="RRRR-MM-DD"
                 placeholderTextColor={colors.textTertiary}
               />
             ) : (
               <TouchableOpacity onPress={handleExpiryPress}>
                 <Text style={[styles.detailValue, !expiryDate && styles.detailPlaceholder]}>
-                  {expiryDate || 'Add date'}
+                  {expiryDate || 'Dodaj datę'}
                 </Text>
               </TouchableOpacity>
             )}

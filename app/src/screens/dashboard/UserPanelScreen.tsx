@@ -16,18 +16,18 @@ export const UserPanelScreen: React.FC = () => {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Dashboard</Text>
-      <Text style={styles.subtitle}>Your recent meal plans and quick actions.</Text>
+      <Text style={styles.title}>Pulpit</Text>
+      <Text style={styles.subtitle}>Twoje ostatnie plany posiłków i szybkie akcje.</Text>
 
       <View style={styles.actions}>
-        <Button title="Create New Plan" onPress={() => navigation.navigate('Create' as never)} />
+        <Button title="Utwórz nowy plan" onPress={() => navigation.navigate('Create' as never)} />
       </View>
 
-      <Text style={styles.sectionTitle}>Recent Plans</Text>
+      <Text style={styles.sectionTitle}>Ostatnie plany</Text>
       {isLoading && plans.length === 0 ? (
-        <Text style={styles.loadingText}>Loading…</Text>
+        <Text style={styles.loadingText}>Ładowanie…</Text>
       ) : plans.length === 0 ? (
-        <Text style={styles.emptyText}>No plans yet. Create one to get started.</Text>
+        <Text style={styles.emptyText}>Brak planów. Utwórz pierwszy, aby zacząć.</Text>
       ) : (
         plans.map((p) => (
           <PlanCard

@@ -5,42 +5,21 @@ import { SettingsSection } from '../../components/settings/SettingsSection';
 import { SettingRow } from '../../components/settings/SettingRow';
 import { Button } from '../../components/common/Button';
 import { colors, spacing, typography } from '../../theme';
-import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { settingsService } from '../../services/settingsService';
 
-type ThemeMode = 'light' | 'dark' | 'system';
 type UnitPref = 'metric' | 'imperial';
 
 export const SettingsScreen: React.FC = () => {
   const navigation = useNavigation();
-  const { themeMode, setThemeMode } = useTheme();
   const { user, logout } = useAuth();
 
-  const [language, setLanguage] = React.useState<'en' | 'es'>('en');
   const [unit, setUnit] = React.useState<UnitPref>('metric');
-  const [notificationSettings, setNotificationSettings] = React.useState<{
-    enabled?: boolean;
-    plan_reminders?: boolean;
-    grocery_reminders?: boolean;
-  }>({
-    enabled: true,
-    plan_reminders: true,
-    grocery_reminders: false,
-  });
 
   React.useEffect(() => {
     const load = async () => {
       const local = await settingsService.getLocalSettings();
-      if (local.language_preference === 'en' || local.language_preference === 'es') setLanguage(local.language_preference);
       if (local.unit_preference === 'metric' || local.unit_preference === 'imperial') setUnit(local.unit_preference);
-      if (local.notification_settings) {
-        setNotificationSettings({
-          enabled: local.notification_settings.enabled ?? true,
-          plan_reminders: local.notification_settings.plan_reminders ?? true,
-          grocery_reminders: local.notification_settings.grocery_reminders ?? false,
-        });
-      }
     };
     void load();
   }, []);
@@ -49,18 +28,8 @@ export const SettingsScreen: React.FC = () => {
     try {
       await settingsService.updateSettings(patch);
     } catch (e: any) {
-      Alert.alert('Error', e?.response?.data?.detail || 'Failed to save settings');
+      Alert.alert('Błąd', e?.response?.data?.detail || 'Nie udało się zapisać ustawień');
     }
-  };
-
-  const setTheme = async (mode: ThemeMode) => {
-    await setThemeMode(mode);
-    await update({ theme_preference: mode });
-  };
-
-  const setLang = async (lang: 'en' | 'es') => {
-    setLanguage(lang);
-    await update({ language_preference: lang });
   };
 
   const setUnitPref = async (pref: UnitPref) => {
@@ -70,47 +39,18 @@ export const SettingsScreen: React.FC = () => {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Settings</Text>
+      <Text style={styles.title}>Ustawienia</Text>
       {user ? <Text style={styles.subtitle}>{user.email}</Text> : null}
 
-      <SettingsSection title="Appearance">
+      <SettingsSection title="Preferencje">
         <SettingRow
-          title="Theme"
-          subtitle={`Current: ${themeMode}`}
+          title="Jednostki"
+          subtitle={`Aktualne: ${unit}`}
           right={
             <View style={styles.rowButtons}>
-              <Button title="Light" variant="secondary" onPress={() => setTheme('light')} disabled={themeMode === 'light'} />
-              <Button title="Dark" variant="secondary" onPress={() => setTheme('dark')} disabled={themeMode === 'dark'} />
+              <Button title="Metryczne" variant="secondary" onPress={() => setUnitPref('metric')} disabled={unit === 'metric'} />
               <Button
-                title="System"
-                variant="secondary"
-                onPress={() => setTheme('system')}
-                disabled={themeMode === 'system'}
-              />
-            </View>
-          }
-        />
-      </SettingsSection>
-
-      <SettingsSection title="Preferences">
-        <SettingRow
-          title="Language"
-          subtitle={`Current: ${language}`}
-          right={
-            <View style={styles.rowButtons}>
-              <Button title="EN" variant="secondary" onPress={() => setLang('en')} disabled={language === 'en'} />
-              <Button title="ES" variant="secondary" onPress={() => setLang('es')} disabled={language === 'es'} />
-            </View>
-          }
-        />
-        <SettingRow
-          title="Units"
-          subtitle={`Current: ${unit}`}
-          right={
-            <View style={styles.rowButtons}>
-              <Button title="Metric" variant="secondary" onPress={() => setUnitPref('metric')} disabled={unit === 'metric'} />
-              <Button
-                title="Imperial"
+                title="Imperialne"
                 variant="secondary"
                 onPress={() => setUnitPref('imperial')}
                 disabled={unit === 'imperial'}
@@ -119,13 +59,13 @@ export const SettingsScreen: React.FC = () => {
           }
         />
         <SettingRow
-          title="Change password"
-          subtitle="Update your account password"
+          title="Zmień hasło"
+          subtitle="Zaktualizuj hasło swojego konta"
           onPress={() => navigation.navigate('ChangePassword' as never)}
         />
       </SettingsSection>
 
-      <SettingsSection title="Info">
+      <SettingsSection title="Informacje">
         <SettingRow
           title="O serwisie"
           subtitle="Informacja o pracy licencjackiej (EPI, UJ)"
@@ -133,72 +73,7 @@ export const SettingsScreen: React.FC = () => {
         />
       </SettingsSection>
 
-      <SettingsSection title="Notifications">
-        <SettingRow
-          title="Enable Notifications"
-          subtitle={notificationSettings.enabled ? 'Notifications are enabled' : 'Notifications are disabled'}
-          right={
-            <Button
-              title={notificationSettings.enabled ? 'ON' : 'OFF'}
-              variant={notificationSettings.enabled ? 'primary' : 'secondary'}
-              onPress={async () => {
-                const newValue = !notificationSettings.enabled;
-                setNotificationSettings({ ...notificationSettings, enabled: newValue });
-                await update({
-                  notification_settings: {
-                    ...notificationSettings,
-                    enabled: newValue,
-                  },
-                });
-              }}
-            />
-          }
-        />
-        <SettingRow
-          title="Plan Reminders"
-          subtitle="Remind me about meal plans"
-          right={
-            <Button
-              title={notificationSettings.plan_reminders ? 'ON' : 'OFF'}
-              variant={notificationSettings.plan_reminders ? 'primary' : 'secondary'}
-              onPress={async () => {
-                const newValue = !notificationSettings.plan_reminders;
-                setNotificationSettings({ ...notificationSettings, plan_reminders: newValue });
-                await update({
-                  notification_settings: {
-                    ...notificationSettings,
-                    plan_reminders: newValue,
-                  },
-                });
-              }}
-              disabled={!notificationSettings.enabled}
-            />
-          }
-        />
-        <SettingRow
-          title="Grocery Reminders"
-          subtitle="Remind me about grocery lists"
-          right={
-            <Button
-              title={notificationSettings.grocery_reminders ? 'ON' : 'OFF'}
-              variant={notificationSettings.grocery_reminders ? 'primary' : 'secondary'}
-              onPress={async () => {
-                const newValue = !notificationSettings.grocery_reminders;
-                setNotificationSettings({ ...notificationSettings, grocery_reminders: newValue });
-                await update({
-                  notification_settings: {
-                    ...notificationSettings,
-                    grocery_reminders: newValue,
-                  },
-                });
-              }}
-              disabled={!notificationSettings.enabled}
-            />
-          }
-        />
-      </SettingsSection>
-
-      <Button title="Logout" onPress={() => void logout()} variant="secondary" />
+      <Button title="Wyloguj się" onPress={() => void logout()} variant="secondary" />
     </ScrollView>
   );
 };

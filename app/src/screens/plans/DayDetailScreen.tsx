@@ -62,7 +62,7 @@ export const DayDetailScreen: React.FC = () => {
   if (!planId || !dayNumber) {
     return (
       <View style={styles.center}>
-        <Text style={styles.errorText}>Missing planId/dayNumber</Text>
+        <Text style={styles.errorText}>Brak planId/dayNumber</Text>
       </View>
     );
   }
@@ -71,7 +71,7 @@ export const DayDetailScreen: React.FC = () => {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Loading day…</Text>
+        <Text style={styles.loadingText}>Ładowanie dnia…</Text>
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
       </View>
     );
@@ -80,19 +80,19 @@ export const DayDetailScreen: React.FC = () => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.title}>
-        Day {day.day_number} • {day.menu_date}
+        Dzień {day.day_number} • {day.menu_date}
       </Text>
       <Text style={styles.subtitle}>{day.actual_calories} kcal</Text>
 
       <Text style={styles.sectionTitle}>
-        {isDishBasedPlan ? `Dishes (${day.meals.length})` : 'Meals'}
+        {isDishBasedPlan ? `Dania (${day.meals.length})` : 'Posiłki'}
       </Text>
       {day.meals.map((meal) => (
         <View key={meal.meal_id}>
           <MealCard meal={meal} isDishBasedPlan={isDishBasedPlan} />
           {meal.recipe?.instructions_single_serving && (
             <View style={styles.instructionsContainer}>
-              <Text style={styles.instructionsTitle}>Preparation Instructions</Text>
+              <Text style={styles.instructionsTitle}>Instrukcje przygotowania</Text>
               <Text style={styles.instructionsText}>
                 {meal.recipe.instructions_single_serving}
               </Text>

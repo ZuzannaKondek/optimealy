@@ -12,17 +12,17 @@ export const ChangePasswordScreen: React.FC = () => {
 
   const onSubmit = async () => {
     if (newPassword.length < 8) {
-      Alert.alert('Validation', 'New password must be at least 8 characters');
+      Alert.alert('Walidacja', 'Nowe hasło musi zawierać co najmniej 8 znaków');
       return;
     }
     setIsSubmitting(true);
     try {
       await authService.updatePassword({ current_password: currentPassword, new_password: newPassword });
-      Alert.alert('Success', 'Password updated');
+      Alert.alert('Sukces', 'Hasło zaktualizowane');
       setCurrentPassword('');
       setNewPassword('');
     } catch (e: any) {
-      Alert.alert('Error', e?.response?.data?.detail || 'Failed to update password');
+      Alert.alert('Błąd', e?.response?.data?.detail || 'Nie udało się zaktualizować hasła');
     } finally {
       setIsSubmitting(false);
     }
@@ -30,18 +30,18 @@ export const ChangePasswordScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Change Password</Text>
-      <Text style={styles.subtitle}>For security, enter your current password first.</Text>
+      <Text style={styles.title}>Zmień hasło</Text>
+      <Text style={styles.subtitle}>Ze względów bezpieczeństwa najpierw wprowadź swoje obecne hasło.</Text>
 
       <Input
-        label="Current password"
+        label="Obecne hasło"
         value={currentPassword}
         onChangeText={setCurrentPassword}
         secureTextEntry
       />
-      <Input label="New password" value={newPassword} onChangeText={setNewPassword} secureTextEntry />
+      <Input label="Nowe hasło" value={newPassword} onChangeText={setNewPassword} secureTextEntry />
 
-      <Button title="Update password" onPress={onSubmit} loading={isSubmitting} />
+      <Button title="Zaktualizuj hasło" onPress={onSubmit} loading={isSubmitting} />
     </View>
   );
 };

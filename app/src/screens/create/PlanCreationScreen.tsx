@@ -91,40 +91,40 @@ export const PlanCreationScreen: React.FC = () => {
 
     const trimmedName = (formData.name || '').trim();
     if (!trimmedName) {
-      newErrors.name = 'Plan name is required';
+      newErrors.name = 'Nazwa planu jest wymagana';
     } else if (trimmedName.length > 255) {
-      newErrors.name = 'Plan name must be 255 characters or less';
+      newErrors.name = 'Nazwa planu może mieć maksymalnie 255 znaków';
     }
 
     if (formData.durationDays < 1 || formData.durationDays > 30) {
-      newErrors.durationDays = 'Duration must be between 1 and 30 days';
+      newErrors.durationDays = 'Czas trwania musi być między 1 a 30 dni';
     }
 
     if (formData.targetCalories < 800 || formData.targetCalories > 5000) {
-      newErrors.targetCalories = 'Calories must be between 800 and 5000';
+      newErrors.targetCalories = 'Kalorie muszą być między 800 a 5000';
     }
 
     if (formData.targetProtein !== undefined && formData.targetProtein < 0) {
-      newErrors.targetProtein = 'Protein must be positive';
+      newErrors.targetProtein = 'Białko musi być dodatnie';
     }
 
     if (formData.targetCarbs !== undefined && formData.targetCarbs < 0) {
-      newErrors.carbs = 'Carbs must be positive';
+      newErrors.carbs = 'Węglowodany muszą być dodatnie';
     }
 
     if (formData.targetFat !== undefined && formData.targetFat < 0) {
-      newErrors.fat = 'Fat must be positive';
+      newErrors.fat = 'Tłuszcze muszą być dodatnie';
     }
 
     // Validate selected meal types
     if (!formData.selectedMealTypes || formData.selectedMealTypes.length === 0) {
-      newErrors.selectedMealTypes = 'At least one meal type must be selected';
+      newErrors.selectedMealTypes = 'Wybierz co najmniej jeden typ posiłku';
     } else {
       const requiredTypes = ['breakfast', 'dinner', 'supper'];
       const selectedSet = new Set(formData.selectedMealTypes);
       const missing = requiredTypes.filter((type) => !selectedSet.has(type));
       if (missing.length > 0) {
-        newErrors.selectedMealTypes = `Required meal types missing: ${missing.join(', ')}`;
+        newErrors.selectedMealTypes = `Brakujące typy posiłków: ${missing.join(', ')}`;
       }
     }
 
@@ -137,10 +137,10 @@ export const PlanCreationScreen: React.FC = () => {
     const formErrors = validateForm();
     if (Object.keys(formErrors).length > 0) {
       const message =
-        'Fix the following so you can submit:\n\n• ' +
+        'Napraw następujące błędy:\n\n• ' +
         Object.values(formErrors).join('\n• ');
       Alert.alert(
-        'Invalid input',
+        'Nieprawidłowe dane',
         message,
         [{ text: 'OK' }]
       );
@@ -149,7 +149,7 @@ export const PlanCreationScreen: React.FC = () => {
 
     const planName = (formData.name ?? '').trim();
     if (!planName) {
-      setErrors((prev) => ({ ...prev, name: 'Plan name is required' }));
+      setErrors((prev) => ({ ...prev, name: 'Nazwa planu jest wymagana' }));
       return;
     }
 
@@ -172,13 +172,12 @@ export const PlanCreationScreen: React.FC = () => {
         dietary_tags: formData.dietaryTags,
         cuisine_types: formData.cuisineTypes,
       });
-      // Don't navigate here - let the useEffect handle it after polling completes
     } catch (error: any) {
       const message = getApiErrorMessage(error);
       const suggestion =
-        'Try adjusting your targets or constraints (e.g. calories 800–5000, duration 1–30 days, at least breakfast/dinner/supper).';
+        'Spróbuj dostosować swoje cele lub ograniczenia (np. kalorie 800–5000, czas trwania 1–30 dni, co najmniej śniadanie/obiad/kolacja).';
       Alert.alert(
-        'Couldn’t create plan',
+        'Nie udało się utworzyć planu',
         message + '\n\n' + suggestion,
         [{ text: 'OK' }]
       );
@@ -199,23 +198,23 @@ export const PlanCreationScreen: React.FC = () => {
     <>
       <PlanCreationErrorModal
         visible={creationState.status === 'failed'}
-        message={creationState.error || 'The optimizer could not find a plan that meets your constraints.'}
+        message={creationState.error || 'Optymalizator nie mógł znaleźć planu spełniającego Twoje ograniczenia.'}
         onDismiss={resetCreationState}
       />
       <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Create Meal Plan</Text>
+      <Text style={styles.title}>Utwórz plan posiłków</Text>
       <Text style={styles.subtitle}>
-        Generate an optimized meal plan that minimizes food waste
+        Wygeneruj zoptymalizowany plan posiłków, który zminimalizuje marnotrawstwo żywności
       </Text>
 
       {/* Plan name */}
       <View style={styles.section}>
-        <Text style={styles.label}>Plan name</Text>
+        <Text style={styles.label}>Nazwa planu</Text>
         <TextInput
           style={[styles.input, errors.name && styles.inputError]}
           value={formData.name}
           onChangeText={(text) => setFormData((prev) => ({ ...prev, name: text }))}
-          placeholder="e.g. Week of Feb 13"
+          placeholder="np. Tydzień 13 lutego"
           maxLength={255}
           accessibilityLabel="Plan name"
         />
@@ -226,7 +225,7 @@ export const PlanCreationScreen: React.FC = () => {
 
       {/* Duration */}
       <View style={styles.section}>
-        <Text style={styles.label}>Duration (days)</Text>
+        <Text style={styles.label}>Czas trwania (dni)</Text>
         <TextInput
           style={[styles.input, errors.durationDays && styles.inputError]}
           value={formData.durationDays.toString()}
@@ -244,7 +243,7 @@ export const PlanCreationScreen: React.FC = () => {
 
       {/* Calories */}
       <View style={styles.section}>
-        <Text style={styles.label}>Daily Calorie Target</Text>
+        <Text style={styles.label}>Dzienny cel kaloryczny</Text>
         <TextInput
           style={[styles.input, errors.targetCalories && styles.inputError]}
           value={formData.targetCalories.toString()}
@@ -262,7 +261,7 @@ export const PlanCreationScreen: React.FC = () => {
 
       {/* Macros (Auto-calculated, editable) */}
       <View style={styles.section}>
-        <Text style={styles.label}>Daily Protein Target (g)</Text>
+        <Text style={styles.label}>Dzienny cel białkowy (g)</Text>
         <TextInput
           style={[styles.input, errors.targetProtein && styles.inputError]}
           value={formData.targetProtein?.toString() || ''}
@@ -273,18 +272,18 @@ export const PlanCreationScreen: React.FC = () => {
           }}
           onFocus={() => setMacroTouched({ ...macroTouched, protein: true })}
           keyboardType="numeric"
-          placeholder="Auto-calculated"
+          placeholder="Obliczone automatycznie"
         />
         {errors.targetProtein && (
           <Text style={styles.errorText}>{errors.targetProtein}</Text>
         )}
         {!macroTouched.protein && (
-          <Text style={styles.helpText}>Auto-calculated (20% of calories)</Text>
+          <Text style={styles.helpText}>Obliczone automatycznie (20% kalorii)</Text>
         )}
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.label}>Daily Carbs Target (g)</Text>
+        <Text style={styles.label}>Dzienny cel węglowodanów (g)</Text>
         <TextInput
           style={[styles.input, errors.carbs && styles.inputError]}
           value={formData.targetCarbs?.toString() || ''}
@@ -295,16 +294,16 @@ export const PlanCreationScreen: React.FC = () => {
           }}
           onFocus={() => setMacroTouched({ ...macroTouched, carbs: true })}
           keyboardType="numeric"
-          placeholder="Auto-calculated"
+          placeholder="Obliczone automatycznie"
         />
         {errors.carbs && <Text style={styles.errorText}>{errors.carbs}</Text>}
         {!macroTouched.carbs && (
-          <Text style={styles.helpText}>Auto-calculated (50% of calories)</Text>
+          <Text style={styles.helpText}>Obliczone automatycznie (50% kalorii)</Text>
         )}
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.label}>Daily Fat Target (g)</Text>
+        <Text style={styles.label}>Dzienny cel tłuszczowy (g)</Text>
         <TextInput
           style={[styles.input, errors.fat && styles.inputError]}
           value={formData.targetFat?.toString() || ''}
@@ -315,11 +314,11 @@ export const PlanCreationScreen: React.FC = () => {
           }}
           onFocus={() => setMacroTouched({ ...macroTouched, fat: true })}
           keyboardType="numeric"
-          placeholder="Auto-calculated"
+          placeholder="Obliczone automatycznie"
         />
         {errors.fat && <Text style={styles.errorText}>{errors.fat}</Text>}
         {!macroTouched.fat && (
-          <Text style={styles.helpText}>Auto-calculated (30% of calories)</Text>
+          <Text style={styles.helpText}>Obliczone automatycznie (30% kalorii)</Text>
         )}
       </View>
 
@@ -341,7 +340,7 @@ export const PlanCreationScreen: React.FC = () => {
         <View style={styles.progressContainer}>
           <ActivityIndicator size="large" color={colors.primary} />
           <Text style={styles.progressText}>
-            Optimizing meal plan... {creationState.progress}%
+            Optymalizowanie planu posiłków... {creationState.progress}%
           </Text>
         </View>
       )}
@@ -358,15 +357,15 @@ export const PlanCreationScreen: React.FC = () => {
         {creationState.isCreating ? (
           <ActivityIndicator color={colors.white} />
         ) : (
-          <Text style={styles.submitButtonText}>Create Meal Plan</Text>
+          <Text style={styles.submitButtonText}>Utwórz plan posiłków</Text>
         )}
       </TouchableOpacity>
 
       {/* Note about ingredient preferences */}
       <Text style={styles.note}>
-        Note: Ingredient preferences (have/want/avoid) and dietary tags can be
-        added in a future update. For now, the algorithm will use all available
-        recipes.
+        Uwaga: Preferencje składników (mieć/chcieć/unikać) i tagi dietetyczne mogą być
+        dodane w przyszłej aktualizacji. Na razie algorytm użyje wszystkich dostępnych
+        przepisów.
       </Text>
     </ScrollView>
     </>

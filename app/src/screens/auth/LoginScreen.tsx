@@ -19,8 +19,8 @@ export const LoginScreen: React.FC = () => {
 
   const validate = () => {
     const next: typeof errors = {};
-    if (!email.includes('@')) next.email = 'Enter a valid email address';
-    if (!password) next.password = 'Password is required';
+    if (!email.includes('@')) next.email = 'Wprowadź poprawny adres email';
+    if (!password) next.password = 'Hasło jest wymagane';
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -39,7 +39,7 @@ export const LoginScreen: React.FC = () => {
         unit_preference: profile.unit_preference,
       });
     } catch (e: any) {
-      Alert.alert('Login failed', e?.response?.data?.detail || 'Invalid credentials');
+      Alert.alert('Błąd logowania', e?.response?.data?.detail || 'Nieprawidłowe dane logowania');
     } finally {
       setIsSubmitting(false);
     }
@@ -47,8 +47,8 @@ export const LoginScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <Text style={styles.subtitle}>Welcome back — sign in to continue.</Text>
+      <Text style={styles.title}>Logowanie</Text>
+      <Text style={styles.subtitle}>Witaj z powrotem — zaloguj się, aby kontynuować.</Text>
 
       <Input
         label="Email"
@@ -59,7 +59,7 @@ export const LoginScreen: React.FC = () => {
         error={errors.email}
       />
       <Input
-        label="Password"
+        label="Hasło"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -67,13 +67,13 @@ export const LoginScreen: React.FC = () => {
       />
 
       <View style={styles.rememberRow}>
-        <Text style={styles.rememberText}>Remember me</Text>
+        <Text style={styles.rememberText}>Zapamiętaj mnie</Text>
         <Switch value={rememberMe} onValueChange={setRememberMe} />
       </View>
 
-      <Button title="Login" onPress={onSubmit} loading={isSubmitting} />
+      <Button title="Zaloguj się" onPress={onSubmit} loading={isSubmitting} />
       <Button
-        title="Create account"
+        title="Załóż konto"
         onPress={() => navigation.navigate('Registration' as never)}
         variant="secondary"
         style={{ marginTop: spacing.sm }}

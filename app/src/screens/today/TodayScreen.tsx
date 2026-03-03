@@ -63,7 +63,7 @@ export const TodayScreen: React.FC = () => {
       setTodayMeals(todayMeals);
     } catch (err: any) {
       console.error('Failed to load today data:', err);
-      setError(err.message || 'Failed to load data');
+      setError(err.message || 'Nie udało się pobrać danych');
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);
@@ -95,7 +95,7 @@ export const TodayScreen: React.FC = () => {
           )
         );
       } catch (err: any) {
-        Alert.alert('Error', err.response?.data?.detail || 'Failed to uncomplete meal');
+        Alert.alert('Błąd', err.response?.data?.detail || 'Nie udało się odznaczyć posiłku');
         // Revert on error
         await loadData();
       }
@@ -112,7 +112,7 @@ export const TodayScreen: React.FC = () => {
           )
         );
       } catch (err: any) {
-        Alert.alert('Error', err.response?.data?.detail || 'Failed to complete meal');
+        Alert.alert('Błąd', err.response?.data?.detail || 'Nie udało się oznaczyć posiłku');
         // Revert on error
         await loadData();
       }
@@ -130,9 +130,9 @@ export const TodayScreen: React.FC = () => {
   if (!activePlan) {
     return (
       <View style={styles.centered}>
-        <Text style={styles.emptyTitle}>No Active Plan</Text>
+        <Text style={styles.emptyTitle}>Brak aktywnego planu</Text>
         <Text style={styles.emptyText}>
-          Create and activate a meal plan to see today's meals here
+          Utwórz i aktywuj plan posiłków, aby zobaczyć dzisiejsze posiłki
         </Text>
       </View>
     );
@@ -141,9 +141,9 @@ export const TodayScreen: React.FC = () => {
   if (error) {
     return (
       <View style={styles.centered}>
-        <Text style={styles.errorText}>Error: {error}</Text>
+        <Text style={styles.errorText}>Błąd: {error}</Text>
         <TouchableOpacity style={styles.retryButton} onPress={loadData}>
-          <Text style={styles.retryButtonText}>Retry</Text>
+          <Text style={styles.retryButtonText}>Spróbuj ponownie</Text>
         </TouchableOpacity>
       </View>
     );
@@ -158,9 +158,9 @@ export const TodayScreen: React.FC = () => {
         }
       >
         <View style={styles.header}>
-          <Text style={styles.title}>Today</Text>
+          <Text style={styles.title}>Dzisiaj</Text>
           <Text style={styles.subtitle}>
-            {new Date().toLocaleDateString('en-US', { 
+            {new Date().toLocaleDateString('pl-PL', { 
               weekday: 'long', 
               month: 'long', 
               day: 'numeric' 
@@ -168,9 +168,9 @@ export const TodayScreen: React.FC = () => {
           </Text>
         </View>
         <View style={styles.centered}>
-          <Text style={styles.emptyTitle}>No meals today</Text>
+          <Text style={styles.emptyTitle}>Brak posiłków dzisiaj</Text>
           <Text style={styles.emptyText}>
-            This date is outside your plan's range
+            Ta data jest poza zakresem Twojego planu
           </Text>
         </View>
       </ScrollView>
@@ -191,9 +191,9 @@ export const TodayScreen: React.FC = () => {
       }
     >
       <View style={styles.header}>
-        <Text style={styles.title}>Today</Text>
+        <Text style={styles.title}>Dzisiaj</Text>
         <Text style={styles.subtitle}>
-          {new Date().toLocaleDateString('en-US', { 
+          {new Date().toLocaleDateString('pl-PL', { 
             weekday: 'long', 
             month: 'long', 
             day: 'numeric' 
@@ -201,7 +201,7 @@ export const TodayScreen: React.FC = () => {
         </Text>
         <View style={styles.progressContainer}>
           <Text style={styles.progressText}>
-            {completedCount} of {todayMeals.length} meals completed
+            {completedCount} z {todayMeals.length} posiłków ukończonych
           </Text>
           <Text style={styles.caloriesText}>
             {Math.round(completedCalories)} / {Math.round(totalCalories)} kcal
@@ -240,15 +240,15 @@ export const TodayScreen: React.FC = () => {
                 </Text>
                 <Text style={styles.nutritionDivider}>•</Text>
                 <Text style={styles.nutritionText}>
-                  P: {Math.round(meal.nutritional_info.protein_g)}g
+                  B: {Math.round(meal.nutritional_info.protein_g)}g
                 </Text>
                 <Text style={styles.nutritionDivider}>•</Text>
                 <Text style={styles.nutritionText}>
-                  C: {Math.round(meal.nutritional_info.carbs_g)}g
+                  W: {Math.round(meal.nutritional_info.carbs_g)}g
                 </Text>
                 <Text style={styles.nutritionDivider}>•</Text>
                 <Text style={styles.nutritionText}>
-                  F: {Math.round(meal.nutritional_info.fat_g)}g
+                  T: {Math.round(meal.nutritional_info.fat_g)}g
                 </Text>
               </View>
             </View>
@@ -258,7 +258,7 @@ export const TodayScreen: React.FC = () => {
 
       {completedCount === todayMeals.length && (
         <View style={styles.celebrationContainer}>
-          <Text style={styles.celebrationText}>🎉 All done for today!</Text>
+          <Text style={styles.celebrationText}>🎉 Wszystko gotowe na dziś!</Text>
         </View>
       )}
     </ScrollView>
@@ -267,11 +267,11 @@ export const TodayScreen: React.FC = () => {
 
 function formatMealType(type: string): string {
   const map: Record<string, string> = {
-    'breakfast': 'Breakfast',
-    'second_breakfast': '2nd Breakfast',
-    'dinner': 'Dinner',
-    'dessert': 'Dessert',
-    'supper': 'Supper',
+    'breakfast': 'Śniadanie',
+    'second_breakfast': 'Drugie śniadanie',
+    'dinner': 'Obiad',
+    'dessert': 'Deser',
+    'supper': 'Kolacja',
   };
   return map[type] || type;
 }

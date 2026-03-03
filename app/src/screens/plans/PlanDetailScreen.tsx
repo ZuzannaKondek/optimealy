@@ -24,11 +24,11 @@ export const PlanDetailScreen: React.FC = () => {
       setIsActivating(true);
       await planService.activatePlan(planId);
       Alert.alert(
-        'Plan Activated! 🎉',
-        'Your meal plan is now active. All grocery items have been added to your pantry.',
+        'Plan aktywny! 🎉',
+        'Twój plan posiłków jest teraz aktywny. Wszystkie produkty zostały dodane do Twojej spiżarni.',
         [
           {
-            text: 'View Today',
+            text: 'Zobacz dzisiaj',
             onPress: () => navigation.navigate('Today' as never),
           },
           {
@@ -41,8 +41,8 @@ export const PlanDetailScreen: React.FC = () => {
       await fetchPlanDetail(planId);
     } catch (err: any) {
       Alert.alert(
-        'Error',
-        err.response?.data?.detail || 'Failed to activate plan'
+        'Błąd',
+        err.response?.data?.detail || 'Nie udało się aktywować planu'
       );
     } finally {
       setIsActivating(false);
@@ -51,24 +51,24 @@ export const PlanDetailScreen: React.FC = () => {
 
   const handleCancelPlan = async () => {
     Alert.alert(
-      'Cancel Plan?',
-      'Your pantry will keep its current state with remaining ingredients.',
+      'Anulować plan?',
+      'Twoja spiżarnia zachowa obecny stan z pozostałymi składnikami.',
       [
         {
-          text: 'Keep Plan',
+          text: 'Zachowaj plan',
           style: 'cancel',
         },
         {
-          text: 'Cancel Plan',
+          text: 'Anuluj plan',
           style: 'destructive',
           onPress: async () => {
               try {
                 setIsCancelling(true);
                 await planService.cancelPlan(planId);
-              Alert.alert('Plan Cancelled', 'Your plan has been cancelled successfully.');
+              Alert.alert('Plan anulowany', 'Twój plan został anulowany.');
               await fetchPlanDetail(planId);
             } catch (err: any) {
-              Alert.alert('Error', err.response?.data?.detail || 'Failed to cancel plan');
+              Alert.alert('Błąd', err.response?.data?.detail || 'Nie udało się anulować planu');
             } finally {
               setIsCancelling(false);
             }
@@ -85,7 +85,7 @@ export const PlanDetailScreen: React.FC = () => {
   if (!planId) {
     return (
       <View style={styles.center}>
-        <Text style={styles.errorText}>Missing planId</Text>
+        <Text style={styles.errorText}>Brak planId</Text>
       </View>
     );
   }
@@ -94,7 +94,7 @@ export const PlanDetailScreen: React.FC = () => {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Loading plan…</Text>
+        <Text style={styles.loadingText}>Ładowanie planu…</Text>
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
       </View>
     );
@@ -103,23 +103,23 @@ export const PlanDetailScreen: React.FC = () => {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.title}>
-        {selectedPlan.name || `${selectedPlan.start_date} • ${selectedPlan.duration_days} days`}
+        {selectedPlan.name || `${selectedPlan.start_date} • ${selectedPlan.duration_days} dni`}
       </Text>
 
       <View style={styles.metrics}>
-        <Text style={styles.metric}>Target: {selectedPlan.target_calories_per_day} kcal/day</Text>
+        <Text style={styles.metric}>Cel: {selectedPlan.target_calories_per_day} kcal/dzień</Text>
         {selectedPlan.estimated_food_waste_g != null ? (
-          <Text style={styles.metric}>Waste: {Math.round(selectedPlan.estimated_food_waste_g)}g</Text>
+          <Text style={styles.metric}>Odpady: {Math.round(selectedPlan.estimated_food_waste_g)}g</Text>
         ) : null}
         {selectedPlan.waste_reduction_percentage != null ? (
-          <Text style={styles.metric}>Waste reduction: {selectedPlan.waste_reduction_percentage}%</Text>
+          <Text style={styles.metric}>Redukcja odpadów: {selectedPlan.waste_reduction_percentage}%</Text>
         ) : null}
 
         <TouchableOpacity
           style={styles.groceryButton}
           onPress={() => navigation.navigate('GroceryList' as never, { planId: selectedPlan.plan_id } as never)}
         >
-          <Text style={styles.groceryButtonText}>View Grocery List</Text>
+          <Text style={styles.groceryButtonText}>Zobacz listę zakupów</Text>
         </TouchableOpacity>
 
         {selectedPlan.execution_status === 'draft' && (
@@ -129,7 +129,7 @@ export const PlanDetailScreen: React.FC = () => {
             disabled={isActivating}
           >
             <Text style={styles.activateButtonText}>
-              {isActivating ? 'Activating...' : 'Buy Groceries & Start Plan'}
+              {isActivating ? 'Aktywacja...' : 'Kup produkty i rozpocznij plan'}
             </Text>
           </TouchableOpacity>
         )}
@@ -141,7 +141,7 @@ export const PlanDetailScreen: React.FC = () => {
             disabled={isCancelling}
           >
             <Text style={styles.cancelButtonText}>
-              {isCancelling ? 'Cancelling...' : 'Cancel Plan'}
+              {isCancelling ? 'Anulowanie...' : 'Anuluj plan'}
             </Text>
           </TouchableOpacity>
         )}
@@ -149,13 +149,13 @@ export const PlanDetailScreen: React.FC = () => {
         {(selectedPlan.execution_status === 'completed' || selectedPlan.execution_status === 'cancelled') && (
           <View style={styles.statusBadge}>
             <Text style={styles.statusBadgeText}>
-              {selectedPlan.execution_status === 'completed' ? '✓ Completed' : '✕ Cancelled'}
+              {selectedPlan.execution_status === 'completed' ? '✓ Zakończony' : '✕ Anulowany'}
             </Text>
           </View>
         )}
       </View>
 
-      <Text style={styles.sectionTitle}>Days</Text>
+      <Text style={styles.sectionTitle}>Dni</Text>
       {selectedPlan.daily_menus.map((day) => (
         <DayCard
           key={`${selectedPlan.plan_id}-${day.day_number}`}

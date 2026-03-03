@@ -52,32 +52,32 @@ const Tabs: React.FC = () => {
         name="Home"
         component={UserPanelScreen}
         options={{
-          title: 'Home',
-          tabBarLabel: 'Home',
+          title: 'Pulpit',
+          tabBarLabel: 'Pulpit',
         }}
       />
       <Tab.Screen
         name="Today"
         component={TodayScreen}
         options={{
-          title: 'Today',
-          tabBarLabel: 'Today',
+          title: 'Dzisiaj',
+          tabBarLabel: 'Dzisiaj',
         }}
       />
       <Tab.Screen
         name="Pantry"
         component={PantryScreen}
         options={{
-          title: 'My Pantry',
-          tabBarLabel: 'Pantry',
+          title: 'Moja spiżarnia',
+          tabBarLabel: 'Spiżarnia',
         }}
       />
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
-          title: 'Settings',
-          tabBarLabel: 'Settings',
+          title: 'Ustawienia',
+          tabBarLabel: 'Ustawienia',
         }}
       />
     </Tab.Navigator>
@@ -103,48 +103,48 @@ export const MainNavigator: React.FC = () => {
         name="CreatePlan" 
         component={PlanCreationScreen} 
         options={{ 
-          title: 'Create Plan',
-          headerBackTitle: 'Back',
+          title: 'Utwórz plan',
+          headerBackTitle: 'Wstecz',
         }} 
       />
       <Stack.Screen 
         name="PlanDetail" 
         component={PlanDetailScreen} 
         options={{ 
-          title: 'Plan Details',
-          headerBackTitle: 'Back',
+          title: 'Szczegóły planu',
+          headerBackTitle: 'Wstecz',
         }} 
       />
       <Stack.Screen 
         name="DayDetail" 
         component={DayDetailScreen} 
         options={{ 
-          title: 'Day Details',
-          headerBackTitle: 'Back',
+          title: 'Szczegóły dnia',
+          headerBackTitle: 'Wstecz',
         }} 
       />
       <Stack.Screen 
         name="GroceryList" 
         component={GroceryListScreen} 
         options={{ 
-          title: 'Grocery List',
-          headerBackTitle: 'Back',
+          title: 'Lista zakupów',
+          headerBackTitle: 'Wstecz',
         }} 
       />
       <Stack.Screen 
         name="ChangePassword" 
         component={ChangePasswordScreen} 
         options={{ 
-          title: 'Change Password',
-          headerBackTitle: 'Back',
+          title: 'Zmień hasło',
+          headerBackTitle: 'Wstecz',
         }} 
       />
       <Stack.Screen 
         name="Pantry" 
         component={PantryScreen} 
         options={{ 
-          title: 'My Pantry',
-          headerBackTitle: 'Back',
+          title: 'Moja spiżarnia',
+          headerBackTitle: 'Wstecz',
         }} 
       />
       <Stack.Screen 

@@ -28,7 +28,7 @@ export const GroceryListScreen: React.FC = () => {
         const list = await planService.getGroceryList(planId, { groupBy: 'category' });
         if (!cancelled) setGroceryList(list);
       } catch (e: any) {
-        if (!cancelled) setError(e?.response?.data?.detail || 'Failed to load grocery list');
+        if (!cancelled) setError(e?.response?.data?.detail || 'Nie udało się pobrać listy zakupów');
       } finally {
         if (!cancelled) setIsLoading(false);
       }
@@ -43,7 +43,7 @@ export const GroceryListScreen: React.FC = () => {
   if (!planId) {
     return (
       <View style={styles.center}>
-        <Text style={styles.errorText}>Missing planId</Text>
+        <Text style={styles.errorText}>Brak planId</Text>
       </View>
     );
   }
@@ -52,7 +52,7 @@ export const GroceryListScreen: React.FC = () => {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Generating grocery list…</Text>
+        <Text style={styles.loadingText}>Generowanie listy zakupów…</Text>
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
       </View>
     );
@@ -68,9 +68,9 @@ export const GroceryListScreen: React.FC = () => {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Grocery List</Text>
+      <Text style={styles.title}>Lista zakupów</Text>
       <Text style={styles.subtitle}>
-        Items: {groceryList.total_items} • Waste: {Math.round(groceryList.estimated_total_waste_g)}g
+        Produkty: {groceryList.total_items} • Odpady: {Math.round(groceryList.estimated_total_waste_g)}g
       </Text>
 
       {categories.map((category) => (
