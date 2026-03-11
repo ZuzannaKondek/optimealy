@@ -17,6 +17,7 @@ const Tab = createBottomTabNavigator();
 import { UserPanelScreen } from '../screens/dashboard/UserPanelScreen';
 import { PlanCreationScreen } from '../screens/create/PlanCreationScreen';
 import { PlanDetailScreen } from '../screens/plans/PlanDetailScreen';
+import { PlanListScreen } from '../screens/plans/PlanListScreen';
 import { DayDetailScreen } from '../screens/plans/DayDetailScreen';
 import { GroceryListScreen } from '../screens/grocery/GroceryListScreen';
 
@@ -37,6 +38,30 @@ const HomeStackScreen = () => (
     <HomeStack.Screen name="DayDetail" component={DayDetailScreen} options={{ title: 'Szczegóły dnia' }} />
     <HomeStack.Screen name="GroceryList" component={GroceryListScreen} options={{ title: 'Lista zakupów' }} />
   </HomeStack.Navigator>
+);
+
+// Plans Stack
+const PlansStack = createStackNavigator();
+
+const PlansStackScreen = () => (
+  <PlansStack.Navigator
+    screenOptions={{
+      headerStyle: { backgroundColor: colors.primary },
+      headerTintColor: colors.white,
+      headerTitleStyle: { fontWeight: typography.fontWeight.semiBold },
+      headerBackTitleVisible: false,
+    }}
+  >
+    <PlansStack.Screen 
+      name="PlansList" 
+      component={PlanListScreen} 
+      options={{ headerShown: false }} 
+    />
+    <PlansStack.Screen name="CreatePlan" component={PlanCreationScreen} options={{ title: 'Utwórz plan' }} />
+    <PlansStack.Screen name="PlanDetail" component={PlanDetailScreen} options={{ title: 'Szczegóły planu' }} />
+    <PlansStack.Screen name="DayDetail" component={DayDetailScreen} options={{ title: 'Szczegóły dnia' }} />
+    <PlansStack.Screen name="GroceryList" component={GroceryListScreen} options={{ title: 'Lista zakupów' }} />
+  </PlansStack.Navigator>
 );
 
 // Today Stack
@@ -125,6 +150,13 @@ export const MainNavigator: React.FC = () => {
         component={TodayStackScreen}
         options={{
           tabBarLabel: 'Dzisiaj',
+        }}
+      />
+      <Tab.Screen
+        name="Plans"
+        component={PlansStackScreen}
+        options={{
+          tabBarLabel: 'Moje plany',
         }}
       />
       <Tab.Screen

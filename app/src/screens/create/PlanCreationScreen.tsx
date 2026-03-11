@@ -40,7 +40,7 @@ const calculateMacros = (calories: number) => {
 
 export const PlanCreationScreen: React.FC = () => {
   const navigation = useNavigation();
-  const { createPlan, creationState, resetCreationState } = usePlans();
+  const { createPlan, creationState, resetCreationState, fetchPlans } = usePlans();
 
   const [formData, setFormData] = useState<PlanCreationFormData>(() => {
     // Initialize with calculated macros for default calories
@@ -187,12 +187,14 @@ export const PlanCreationScreen: React.FC = () => {
   // Watch for completion – navigate when plan is ready; failure is shown in PlanCreationErrorModal
   React.useEffect(() => {
     if (creationState.status === 'completed' && creationState.createdPlanId) {
+      // Refresh plans list before navigating
+      void fetchPlans({ limit: 10, offset: 0, append: false });
       navigation.navigate('PlanDetail' as never, {
         planId: creationState.createdPlanId,
       } as never);
       setTimeout(() => resetCreationState(), 500);
     }
-  }, [creationState.status, creationState.createdPlanId, navigation, resetCreationState]);
+  }, [creationState.status, creationState.createdPlanId, navigation, resetCreationState, fetchPlans]);
 
   return (
     <>

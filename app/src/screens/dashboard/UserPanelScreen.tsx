@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { usePlans } from '../../hooks/usePlans';
 import { PlanCard } from '../../components/plan/PlanCard';
 import { Button } from '../../components/common/Button';
@@ -10,9 +10,11 @@ export const UserPanelScreen: React.FC = () => {
   const navigation = useNavigation();
   const { plans, isLoading, fetchPlans } = usePlans();
 
-  React.useEffect(() => {
-    void fetchPlans({ limit: 5, offset: 0, append: false });
-  }, [fetchPlans]);
+  useFocusEffect(
+    React.useCallback(() => {
+      void fetchPlans({ limit: 5, offset: 0, append: false });
+    }, [fetchPlans])
+  );
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>

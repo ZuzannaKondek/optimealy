@@ -1,4 +1,5 @@
 """MealPlan, DailyMenu, and Meal models."""
+
 from datetime import datetime, date
 from typing import Optional, List, TYPE_CHECKING
 from uuid import uuid4
@@ -61,14 +62,14 @@ class MealPlan(Base):
         default=OptimizationStatus.PENDING.value,
         index=True,
     )
-    
+
     # Execution Status
     execution_status: Mapped[str] = mapped_column(
         String(20),
         nullable=False,
-        default='draft',
+        default="draft",
         index=True,
-        comment="Plan execution state: draft, active, completed, cancelled"
+        comment="Plan execution state: draft, active, completed, cancelled",
     )
 
     # Optimization Metrics
@@ -77,9 +78,7 @@ class MealPlan(Base):
         nullable=True,
     )
     estimated_food_waste_g: Mapped[Optional[float]] = mapped_column(
-        Numeric(10, 2),
-        nullable=True,
-        comment="Perishable food waste in grams"
+        Numeric(10, 2), nullable=True, comment="Perishable food waste in grams"
     )
     waste_reduction_percentage: Mapped[Optional[float]] = mapped_column(
         Numeric(5, 2),
@@ -88,7 +87,7 @@ class MealPlan(Base):
     pantry_additions_g: Mapped[Optional[float]] = mapped_column(
         Numeric(10, 2),
         nullable=True,
-        comment="Shelf-stable leftovers auto-added to pantry in grams"
+        comment="Shelf-stable leftovers auto-added to pantry in grams",
     )
     estimated_total_cost: Mapped[Optional[float]] = mapped_column(
         Numeric(10, 2),
@@ -120,6 +119,7 @@ class MealPlan(Base):
         "GroceryList",
         back_populates="meal_plan",
         uselist=False,
+        cascade="all, delete-orphan",
     )
 
     # Indexes
@@ -230,12 +230,14 @@ class Meal(Base):
 
     # Meal Information
     meal_type: Mapped[str] = mapped_column(
-        String(50), 
+        String(50),
         nullable=False,
-        comment="Type of meal: breakfast, second_breakfast, dinner, dessert, or supper"
+        comment="Type of meal: breakfast, second_breakfast, dinner, dessert, or supper",
     )
     servings: Mapped[float] = mapped_column(Numeric(5, 2), nullable=False)
-    dish_weight_g: Mapped[Optional[float]] = mapped_column(Numeric(10, 2), nullable=True, default=None)
+    dish_weight_g: Mapped[Optional[float]] = mapped_column(
+        Numeric(10, 2), nullable=True, default=None
+    )
 
     # Calculated Nutritional Information (for this meal)
     calculated_nutritional_info: Mapped[dict] = mapped_column(
@@ -260,9 +262,7 @@ class Meal(Base):
     daily_menu: Mapped["DailyMenu"] = relationship("DailyMenu", back_populates="meals")
     recipe: Mapped["Recipe"] = relationship("Recipe", back_populates="meals")
     completions: Mapped[List["MealCompletion"]] = relationship(
-        "MealCompletion",
-        back_populates="meal",
-        cascade="all, delete-orphan"
+        "MealCompletion", back_populates="meal", cascade="all, delete-orphan"
     )
 
     # Indexes
