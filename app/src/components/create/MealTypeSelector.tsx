@@ -23,7 +23,7 @@ const OPTIONAL_MEAL_TYPES: MealType[] = ['second_breakfast', 'dessert'];
 // Display labels for meal types
 const MEAL_TYPE_LABELS: Record<MealType, string> = {
   breakfast: 'Śniadanie',
-  second_breakfast: '2. Śniadanie',
+  second_breakfast: 'Drugie śniadanie',
   dinner: 'Obiad',
   dessert: 'Deser',
   supper: 'Kolacja',

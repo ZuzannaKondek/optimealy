@@ -1,4 +1,5 @@
 """Meal Plans API endpoints."""
+
 from typing import List, Optional, Dict, Any
 from datetime import date
 import logging
@@ -186,7 +187,7 @@ async def create_meal_plan(
 ) -> CreateMealPlanResponse:
     """
     Create a new optimized meal plan.
-    
+
     This endpoint triggers the optimization algorithm to generate a meal plan
     that minimizes food waste while meeting nutritional constraints.
     """
@@ -211,7 +212,7 @@ async def create_meal_plan(
     )
     print(request_log)  # Use print to ensure it shows in Docker logs
     logger.info(request_log)
-    
+
     try:
         # Convert ingredients_to_have to dict format
         ingredients_to_have = None
@@ -220,7 +221,7 @@ async def create_meal_plan(
                 {"product_id": item.product_id, "quantity_g": item.quantity_g}
                 for item in request.ingredients_to_have
             ]
-        
+
         # Ensure name is taken from the parsed request body (required for plan creation)
         plan_name = (request.name or "").strip()
         if not plan_name:
@@ -246,19 +247,19 @@ async def create_meal_plan(
             dietary_tags=request.dietary_tags,
             cuisine_types=request.cuisine_types,
         )
-        
-        logger.info(f"Meal plan created: id={meal_plan.id}, name={getattr(meal_plan, 'name', None)!r}")
+
+        logger.info(
+            f"Meal plan created: id={meal_plan.id}, name={getattr(meal_plan, 'name', None)!r}"
+        )
 
         return CreateMealPlanResponse(
             message="Meal plan generation initiated",
             plan_id=str(meal_plan.id),
             status_url=f"/api/v1/meal-plans/{meal_plan.id}/status",
         )
-        
+
     except ValueError as e:
-        logger.error(
-            f"Validation error creating meal plan for user {current_user.id}: {str(e)}"
-        )
+        logger.error(f"Validation error creating meal plan for user {current_user.id}: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=str(e),
@@ -273,9 +274,7 @@ async def create_meal_plan(
             },
         )
     except RuntimeError as e:
-        logger.error(
-            f"Runtime error creating meal plan for user {current_user.id}: {str(e)}"
-        )
+        logger.error(f"Runtime error creating meal plan for user {current_user.id}: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail=str(e),
@@ -300,7 +299,7 @@ async def get_meal_plans(
 ) -> List[MealPlanSummaryResponse]:
     """
     Get all meal plans for the current user.
-    
+
     Supports pagination and filtering by optimization status.
     """
     meal_plans = await MealPlanService.get_user_meal_plans(
@@ -310,7 +309,7 @@ async def get_meal_plans(
         offset=offset,
         status=status_filter,
     )
-    
+
     return [
         MealPlanSummaryResponse(
             plan_id=str(plan.id),
@@ -322,10 +321,16 @@ async def get_meal_plans(
             dishes_per_day=plan.dishes_per_day,
             optimization_status=plan.optimization_status,
             execution_status=plan.execution_status,
-            estimated_food_waste_g=float(plan.estimated_food_waste_g) if plan.estimated_food_waste_g else None,
+            estimated_food_waste_g=float(plan.estimated_food_waste_g)
+            if plan.estimated_food_waste_g
+            else None,
             pantry_additions_g=float(plan.pantry_additions_g) if plan.pantry_additions_g else None,
-            waste_reduction_percentage=float(plan.waste_reduction_percentage) if plan.waste_reduction_percentage else None,
-            estimated_total_cost=float(plan.estimated_total_cost) if plan.estimated_total_cost else None,
+            waste_reduction_percentage=float(plan.waste_reduction_percentage)
+            if plan.waste_reduction_percentage
+            else None,
+            estimated_total_cost=float(plan.estimated_total_cost)
+            if plan.estimated_total_cost
+            else None,
         )
         for plan in meal_plans
     ]
@@ -339,19 +344,16 @@ async def get_active_plan(
     """
     Get the user's active meal plan, if any.
     """
-    plan = await PlanExecutionService.get_active_plan(
-        db=db,
-        user_id=current_user.id
-    )
-    
+    plan = await PlanExecutionService.get_active_plan(db=db, user_id=current_user.id)
+
     if not plan:
         return None
-    
+
     return {
         "id": str(plan.id),
         "start_date": plan.start_date.isoformat(),
         "duration_days": plan.duration_days,
-        "execution_status": plan.execution_status
+        "execution_status": plan.execution_status,
     }
 
 
@@ -363,7 +365,7 @@ async def get_meal_plan(
 ) -> MealPlanDetailResponse:
     """
     Get detailed information for a specific meal plan.
-    
+
     Includes all daily menus and meals.
     """
     meal_plan = await MealPlanService.get_meal_plan_by_id(
@@ -371,17 +373,21 @@ async def get_meal_plan(
         plan_id=plan_id,
         user_id=str(current_user.id),
     )
-    
+
     if meal_plan is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Meal plan not found",
         )
-    
+
     # Load daily menus with meals and recipe details
     from sqlalchemy.orm import selectinload
     from sqlalchemy import select
-    
+
+    # Meal type order for sorting
+    COURSE_ORDER = ["breakfast", "second_breakfast", "dinner", "dessert", "supper"]
+    meal_type_order = {meal_type: idx for idx, meal_type in enumerate(COURSE_ORDER)}
+
     stmt = (
         select(DailyMenu)
         .where(DailyMenu.meal_plan_id == meal_plan.id)
@@ -395,7 +401,11 @@ async def get_meal_plan(
     )
     result = await db.execute(stmt)
     daily_menus = list(result.scalars().all())
-    
+
+    # Sort meals by meal_type order for each daily menu
+    for menu in daily_menus:
+        menu.meals.sort(key=lambda m: meal_type_order.get(m.meal_type, 999))
+
     # Build response
     daily_menus_response = []
     for menu in daily_menus:
@@ -405,18 +415,24 @@ async def get_meal_plan(
             selected_meal_types = meal_plan.user_constraints.get("selected_meal_types", [])
             if meal.recipe and selected_meal_types:
                 # Get single-serving instructions for dish-based plans
-                instructions_single_serving = RecipeService.get_single_serving_instructions(meal.recipe)
-                
+                instructions_single_serving = RecipeService.get_single_serving_instructions(
+                    meal.recipe
+                )
+
                 # Build ingredients list
                 ingredients_list = []
                 if meal.recipe.recipe_ingredients:
                     for ing in meal.recipe.recipe_ingredients:
-                        ingredients_list.append({
-                            "name": ing.product.name if ing.product else "Unknown",
-                            "quantity": float(ing.quantity_value) if ing.quantity_value else 0.0,
-                            "unit": ing.quantity_unit or "g",
-                        })
-                
+                        ingredients_list.append(
+                            {
+                                "name": ing.product.name if ing.product else "Unknown",
+                                "quantity": float(ing.quantity_value)
+                                if ing.quantity_value
+                                else 0.0,
+                                "unit": ing.quantity_unit or "g",
+                            }
+                        )
+
                 recipe_detail = RecipeDetailResponse(
                     id=str(meal.recipe.id),
                     name=meal.recipe.name,
@@ -428,46 +444,50 @@ async def get_meal_plan(
                     instructions_single_serving=instructions_single_serving,
                     ingredients=ingredients_list if ingredients_list else None,
                 )
-            
-            meals_response.append(MealResponse(
-                meal_id=str(meal.id),
-                meal_type=meal.meal_type,
-                recipe_id=str(meal.recipe_id),
-                recipe_name=meal.recipe.name if meal.recipe else "Unknown",
-                servings=float(meal.servings),
-                dish_weight_g=float(meal.dish_weight_g) if meal.dish_weight_g else None,
-                calculated_nutritional_info=meal.calculated_nutritional_info,
-                recipe=recipe_detail,
-            ))
-        
-        daily_menus_response.append(DailyMenuResponse(
-            day_number=menu.day_number,
-            menu_date=menu.menu_date.isoformat(),
-            actual_calories=menu.actual_calories,
-            actual_protein_g=float(menu.actual_protein_g),
-            actual_carbs_g=float(menu.actual_carbs_g),
-            actual_fat_g=float(menu.actual_fat_g),
-            variance_from_target={
-                "calorie_variance_pct": _variance_pct(
-                    float(menu.actual_calories),
-                    float(meal_plan.target_calories_per_day),
-                ),
-                "protein_variance_pct": _variance_pct(
-                    float(menu.actual_protein_g),
-                    float(meal_plan.target_protein_g) if meal_plan.target_protein_g else None,
-                ),
-                "carbs_variance_pct": _variance_pct(
-                    float(menu.actual_carbs_g),
-                    float(meal_plan.target_carbs_g) if meal_plan.target_carbs_g else None,
-                ),
-                "fat_variance_pct": _variance_pct(
-                    float(menu.actual_fat_g),
-                    float(meal_plan.target_fat_g) if meal_plan.target_fat_g else None,
-                ),
-            },
-            meals=meals_response,
-        ))
-    
+
+            meals_response.append(
+                MealResponse(
+                    meal_id=str(meal.id),
+                    meal_type=meal.meal_type,
+                    recipe_id=str(meal.recipe_id),
+                    recipe_name=meal.recipe.name if meal.recipe else "Unknown",
+                    servings=float(meal.servings),
+                    dish_weight_g=float(meal.dish_weight_g) if meal.dish_weight_g else None,
+                    calculated_nutritional_info=meal.calculated_nutritional_info,
+                    recipe=recipe_detail,
+                )
+            )
+
+        daily_menus_response.append(
+            DailyMenuResponse(
+                day_number=menu.day_number,
+                menu_date=menu.menu_date.isoformat(),
+                actual_calories=menu.actual_calories,
+                actual_protein_g=float(menu.actual_protein_g),
+                actual_carbs_g=float(menu.actual_carbs_g),
+                actual_fat_g=float(menu.actual_fat_g),
+                variance_from_target={
+                    "calorie_variance_pct": _variance_pct(
+                        float(menu.actual_calories),
+                        float(meal_plan.target_calories_per_day),
+                    ),
+                    "protein_variance_pct": _variance_pct(
+                        float(menu.actual_protein_g),
+                        float(meal_plan.target_protein_g) if meal_plan.target_protein_g else None,
+                    ),
+                    "carbs_variance_pct": _variance_pct(
+                        float(menu.actual_carbs_g),
+                        float(meal_plan.target_carbs_g) if meal_plan.target_carbs_g else None,
+                    ),
+                    "fat_variance_pct": _variance_pct(
+                        float(menu.actual_fat_g),
+                        float(meal_plan.target_fat_g) if meal_plan.target_fat_g else None,
+                    ),
+                },
+                meals=meals_response,
+            )
+        )
+
     return MealPlanDetailResponse(
         plan_id=str(meal_plan.id),
         name=meal_plan.name,
@@ -482,11 +502,21 @@ async def get_meal_plan(
         target_fat_g=float(meal_plan.target_fat_g) if meal_plan.target_fat_g else None,
         optimization_status=meal_plan.optimization_status,
         execution_status=meal_plan.execution_status,
-        algorithm_execution_time_s=float(meal_plan.algorithm_execution_time_s) if meal_plan.algorithm_execution_time_s else None,
-        estimated_food_waste_g=float(meal_plan.estimated_food_waste_g) if meal_plan.estimated_food_waste_g else None,
-        pantry_additions_g=float(meal_plan.pantry_additions_g) if meal_plan.pantry_additions_g else None,
-        waste_reduction_percentage=float(meal_plan.waste_reduction_percentage) if meal_plan.waste_reduction_percentage else None,
-        estimated_total_cost=float(meal_plan.estimated_total_cost) if meal_plan.estimated_total_cost else None,
+        algorithm_execution_time_s=float(meal_plan.algorithm_execution_time_s)
+        if meal_plan.algorithm_execution_time_s
+        else None,
+        estimated_food_waste_g=float(meal_plan.estimated_food_waste_g)
+        if meal_plan.estimated_food_waste_g
+        else None,
+        pantry_additions_g=float(meal_plan.pantry_additions_g)
+        if meal_plan.pantry_additions_g
+        else None,
+        waste_reduction_percentage=float(meal_plan.waste_reduction_percentage)
+        if meal_plan.waste_reduction_percentage
+        else None,
+        estimated_total_cost=float(meal_plan.estimated_total_cost)
+        if meal_plan.estimated_total_cost
+        else None,
         daily_menus=daily_menus_response,
     )
 
@@ -522,7 +552,7 @@ async def get_meal_plan_day(
 
     from src.models.recipe_ingredient import RecipeIngredient
     from src.models.product import Product
-    
+
     stmt = (
         select(DailyMenu)
         .where(DailyMenu.meal_plan_id == meal_plan.id)
@@ -549,18 +579,22 @@ async def get_meal_plan_day(
             # Get single-serving instructions for dish-based plans
             instructions_single_serving = None
             if meal_plan.dishes_per_day is not None:
-                instructions_single_serving = RecipeService.get_single_serving_instructions(meal.recipe)
-            
+                instructions_single_serving = RecipeService.get_single_serving_instructions(
+                    meal.recipe
+                )
+
             # Build ingredients list
             ingredients_list = []
             if meal.recipe.recipe_ingredients:
                 for ing in meal.recipe.recipe_ingredients:
-                    ingredients_list.append({
-                        "name": ing.product.name if ing.product else "Unknown",
-                        "quantity": float(ing.quantity_value) if ing.quantity_value else 0.0,
-                        "unit": ing.quantity_unit or "g",
-                    })
-            
+                    ingredients_list.append(
+                        {
+                            "name": ing.product.name if ing.product else "Unknown",
+                            "quantity": float(ing.quantity_value) if ing.quantity_value else 0.0,
+                            "unit": ing.quantity_unit or "g",
+                        }
+                    )
+
             recipe_detail = RecipeDetailResponse(
                 id=str(meal.recipe.id),
                 name=meal.recipe.name,
@@ -572,7 +606,7 @@ async def get_meal_plan_day(
                 instructions_single_serving=instructions_single_serving,
                 ingredients=ingredients_list if ingredients_list else None,
             )
-        
+
         meals_response.append(
             MealResponse(
                 meal_id=str(meal.id),
@@ -631,17 +665,17 @@ async def get_optimization_status(
         plan_id=plan_id,
         user_id=str(current_user.id),
     )
-    
+
     if meal_plan is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Meal plan not found",
         )
-    
+
     # Determine progress percentage based on status
     progress_percentage = None
     message = None
-    
+
     if meal_plan.optimization_status == "pending":
         progress_percentage = 10
         message = "Preparing optimization..."
@@ -654,7 +688,7 @@ async def get_optimization_status(
     elif meal_plan.optimization_status == "failed":
         progress_percentage = 0
         message = "Optimization failed"
-    
+
     return OptimizationStatusResponse(
         plan_id=str(meal_plan.id),
         status=meal_plan.optimization_status,
@@ -677,7 +711,7 @@ async def delete_meal_plan(
         plan_id=plan_id,
         user_id=str(current_user.id),
     )
-    
+
     if not deleted:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -687,6 +721,7 @@ async def delete_meal_plan(
 
 # Plan Execution Endpoints
 
+
 @router.post("/{plan_id}/activate")
 async def activate_meal_plan(
     plan_id: str,
@@ -695,7 +730,7 @@ async def activate_meal_plan(
 ) -> Dict[str, Any]:
     """
     Activate a meal plan for execution.
-    
+
     This will:
     - Add all grocery items to the user's pantry
     - Mark the plan as active
@@ -703,30 +738,23 @@ async def activate_meal_plan(
     """
     try:
         from uuid import UUID
+
         result = await PlanExecutionService.activate_plan(
-            db=db,
-            plan_id=UUID(plan_id),
-            user_id=current_user.id
+            db=db, plan_id=UUID(plan_id), user_id=current_user.id
         )
-        
+
         return {
             "message": "Plan activated successfully",
             "plan": {
                 "id": str(result["plan"].id),
-                "execution_status": result["plan"].execution_status
+                "execution_status": result["plan"].execution_status,
             },
-            "pantry_updated": True
+            "pantry_updated": True,
         }
     except ValueError as e:
         if "already have an active plan" in str(e):
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail=str(e)
-            )
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
-        )
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
 @router.post("/{plan_id}/cancel")
@@ -737,29 +765,22 @@ async def cancel_meal_plan(
 ) -> Dict[str, Any]:
     """
     Cancel an active meal plan.
-    
+
     Pantry remains unchanged.
     """
     try:
         from uuid import UUID
+
         plan = await PlanExecutionService.cancel_plan(
-            db=db,
-            plan_id=UUID(plan_id),
-            user_id=current_user.id
+            db=db, plan_id=UUID(plan_id), user_id=current_user.id
         )
-        
+
         return {
             "message": "Plan cancelled successfully",
-            "plan": {
-                "id": str(plan.id),
-                "execution_status": plan.execution_status
-            }
+            "plan": {"id": str(plan.id), "execution_status": plan.execution_status},
         }
     except ValueError as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
 @router.get("/{plan_id}/today")
@@ -772,32 +793,40 @@ async def get_today_meals(
     Get today's meals from a plan with completion status.
     """
     from uuid import UUID
+
     meals = await PlanExecutionService.get_today_meals(
-        db=db,
-        plan_id=UUID(plan_id),
-        user_id=current_user.id
+        db=db, plan_id=UUID(plan_id), user_id=current_user.id
     )
-    
+
+    # Sort meals by meal_type order
+    COURSE_ORDER = ["breakfast", "second_breakfast", "dinner", "dessert", "supper"]
+    meal_type_order = {meal_type: idx for idx, meal_type in enumerate(COURSE_ORDER)}
+    meals.sort(key=lambda m: meal_type_order.get(m["meal"].meal_type, 999))
+
     result = []
     for meal_data in meals:
         meal = meal_data["meal"]
         # Transform nutritional info to match frontend expectations
         nutritional_info = meal.calculated_nutritional_info
-        result.append({
-            "id": str(meal.id),
-            "meal_type": meal.meal_type,
-            "recipe_id": str(meal.recipe_id),
-            "servings": float(meal.servings),
-            "is_completed": meal_data["is_completed"],
-            "completed_at": meal_data["completed_at"].isoformat() if meal_data["completed_at"] else None,
-            "nutritional_info": {
-                "calories": nutritional_info.get("calories", 0),
-                "protein_g": nutritional_info.get("protein", 0),
-                "carbs_g": nutritional_info.get("carbs", 0),
-                "fat_g": nutritional_info.get("fat", 0)
+        result.append(
+            {
+                "id": str(meal.id),
+                "meal_type": meal.meal_type,
+                "recipe_id": str(meal.recipe_id),
+                "servings": float(meal.servings),
+                "is_completed": meal_data["is_completed"],
+                "completed_at": meal_data["completed_at"].isoformat()
+                if meal_data["completed_at"]
+                else None,
+                "nutritional_info": {
+                    "calories": nutritional_info.get("calories", 0),
+                    "protein_g": nutritional_info.get("protein", 0),
+                    "carbs_g": nutritional_info.get("carbs", 0),
+                    "fat_g": nutritional_info.get("fat", 0),
+                },
             }
-        })
-    
+        )
+
     return result
 
 
@@ -809,30 +838,26 @@ async def complete_meal(
 ) -> Dict[str, Any]:
     """
     Mark a meal as completed.
-    
+
     This will automatically deduct the ingredients from the user's pantry.
     """
     try:
         from uuid import UUID
+
         result = await PlanExecutionService.complete_meal(
-            db=db,
-            meal_id=UUID(meal_id),
-            user_id=current_user.id
+            db=db, meal_id=UUID(meal_id), user_id=current_user.id
         )
-        
+
         return {
             "message": "Meal completed successfully",
             "completion": {
                 "id": str(result["completion"].id),
-                "completed_at": result["completion"].completed_at.isoformat()
+                "completed_at": result["completion"].completed_at.isoformat(),
             },
-            "pantry_updated": True
+            "pantry_updated": True,
         }
     except ValueError as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
 @router.delete("/meals/{meal_id}/complete")
@@ -843,24 +868,17 @@ async def uncomplete_meal(
 ) -> Dict[str, Any]:
     """
     Uncomplete a meal (undo completion).
-    
+
     Only allowed within 24 hours of completion.
     Restores ingredient quantities to pantry.
     """
     try:
         from uuid import UUID
+
         await PlanExecutionService.uncomplete_meal(
-            db=db,
-            meal_id=UUID(meal_id),
-            user_id=current_user.id
+            db=db, meal_id=UUID(meal_id), user_id=current_user.id
         )
-        
-        return {
-            "message": "Meal uncompleted successfully",
-            "pantry_updated": True
-        }
+
+        return {"message": "Meal uncompleted successfully", "pantry_updated": True}
     except ValueError as e:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))

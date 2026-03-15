@@ -79,7 +79,7 @@ export const usePlans = create<PlansState>((set, get) => ({
       }));
     } catch (error: any) {
       set({
-        error: error.response?.data?.detail || 'Failed to fetch plans',
+        error: error.response?.data?.detail || 'Nie udało się pobrać planów',
         isLoading: false,
       });
     }
@@ -93,7 +93,7 @@ export const usePlans = create<PlansState>((set, get) => ({
       set({ selectedPlan: plan, isLoadingDetail: false });
     } catch (error: any) {
       set({
-        error: error.response?.data?.detail || 'Failed to fetch plan details',
+        error: error.response?.data?.detail || 'Nie udało się pobrać szczegółów planu',
         isLoadingDetail: false,
       });
     }
@@ -146,7 +146,7 @@ export const usePlans = create<PlansState>((set, get) => ({
                 isCreating: false,
                 progress: 0,
                 status: 'failed',
-                error: status.message || 'Optimization failed',
+                error: status.message || 'Optymalizacja nie powiodła się',
                 createdPlanId: null,
               },
             });
@@ -204,7 +204,7 @@ export const usePlans = create<PlansState>((set, get) => ({
       }));
     } catch (error: any) {
       set({
-        error: error.response?.data?.detail || 'Failed to delete plan',
+        error: error.response?.data?.detail || 'Nie udało się usunąć planu',
       });
       throw error;
     }

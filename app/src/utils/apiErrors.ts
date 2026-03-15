@@ -8,5 +8,5 @@ export function getApiErrorMessage(error: any): string {
   if (detail && typeof detail === 'object' && typeof detail.message === 'string')
     return detail.message;
   if (error?.message) return error.message;
-  return 'Something went wrong. Please try again.';
+  return 'Coś poszło nie tak. Spróbuj ponownie.';
 }

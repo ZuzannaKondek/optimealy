@@ -50,7 +50,7 @@ export const PlanCard: React.FC<Props> = ({ plan, onPress }) => {
     >
       <View style={styles.headerRow}>
         <Text style={styles.title}>
-          {plan.name || `${plan.start_date} • ${plan.duration_days} days`}
+          {plan.name || `${plan.start_date} • ${plan.duration_days} dni`}
         </Text>
         <Text style={[styles.status, statusStyle]}>{displayStatus}</Text>
       </View>

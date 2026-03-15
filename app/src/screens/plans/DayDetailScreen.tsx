@@ -47,7 +47,7 @@ export const DayDetailScreen: React.FC = () => {
         const response = await planService.getPlanDay(planId, dayNumber);
         if (!cancelled) setDay(response.daily_menu);
       } catch (e: any) {
-        if (!cancelled) setError(e?.response?.data?.detail || 'Failed to load day details');
+        if (!cancelled) setError(e?.response?.data?.detail || 'Nie udało się pobrać szczegółów dnia');
       } finally {
         if (!cancelled) setIsLoading(false);
       }

@@ -8,7 +8,7 @@ import { useAuth } from '../../context/AuthContext';
 // Display labels for meal types
 const MEAL_TYPE_LABELS: Record<string, string> = {
   breakfast: 'Śniadanie',
-  second_breakfast: '2. Śniadanie',
+  second_breakfast: 'Drugie śniadanie',
   dinner: 'Obiad',
   dessert: 'Deser',
   supper: 'Kolacja',

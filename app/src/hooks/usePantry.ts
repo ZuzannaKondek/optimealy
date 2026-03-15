@@ -49,7 +49,7 @@ export const usePantry = () => {
       setState((prev) => ({
         ...prev,
         isLoading: false,
-        error: error.message || 'Failed to fetch pantry',
+        error: error.message || 'Nie udało się pobrać spiżarni',
       }));
       throw error;
     }
@@ -72,7 +72,7 @@ export const usePantry = () => {
       setState((prev) => ({
         ...prev,
         isLoading: false,
-        error: error.message || 'Failed to fetch staples',
+        error: error.message || 'Nie udało się pobrać produktów podstawowych',
       }));
       throw error;
     }
@@ -95,7 +95,7 @@ export const usePantry = () => {
       setState((prev) => ({
         ...prev,
         isLoading: false,
-        error: error.message || 'Failed to update pantry',
+        error: error.message || 'Nie udało się zaktualizować spiżarni',
       }));
       throw error;
     }
