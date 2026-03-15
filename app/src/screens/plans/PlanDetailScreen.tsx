@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { usePlans } from '../../hooks/usePlans';
 import { DayCard } from '../../components/plan/DayCard';
@@ -15,7 +15,7 @@ export const PlanDetailScreen: React.FC = () => {
   const route = useRoute();
   const { planId } = (route.params as RouteParams) ?? {};
 
-  const { selectedPlan, isLoadingDetail, error, fetchPlanDetail, fetchPlans } = usePlans();
+  const { selectedPlan, isLoadingDetail, error, fetchPlanDetail, fetchPlans, setSelectedPlan } = usePlans();
   const [isActivating, setIsActivating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -23,7 +23,9 @@ export const PlanDetailScreen: React.FC = () => {
   const handleActivatePlan = async () => {
     try {
       setIsActivating(true);
-      await planService.activatePlan(planId);
+      const updatedPlan = await planService.activatePlan(planId);
+      // Update local state immediately so button disappears right away
+      setSelectedPlan(updatedPlan);
       Alert.alert(
         'Plan aktywny! 🎉',
         'Twój plan posiłków jest teraz aktywny. Wszystkie produkty zostały dodane do Twojej spiżarni.',
@@ -38,7 +40,7 @@ export const PlanDetailScreen: React.FC = () => {
           },
         ]
       );
-      // Refresh plan data
+      // Also refresh from server to ensure consistency
       await fetchPlanDetail(planId);
     } catch (err: any) {
       Alert.alert(
@@ -114,7 +116,7 @@ export const PlanDetailScreen: React.FC = () => {
           style={styles.groceryButton}
           onPress={() => navigation.navigate('GroceryList' as never, { planId: selectedPlan.plan_id } as never)}
         >
-          <Text style={styles.groceryButtonText}>Zobacz listę zakupów</Text>
+          <Text style={styles.groceryButtonText}>Potrzebne produkty</Text>
         </TouchableOpacity>
 
         {selectedPlan.execution_status === 'draft' && (

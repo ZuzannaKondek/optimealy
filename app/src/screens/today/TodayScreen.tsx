@@ -17,6 +17,7 @@ interface TodayMeal {
   id: string;
   meal_type: string;
   recipe_id: string;
+  recipe_name: string;
   servings: number;
   is_completed: boolean;
   completed_at: string | null;
@@ -235,6 +236,13 @@ export const TodayScreen: React.FC = () => {
                 {formatMealType(meal.meal_type)}
               </Text>
               
+              <Text style={[
+                styles.mealTitle,
+                meal.is_completed && styles.mealTitleCompleted,
+              ]}>
+                {meal.recipe_name}
+              </Text>
+              
               <View style={styles.nutritionRow}>
                 <Text style={styles.nutritionText}>
                   {Math.round(meal.nutritional_info.calories)} kcal
@@ -367,6 +375,15 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xs,
   },
   mealTypeCompleted: {
+    color: colors.textSecondary,
+  },
+  mealTitle: {
+    fontSize: typography.fontSize.md,
+    fontWeight: typography.fontWeight.medium,
+    color: colors.textPrimary,
+    marginBottom: spacing.xs,
+  },
+  mealTitleCompleted: {
     color: colors.textSecondary,
   },
   nutritionRow: {

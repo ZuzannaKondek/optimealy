@@ -31,6 +31,7 @@ interface PlansState {
     append?: boolean;
   }) => Promise<void>;
   fetchPlanDetail: (planId: string) => Promise<void>;
+  setSelectedPlan: (plan: MealPlanDetail | null) => void;
   createPlan: (request: any) => Promise<string | null>;
   deletePlan: (planId: string) => Promise<void>;
   clearError: () => void;
@@ -96,6 +97,11 @@ export const usePlans = create<PlansState>((set, get) => ({
         isLoadingDetail: false,
       });
     }
+  },
+
+  // Set selected plan directly
+  setSelectedPlan: (plan: MealPlanDetail | null) => {
+    set({ selectedPlan: plan });
   },
 
   // Create plan

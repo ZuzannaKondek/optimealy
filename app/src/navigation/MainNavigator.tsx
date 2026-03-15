@@ -6,9 +6,10 @@
  * Each tab has its own stack navigator to keep tabs visible on all screens.
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { View, ActivityIndicator, Text, StyleSheet } from 'react-native';
 import { colors, spacing, typography } from '../theme';
 
 const Tab = createBottomTabNavigator();
@@ -17,7 +18,6 @@ const Tab = createBottomTabNavigator();
 import { UserPanelScreen } from '../screens/dashboard/UserPanelScreen';
 import { PlanCreationScreen } from '../screens/create/PlanCreationScreen';
 import { PlanDetailScreen } from '../screens/plans/PlanDetailScreen';
-import { PlanListScreen } from '../screens/plans/PlanListScreen';
 import { DayDetailScreen } from '../screens/plans/DayDetailScreen';
 import { GroceryListScreen } from '../screens/grocery/GroceryListScreen';
 
@@ -36,32 +36,8 @@ const HomeStackScreen = () => (
     <HomeStack.Screen name="CreatePlan" component={PlanCreationScreen} options={{ title: 'Utwórz plan' }} />
     <HomeStack.Screen name="PlanDetail" component={PlanDetailScreen} options={{ title: 'Szczegóły planu' }} />
     <HomeStack.Screen name="DayDetail" component={DayDetailScreen} options={{ title: 'Szczegóły dnia' }} />
-    <HomeStack.Screen name="GroceryList" component={GroceryListScreen} options={{ title: 'Lista zakupów' }} />
+    <HomeStack.Screen name="GroceryList" component={GroceryListScreen} options={{ title: 'Potrzebne produkty' }} />
   </HomeStack.Navigator>
-);
-
-// Plans Stack
-const PlansStack = createStackNavigator();
-
-const PlansStackScreen = () => (
-  <PlansStack.Navigator
-    screenOptions={{
-      headerStyle: { backgroundColor: colors.primary },
-      headerTintColor: colors.white,
-      headerTitleStyle: { fontWeight: typography.fontWeight.semiBold },
-      headerBackTitleVisible: false,
-    }}
-  >
-    <PlansStack.Screen 
-      name="PlansList" 
-      component={PlanListScreen} 
-      options={{ headerShown: false }} 
-    />
-    <PlansStack.Screen name="CreatePlan" component={PlanCreationScreen} options={{ title: 'Utwórz plan' }} />
-    <PlansStack.Screen name="PlanDetail" component={PlanDetailScreen} options={{ title: 'Szczegóły planu' }} />
-    <PlansStack.Screen name="DayDetail" component={DayDetailScreen} options={{ title: 'Szczegóły dnia' }} />
-    <PlansStack.Screen name="GroceryList" component={GroceryListScreen} options={{ title: 'Lista zakupów' }} />
-  </PlansStack.Navigator>
 );
 
 // Today Stack
@@ -104,6 +80,137 @@ const PantryStackScreen = () => (
 import { SettingsScreen } from '../screens/settings/SettingsScreen';
 import { ChangePasswordScreen } from '../screens/settings/ChangePasswordScreen';
 import { AboutScreen } from '../screens/settings/AboutScreen';
+import { planService } from '../services/planService';
+import { ShoppingListScreen } from '../screens/grocery/ShoppingListScreen';
+
+const GroceryStack = createStackNavigator();
+
+// Wrapper to get active plan and navigate to ShoppingList
+const GroceryListWrapper: React.FC<{ navigation: any }> = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    const getActivePlanAndNavigate = async () => {
+      try {
+        const activePlan = await planService.getActivePlan();
+        if (activePlan) {
+          navigation.navigate('ShoppingList', { planId: activePlan.plan_id });
+        }
+      } catch (e) {
+        console.error('Failed to get active plan:', e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getActivePlanAndNavigate();
+  }, [navigation]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color={colors.primary} />
+        <Text style={styles.loadingText}>Ładowanie...</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.loading}>
+      <Text style={styles.noPlanText}>Brak aktywnego planu</Text>
+      <Text style={styles.noPlanSubtext}>Utwórz plan, aby zobaczyć listę produktów</Text>
+    </View>
+  );
+};
+
+// Wrapper to get active plan and navigate to ShoppingList
+const ShoppingListWrapper: React.FC<{ navigation: any }> = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    const getActivePlanAndNavigate = async () => {
+      try {
+        const activePlan = await planService.getActivePlan();
+        if (activePlan) {
+          navigation.navigate('ShoppingList', { planId: activePlan.plan_id });
+        }
+      } catch (e) {
+        console.error('Failed to get active plan:', e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getActivePlanAndNavigate();
+  }, [navigation]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color={colors.primary} />
+        <Text style={styles.loadingText}>Ładowanie...</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.loading}>
+      <Text style={styles.noPlanText}>Brak aktywnego planu</Text>
+      <Text style={styles.noPlanSubtext}>Utwórz plan, aby zobaczyć listę zakupów</Text>
+    </View>
+  );
+};
+
+const GroceryStackScreen = () => (
+  <GroceryStack.Navigator
+    screenOptions={{
+      headerStyle: { backgroundColor: colors.primary },
+      headerTintColor: colors.white,
+      headerTitleStyle: { fontWeight: typography.fontWeight.semiBold },
+      headerBackTitleVisible: false,
+    }}
+  >
+    <GroceryStack.Screen 
+      name="ShoppingListMain" 
+      component={ShoppingListWrapper} 
+      options={{ title: 'Zakupy' }} 
+    />
+    <GroceryStack.Screen 
+      name="ShoppingList" 
+      component={ShoppingListScreen} 
+      options={{ title: 'Zakupy' }} 
+    />
+    <GroceryStack.Screen 
+      name="GroceryList" 
+      component={GroceryListScreen} 
+      options={{ title: 'Potrzebne produkty' }} 
+    />
+  </GroceryStack.Navigator>
+);
+
+const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.background,
+    padding: spacing.lg,
+  },
+  loadingText: {
+    marginTop: spacing.sm,
+    fontSize: typography.fontSize.md,
+    color: colors.textSecondary,
+  },
+  noPlanText: {
+    fontSize: typography.fontSize.lg,
+    fontWeight: typography.fontWeight.semiBold,
+    color: colors.textPrimary,
+    marginBottom: spacing.xs,
+  },
+  noPlanSubtext: {
+    fontSize: typography.fontSize.md,
+    color: colors.textSecondary,
+    textAlign: 'center',
+  },
+});
 
 const SettingsStack = createStackNavigator();
 
@@ -153,17 +260,17 @@ export const MainNavigator: React.FC = () => {
         }}
       />
       <Tab.Screen
-        name="Plans"
-        component={PlansStackScreen}
-        options={{
-          tabBarLabel: 'Moje plany',
-        }}
-      />
-      <Tab.Screen
         name="Pantry"
         component={PantryStackScreen}
         options={{
           tabBarLabel: 'Spiżarnia',
+        }}
+      />
+      <Tab.Screen
+        name="Grocery"
+        component={GroceryStackScreen}
+        options={{
+          tabBarLabel: 'Zakupy',
         }}
       />
       <Tab.Screen
