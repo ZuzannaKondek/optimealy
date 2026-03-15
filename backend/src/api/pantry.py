@@ -8,7 +8,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from sqlalchemy import select, delete
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database.connection import get_db
@@ -156,7 +156,8 @@ async def update_user_pantry(
     """
     Update user's pantry items with quantities.
 
-    Replaces the entire pantry with the provided list of items and their quantities.
+    Merges the provided items with existing pantry items (adds quantities for items
+    that already exist, adds new items for those that don't).
     """
     # Validate that all product IDs exist
     product_ids = [UUID(item.product_id) for item in request.items]
@@ -174,14 +175,19 @@ async def update_user_pantry(
                 status_code=400, detail=f"Quantity must be positive for product {item.product_id}"
             )
 
-    # Delete existing pantry items for this user
-    delete_query = delete(UserPantryItem).where(UserPantryItem.user_id == current_user.id)
-    await db.execute(delete_query)
+    # Get existing pantry items for this user
+    existing_stmt = select(UserPantryItem).where(UserPantryItem.user_id == current_user.id)
+    existing_result = await db.execute(existing_stmt)
+    existing_items = {str(item.product_id): item for item in existing_result.scalars().all()}
 
-    # Insert new pantry items with user-specified quantities
+    # Process items: merge quantities for existing items, add new items
     from datetime import date
 
+    # Track product IDs that were in the request
+    requested_product_ids = {item.product_id for item in request.items}
+
     for item in request.items:
+        product_id = item.product_id
         expiry = None
         if item.expiry_date:
             try:
@@ -189,13 +195,26 @@ async def update_user_pantry(
             except ValueError:
                 pass  # Ignore invalid dates
 
-        pantry_item = UserPantryItem(
-            user_id=current_user.id,
-            product_id=UUID(item.product_id),
-            quantity_g=item.quantity_g,
-            expiry_date=expiry,
-        )
-        db.add(pantry_item)
+        if product_id in existing_items:
+            # Update existing pantry item - REPLACE the quantity (not add)
+            existing_item = existing_items[product_id]
+            existing_item.quantity_g = float(item.quantity_g)
+            if expiry:
+                existing_item.expiry_date = expiry
+        else:
+            # Add new pantry item
+            pantry_item = UserPantryItem(
+                user_id=current_user.id,
+                product_id=UUID(product_id),
+                quantity_g=item.quantity_g,
+                expiry_date=expiry,
+            )
+            db.add(pantry_item)
+
+    # Remove items that were deleted on the client (not in request)
+    for product_id, existing_item in existing_items.items():
+        if product_id not in requested_product_ids:
+            await db.delete(existing_item)
 
     await db.commit()
 

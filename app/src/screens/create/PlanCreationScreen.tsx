@@ -22,6 +22,7 @@ import { colors, spacing, typography } from '../../theme';
 import type { PlanCreationFormData } from '../../types/models';
 import { MealTypeSelector, type MealType } from '../../components/create/MealTypeSelector';
 import { PlanCreationErrorModal } from '../../components/create/PlanCreationErrorModal';
+import { PlanCreationLoadingModal } from '../../components/create/PlanCreationLoadingModal';
 import { getApiErrorMessage } from '../../utils/apiErrors';
 
 /**
@@ -198,6 +199,10 @@ export const PlanCreationScreen: React.FC = () => {
 
   return (
     <>
+      <PlanCreationLoadingModal
+        visible={creationState.isCreating}
+        planName={formData.name}
+      />
       <PlanCreationErrorModal
         visible={creationState.status === 'failed'}
         message={creationState.error || 'Optymalizator nie mógł znaleźć planu spełniającego Twoje ograniczenia.'}

@@ -1,14 +1,54 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert, Animated, Dimensions } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { planService } from '../../services/planService';
 import { pantryService } from '../../services/pantryService';
 import { CategorySection } from '../../components/grocery/CategorySection';
+import { GroceryItemCard } from '../../components/grocery/GroceryItemCard';
 import { colors, spacing, typography } from '../../theme';
 import type { GroceryList, GroceryItem } from '../../types/models';
 
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
 type RouteParams = {
   planId: string;
+};
+
+// Animated item wrapper for slide-out effect
+const AnimatedGroceryItem: React.FC<{
+  item: GroceryItem;
+  onPress: () => void;
+  onAnimationComplete: () => void;
+}> = ({ item, onPress, onAnimationComplete }) => {
+  const slideAnim = React.useRef(new Animated.Value(0)).current;
+  const opacityAnim = React.useRef(new Animated.Value(1)).current;
+
+  React.useEffect(() => {
+    Animated.parallel([
+      Animated.timing(slideAnim, {
+        toValue: -SCREEN_WIDTH,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacityAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      onAnimationComplete();
+    });
+  }, [slideAnim, opacityAnim, onAnimationComplete]);
+
+  return (
+    <Animated.View
+      style={[
+        { transform: [{ translateX: slideAnim }], opacity: opacityAnim },
+      ]}
+    >
+      <GroceryItemCard item={item} onPress={onPress} />
+    </Animated.View>
+  );
 };
 
 export const ShoppingListScreen: React.FC = () => {
@@ -18,6 +58,7 @@ export const ShoppingListScreen: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [groceryList, setGroceryList] = React.useState<GroceryList | null>(null);
+  const [removingItem, setRemovingItem] = React.useState<GroceryItem | null>(null);
 
   React.useEffect(() => {
     let cancelled = false;
@@ -59,6 +100,32 @@ export const ShoppingListScreen: React.FC = () => {
       setGroceryList(list);
     } catch (e: any) {
       Alert.alert('Błąd', e?.response?.data?.detail || 'Nie udało się dodać produktów do spiżarni');
+    }
+  };
+
+  const handleItemBought = async (item: GroceryItem) => {
+    // Start animation - don't refresh list yet
+    setRemovingItem(item);
+  };
+
+  const handleAnimationComplete = async () => {
+    if (!removingItem) return;
+    
+    try {
+      await pantryService.updatePantry([
+        {
+          product_id: removingItem.product_id,
+          quantity_g: removingItem.required_quantity_g,
+        },
+      ]);
+      Alert.alert('Sukces', `Dodano "${removingItem.product_name}" do spiżarni`);
+    } catch (e: any) {
+      Alert.alert('Błąd', e?.response?.data?.detail || 'Nie udało się dodać produktu do spiżarni');
+    } finally {
+      setRemovingItem(null);
+      // Reload the list
+      const list = await planService.getGroceryList(planId, { groupBy: 'category' });
+      setGroceryList(list);
     }
   };
 
@@ -117,9 +184,21 @@ export const ShoppingListScreen: React.FC = () => {
 
       {categories.map((category) => (
         <CategorySection key={category} title={category}>
-          {grouped[category].map((item) => (
-            <ShoppingItemCard key={item.item_id} item={item} />
-          ))}
+          {grouped[category].map((item) => {
+            if (removingItem?.item_id === item.item_id) {
+              return (
+                <AnimatedGroceryItem
+                  key={item.item_id}
+                  item={item}
+                  onPress={() => {}}
+                  onAnimationComplete={handleAnimationComplete}
+                />
+              );
+            }
+            return (
+              <GroceryItemCard key={item.item_id} item={item} onPress={() => handleItemBought(item)} />
+            );
+          })}
         </CategorySection>
       ))}
     </ScrollView>
@@ -127,28 +206,7 @@ export const ShoppingListScreen: React.FC = () => {
 };
 
 // Simple shopping item card without add button
-const ShoppingItemCard: React.FC<{ item: GroceryItem }> = ({ item }) => {
-  const recipes = item.used_in_recipes ?? [];
-  const recipePreview = recipes.slice(0, 2).map((r: any) => r.recipe_name).join(', ');
-  const moreCount = recipes.length > 2 ? recipes.length - 2 : 0;
-
-  return (
-    <View style={styles.card}>
-      <Text style={styles.titleText}>{item.product_name}</Text>
-
-      <Text style={styles.meta}>
-        Kup: {Math.round(item.purchase_quantity_g)} {item.purchase_unit}
-      </Text>
-
-      {recipes.length > 0 ? (
-        <Text style={styles.usedIn}>
-          Użyte w: {recipePreview}
-          {moreCount ? ` +${moreCount} więcej` : ''}
-        </Text>
-      ) : null}
-    </View>
-  );
-};
+// Removed - now using GroceryItemCard from components
 
 const styles = StyleSheet.create({
   container: {

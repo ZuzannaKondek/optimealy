@@ -1,18 +1,22 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import type { GroceryItem } from '../../types/models';
 import { colors, spacing, typography } from '../../theme';
 
 type Props = {
   item: GroceryItem;
+  onPress?: () => void;
 };
 
-export const GroceryItemCard: React.FC<Props> = ({ item }) => {
+export const GroceryItemCard: React.FC<Props> = ({ item, onPress }) => {
   const isAlreadyOwned = item.status === 'already_have';
-  const statusLabel = isAlreadyOwned ? 'Mam' : item.status === 'purchased' ? 'Kupione' : 'Potrzebne';
+  const isNeeded = item.status === 'needed';
+  const isPurchased = item.status === 'purchased';
+  const isClickable = !isAlreadyOwned && !isNeeded && !!onPress;
+  const statusLabel = isAlreadyOwned ? 'Mam' : isPurchased ? 'Kupione' : 'Potrzebne';
 
   const recipes = item.used_in_recipes ?? [];
-  const recipePreview = recipes.slice(0, 2).map((r) => r.recipe_name).join(', ');
+  const recipePreview = recipes.slice(0, 2).map((r: { recipe_name: string }) => r.recipe_name).join(', ');
   const moreCount = recipes.length > 2 ? recipes.length - 2 : 0;
 
   const showExactBadge = item.exact_quantity === true;
@@ -20,8 +24,8 @@ export const GroceryItemCard: React.FC<Props> = ({ item }) => {
   const toBuy = Math.max(0, item.purchase_quantity_g - item.estimated_item_waste_g);
   const owned = Math.max(0, Math.round(item.required_quantity_g - toBuy));
 
-  return (
-    <View style={[styles.card, isAlreadyOwned && styles.cardOwned]}>
+  const CardContent = () => (
+    <View style={[styles.card, isAlreadyOwned && styles.cardOwned, isClickable && styles.cardClickable]}>
       <View style={styles.headerRow}>
         {isAlreadyOwned && (
           <View style={styles.checkmark}>
@@ -55,6 +59,16 @@ export const GroceryItemCard: React.FC<Props> = ({ item }) => {
       ) : null}
     </View>
   );
+
+  if (isClickable) {
+    return (
+      <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
+        <CardContent />
+      </TouchableOpacity>
+    );
+  }
+
+  return <CardContent />;
 };
 
 const styles = StyleSheet.create({
@@ -70,6 +84,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0fff4',
     borderColor: colors.success,
     borderWidth: 2,
+  },
+  cardClickable: {
+    borderColor: colors.primary,
+    borderWidth: 1,
   },
   headerRow: {
     flexDirection: 'row',

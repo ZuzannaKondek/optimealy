@@ -26,8 +26,8 @@ import { colors, spacing, typography } from '../../theme';
 export const PantryScreen: React.FC = () => {
   const { items, staples, isLoading, error, fetchPantry, fetchStaples, updatePantry, searchProducts } = usePantry();
   
-  // Track quantities per product ID with optional expiry date
-  const [quantities, setQuantities] = useState<Map<string, { quantity: number; expiryDate?: string }>>(new Map());
+  // Track quantities per product ID with product details
+  const [quantities, setQuantities] = useState<Map<string, { quantity: number; expiryDate?: string; productName?: string; category?: string }>>(new Map());
   const [isSaving, setIsSaving] = useState(false);
 
   // Search state
@@ -48,13 +48,15 @@ export const PantryScreen: React.FC = () => {
     loadData();
   }, [fetchPantry, fetchStaples]);
 
-  // Update quantities map when items load
+  // Update quantities map when items load (sync from backend with product details)
   useEffect(() => {
-    const newQuantities = new Map<string, { quantity: number; expiryDate?: string }>();
+    const newQuantities = new Map<string, { quantity: number; expiryDate?: string; productName?: string; category?: string }>();
     items.forEach((item) => {
       newQuantities.set(item.product_id, { 
         quantity: item.quantity_g, 
-        expiryDate: item.expiry_date 
+        expiryDate: item.expiry_date,
+        productName: item.product_name,
+        category: item.category,
       });
     });
     setQuantities(newQuantities);
@@ -83,13 +85,13 @@ export const PantryScreen: React.FC = () => {
     return () => clearTimeout(timer);
   }, [searchQuery, searchProducts]);
 
-  const toggleItem = (productId: string, defaultQuantity: number) => {
+  const toggleItem = (productId: string, defaultQuantity: number, productName?: string, category?: string) => {
     setQuantities((prev) => {
       const newMap = new Map(prev);
       if (newMap.has(productId)) {
         newMap.delete(productId);
       } else {
-        newMap.set(productId, { quantity: defaultQuantity });
+        newMap.set(productId, { quantity: defaultQuantity, productName, category });
       }
       return newMap;
     });
@@ -100,7 +102,7 @@ export const PantryScreen: React.FC = () => {
       const newMap = new Map(prev);
       const existing = newMap.get(productId);
       if (quantity > 0) {
-        newMap.set(productId, { quantity, expiryDate: existing?.expiryDate });
+        newMap.set(productId, { quantity, expiryDate: existing?.expiryDate, productName: existing?.productName, category: existing?.category });
       } else {
         newMap.delete(productId);
       }
@@ -123,8 +125,8 @@ export const PantryScreen: React.FC = () => {
     setQuantities((prev) => {
       const newMap = new Map(prev);
       if (!newMap.has(product.product_id)) {
-        // Default to 500g or common package size
-        newMap.set(product.product_id, { quantity: 500 });
+        // Store product details along with quantity
+        newMap.set(product.product_id, { quantity: 500, productName: product.product_name, category: product.category });
       }
       return newMap;
     });
@@ -169,7 +171,27 @@ export const PantryScreen: React.FC = () => {
     );
   }
 
-  // Get products that are in the pantry (either from search or staples)
+  // Category to icon mapping
+  const getCategoryIcon = (category?: string): string => {
+    const iconMap: Record<string, string> = {
+      oil: '🫒',
+      condiment: '🧂',
+      spice: '🌶️',
+      herb: '🌿',
+      grain: '🌾',
+      dairy: '🥛',
+      protein: '🥚',
+      vegetable: '🥕',
+      fruit: '🍎',
+      meat: '🥩',
+      fish: '🐟',
+      beverage: '🥤',
+      other: '🥫',
+    };
+    return iconMap[category || 'other'] || '🥫';
+  };
+
+  // Get products that are in the pantry (either from staples or stored product details)
   const pantryProducts = [
     ...staples.filter(s => quantities.has(s.product_id)).map(s => ({
       product_id: s.product_id,
@@ -180,11 +202,11 @@ export const PantryScreen: React.FC = () => {
     })),
     ...Array.from(quantities.entries())
       .filter(([id]) => !staples.find(s => s.product_id === id))
-      .map(([product_id]) => ({
+      .map(([product_id, data]) => ({
         product_id,
-        product_name: searchResults.find(r => r.product_id === product_id)?.product_name || 'Nieznany',
-        category: searchResults.find(r => r.product_id === product_id)?.category || 'other',
-        icon: '🥫',
+        product_name: data.productName || 'Nieznany',
+        category: data.category || 'other',
+        icon: getCategoryIcon(data.category),
         isStaple: false,
       }))
   ];
@@ -244,7 +266,7 @@ export const PantryScreen: React.FC = () => {
                 icon={product.icon}
                 quantity={quantities.get(product.product_id)?.quantity}
                 expiryDate={quantities.get(product.product_id)?.expiryDate}
-                onToggle={() => toggleItem(product.product_id, 500)}
+                onToggle={() => toggleItem(product.product_id, 500, product.product_name, product.category)}
                 onQuantityChange={(qty) => updateQuantity(product.product_id, qty)}
                 onExpiryDateChange={(date) => updateExpiryDate(product.product_id, date)}
               />
@@ -271,7 +293,7 @@ export const PantryScreen: React.FC = () => {
                     styles.stapleChip,
                     quantities.has(staple.product_id) && styles.stapleChipSelected
                   ]}
-                  onPress={() => toggleItem(staple.product_id, staple.default_quantity_g)}
+                  onPress={() => toggleItem(staple.product_id, staple.default_quantity_g, staple.product_name, staple.category)}
                 >
                   <Text style={styles.stapleIcon}>{staple.icon}</Text>
                   <Text 

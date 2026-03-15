@@ -1,14 +1,54 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert, Animated, Dimensions } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { planService } from '../../services/planService';
+import { pantryService } from '../../services/pantryService';
 import { GroceryItemCard } from '../../components/grocery/GroceryItemCard';
 import { CategorySection } from '../../components/grocery/CategorySection';
 import { colors, spacing, typography } from '../../theme';
 import type { GroceryList, GroceryItem } from '../../types/models';
 
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
 type RouteParams = {
   planId: string;
+};
+
+// Animated item wrapper for slide-out effect
+const AnimatedGroceryItem: React.FC<{
+  item: GroceryItem;
+  onPress: () => void;
+  onAnimationComplete: () => void;
+}> = ({ item, onPress, onAnimationComplete }) => {
+  const slideAnim = React.useRef(new Animated.Value(0)).current;
+  const opacityAnim = React.useRef(new Animated.Value(1)).current;
+
+  React.useEffect(() => {
+    Animated.parallel([
+      Animated.timing(slideAnim, {
+        toValue: -SCREEN_WIDTH,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacityAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      onAnimationComplete();
+    });
+  }, [slideAnim, opacityAnim, onAnimationComplete]);
+
+  return (
+    <Animated.View
+      style={[
+        { transform: [{ translateX: slideAnim }], opacity: opacityAnim },
+      ]}
+    >
+      <GroceryItemCard item={item} onPress={onPress} />
+    </Animated.View>
+  );
 };
 
 export const GroceryListScreen: React.FC = () => {
@@ -19,6 +59,7 @@ export const GroceryListScreen: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [groceryList, setGroceryList] = React.useState<GroceryList | null>(null);
+  const [removingItem, setRemovingItem] = React.useState<GroceryItem | null>(null);
 
   React.useEffect(() => {
     let cancelled = false;
@@ -55,6 +96,34 @@ export const GroceryListScreen: React.FC = () => {
       screen: 'ShoppingList',
       params: { planId },
     });
+  };
+
+  const handleItemBought = async (item: GroceryItem) => {
+    if (item.status === 'already_have') return;
+    
+    // Start animation - don't refresh list yet
+    setRemovingItem(item);
+  };
+
+  const handleAnimationComplete = async () => {
+    if (!removingItem) return;
+    
+    try {
+      await pantryService.updatePantry([
+        {
+          product_id: removingItem.product_id,
+          quantity_g: removingItem.required_quantity_g,
+        },
+      ]);
+      Alert.alert('Sukces', `Dodano "${removingItem.product_name}" do spiżarni`);
+    } catch (e: any) {
+      Alert.alert('Błąd', e?.response?.data?.detail || 'Nie udało się dodać produktu do spiżarni');
+    } finally {
+      setRemovingItem(null);
+      // Reload the list
+      const list = await planService.getGroceryList(planId, { groupBy: 'category' });
+      setGroceryList(list);
+    }
   };
 
   if (!planId) {
@@ -111,9 +180,26 @@ export const GroceryListScreen: React.FC = () => {
 
       {categories.map((category) => (
         <CategorySection key={category} title={category}>
-          {grouped[category].map((item) => (
-            <GroceryItemCard key={item.item_id} item={item} />
-          ))}
+          {grouped[category].map((item) => {
+            const isRemoving = removingItem?.item_id === item.item_id;
+            if (isRemoving) {
+              return (
+                <AnimatedGroceryItem
+                  key={item.item_id}
+                  item={item}
+                  onPress={() => {}}
+                  onAnimationComplete={handleAnimationComplete}
+                />
+              );
+            }
+            return (
+              <GroceryItemCard 
+                key={item.item_id} 
+                item={item} 
+                onPress={item.status !== 'already_have' ? () => handleItemBought(item) : undefined} 
+              />
+            );
+          })}
         </CategorySection>
       ))}
     </ScrollView>
