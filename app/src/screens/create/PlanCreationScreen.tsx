@@ -218,7 +218,7 @@ export const PlanCreationScreen: React.FC = () => {
           onChangeText={(text) => setFormData((prev) => ({ ...prev, name: text }))}
           placeholder="np. Tydzień 13 lutego"
           maxLength={255}
-          accessibilityLabel="Plan name"
+          accessibilityLabel="Nazwa planu"
         />
         {errors.name && (
           <Text style={styles.errorText}>{errors.name}</Text>

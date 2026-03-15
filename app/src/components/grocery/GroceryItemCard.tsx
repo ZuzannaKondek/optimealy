@@ -9,7 +9,7 @@ type Props = {
 
 export const GroceryItemCard: React.FC<Props> = ({ item }) => {
   const isAlreadyOwned = item.status === 'already_have';
-  const statusLabel = isAlreadyOwned ? 'Already have' : item.status === 'purchased' ? 'Purchased' : 'Needed';
+  const statusLabel = isAlreadyOwned ? 'Mam' : item.status === 'purchased' ? 'Kupione' : 'Potrzebne';
 
   const recipes = item.used_in_recipes ?? [];
   const recipePreview = recipes.slice(0, 2).map((r) => r.recipe_name).join(', ');
@@ -33,24 +33,24 @@ export const GroceryItemCard: React.FC<Props> = ({ item }) => {
       </View>
 
       <Text style={styles.meta}>
-        Buy: {Math.round(item.purchase_quantity_g)} {item.purchase_unit} • Total need:{' '}
+        Kup: {Math.round(item.purchase_quantity_g)} {item.purchase_unit} • Łączne zapotrzebowanie:{' '}
         {Math.round(item.required_quantity_g)}g
-        {owned > 0 && <Text style={styles.ownedHint}> • In pantry: {owned}g</Text>}
-        {showExactBadge && <Text style={styles.exactBadge}> • Exact weight</Text>}
+        {owned > 0 && <Text style={styles.ownedHint}> • W spiżarni: {owned}g</Text>}
+        {showExactBadge && <Text style={styles.exactBadge}> • Dokładna waga</Text>}
       </Text>
 
       <View style={styles.footerRow}>
         {waste > 0 ? (
-          <Text style={styles.wasteText}>Waste: {waste}g</Text>
+          <Text style={styles.wasteText}>Odpady: {waste}g</Text>
         ) : (
-          <Text style={styles.noWasteText}>No waste</Text>
+          <Text style={styles.noWasteText}>Bez odpadów</Text>
         )}
       </View>
 
       {recipes.length > 0 ? (
         <Text style={styles.usedIn}>
-          Used in: {recipePreview}
-          {moreCount ? ` +${moreCount} more` : ''}
+          Użyte w: {recipePreview}
+          {moreCount ? ` +${moreCount} więcej` : ''}
         </Text>
       ) : null}
     </View>

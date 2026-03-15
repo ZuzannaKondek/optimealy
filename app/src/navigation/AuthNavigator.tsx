@@ -35,12 +35,12 @@ export const AuthNavigator: React.FC = () => {
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{ title: 'Login to OptiMeal' }}
+        options={{ title: 'Zaloguj się' }}
       />
       <Stack.Screen
         name="Registration"
         component={RegistrationScreen}
-        options={{ title: 'Create Account' }}
+        options={{ title: 'Utwórz konto' }}
       />
     </Stack.Navigator>
   );

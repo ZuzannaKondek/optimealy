@@ -63,9 +63,9 @@ export const MealCard: React.FC<Props> = ({ meal, isDishBasedPlan = false }) => 
           {calories != null ? formatCalories(calories) : 'kcal —'}
         </Text>
         <Text style={styles.metric}>
-          {protein != null ? `P ${formatNutritionalValue(protein, unitPreference)}` : 'P —'} •{' '}
-          {carbs != null ? `C ${formatNutritionalValue(carbs, unitPreference)}` : 'C —'} •{' '}
-          {fat != null ? `F ${formatNutritionalValue(fat, unitPreference)}` : 'F —'}
+          {protein != null ? `B ${formatNutritionalValue(protein, unitPreference)}` : 'B —'} •{' '}
+          {carbs != null ? `W ${formatNutritionalValue(carbs, unitPreference)}` : 'W —'} •{' '}
+          {fat != null ? `T ${formatNutritionalValue(fat, unitPreference)}` : 'T —'}
         </Text>
       </View>
     </View>

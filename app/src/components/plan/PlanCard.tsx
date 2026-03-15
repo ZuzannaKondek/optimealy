@@ -10,18 +10,18 @@ type Props = {
 
 export const PlanCard: React.FC<Props> = ({ plan, onPress }) => {
   const wasteText =
-    plan.estimated_food_waste_g != null ? `${Math.round(plan.estimated_food_waste_g)}g waste` : 'Waste: —';
+    plan.estimated_food_waste_g != null ? `${Math.round(plan.estimated_food_waste_g)}g odpadów` : 'Odpady: —';
 
   // Display execution status when available (draft/active/completed/cancelled), else optimization status
   const displayStatus =
     plan.execution_status === 'draft'
-      ? 'Draft'
+      ? 'Szkic'
       : plan.execution_status === 'active'
-      ? 'Active'
+      ? 'Aktywny'
       : plan.execution_status === 'completed'
-      ? 'Completed'
+      ? 'Zakończony'
       : plan.execution_status === 'cancelled'
-      ? 'Cancelled'
+      ? 'Anulowany'
       : plan.optimization_status;
 
   // Styling: prefer execution_status for user-facing state, fall back to optimization_status
@@ -46,7 +46,7 @@ export const PlanCard: React.FC<Props> = ({ plan, onPress }) => {
       activeOpacity={0.8}
       style={styles.card}
       accessibilityRole="button"
-      accessibilityLabel={plan.name || `Meal plan starting ${plan.start_date}`}
+      accessibilityLabel={plan.name || `Plan posiłków rozpoczynający się ${plan.start_date}`}
     >
       <View style={styles.headerRow}>
         <Text style={styles.title}>
@@ -56,7 +56,7 @@ export const PlanCard: React.FC<Props> = ({ plan, onPress }) => {
       </View>
 
       <View style={styles.row}>
-        <Text style={styles.meta}>Target: {plan.target_calories_per_day} kcal/day</Text>
+        <Text style={styles.meta}>Cel: {plan.target_calories_per_day} kcal/dzień</Text>
       </View>
 
       <View style={styles.footerRow}>
