@@ -1,67 +1,62 @@
-"""Pantry Staples Configuration
+"""Konfiguracja produktów podstawowych spiżarni
 
-Curated list of common pantry/fridge items that users typically have.
-These are the most common items that cause waste when not tracked.
+Kuratorowana lista typowych produktów spiżarkowych/lodówkowych, które użytkownicy zazwyczaj posiadają.
+Najczęstsze produkty powodujące marnotrawstwo gdy nie są śledzone.
 """
 
-# Curated list of pantry staple product names
-# These should match product names in the database exactly
+# Kuratorowana lista nazw produktów podstawowych
+# Muszą dokładnie odpowiadać nazwom produktów w bazie danych
 PANTRY_STAPLES = [
-    # Oils & Fats
-    "Olive Oil",
-    "Vegetable Oil",
-    "Sesame Oil",
-    "Coconut Oil",
-    "Butter",
-    
-    # Basic Seasonings
-    "Salt",
-    "Black Pepper",
-    "Garlic Powder",
-    "Onion Powder",
-    "Paprika",
-    "Cumin",
+    # Oleje i tłuszcze
+    "Oliwa z oliwek",
+    "Olej roślinny",
+    "Olej sezamowy",
+    "Olej kokosowy",
+    "Masło",
+    # Podstawowe przyprawy
+    "Sól",
+    "Pieprz czarny",
+    "Czosnek granulowany",
+    "Cebula granulowana",
+    "Papryka słodka",
+    "Kmin rzymski",
     "Oregano",
-    "Basil",
-    "Thyme",
-    "Cinnamon",
-    
-    # Condiments & Sauces
-    "Soy Sauce",
-    "Honey",
-    "Mustard",
+    "Bazylia",
+    "Tymianek",
+    "Cynamon",
+    # Sosy i przyprawy
+    "Soy sauce",  # Keep as is - it's a brand/type name
+    "Miód",
+    "Musztarda",
     "Ketchup",
-    "Mayonnaise",
-    "Tomato Sauce",
-    "Olive Oil",
-    "Balsamic Vinegar",
-    "Lemon Juice",
-    
-    # Grains & Starches
-    "Rice",
-    "White Rice",
-    "Brown Rice",
-    "Flour",
-    "Wheat Flour",
-    "Pasta",
+    "Majonez",
+    "Sos pomidorowy",
+    "Oliwa z oliwek",
+    "Ocet balsamiczny",
+    "Sok z cytryny",
+    # Zboża i skrobie
+    "Ryż",
+    "Ryż biały",
+    "Ryż brązowy",
+    "Mąka",
+    "Mąka pszenna",
+    "Makaron",
     "Spaghetti",
-    "Bread",
-    "Oats",
-    
-    # Dairy & Eggs
-    "Eggs",
-    "Milk",
-    "Butter",
-    "Cheese",
-    "Greek Yogurt",
-    "Parmesan",
-    
-    # Common Vegetables (long shelf life)
-    "Onion",
-    "Garlic",
-    "Potatoes",
-    "Carrots",
+    "Chleb",
+    "Płatki owsiane",
+    # Nabiał i jaja
+    "Jaja",
+    "Mleko",
+    "Masło",
+    "Ser",
+    "Jogurt grecki",
+    "Parmezan",
+    # Warzywa (długi okres przydatności)
+    "Cebula",
+    "Czosnek",
+    "Ziemniaki",
+    "Marchewka",
 ]
 
-# Remove duplicates while preserving order
+# Usuń duplikaty zachowując kolejność
 PANTRY_STAPLES = list(dict.fromkeys(PANTRY_STAPLES))

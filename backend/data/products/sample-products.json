@@ -1,6 +1,6 @@
 [
   {
-    "name": "Chicken Breast",
+    "name": "Pierś z kurczaka",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 165,
@@ -19,7 +19,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Ground Beef",
+    "name": "Mięso mielone wołowe",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 250,
@@ -38,7 +38,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Salmon Fillet",
+    "name": "Filet z łososia",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 208,
@@ -57,7 +57,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Tuna Steak",
+    "name": "Stek z tuńczyka",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 184,
@@ -76,7 +76,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Turkey Breast",
+    "name": "Pierś z indyka",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 135,
@@ -95,7 +95,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Pork Tenderloin",
+    "name": "Polędwica wieprzowa",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 143,
@@ -114,7 +114,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Lamb Chops",
+    "name": "Kotlet jagnięcy",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 294,
@@ -133,7 +133,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Shrimp",
+    "name": "Krewetki",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 99,
@@ -152,7 +152,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Cod Fillet",
+    "name": "Filet z dorsza",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 82,
@@ -171,7 +171,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Eggs",
+    "name": "Jaja",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 155,
@@ -190,7 +190,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Chicken Thighs",
+    "name": "Udka z kurczaka",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 209,
@@ -209,7 +209,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Beef Steak",
+    "name": "Stek wołowy",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 271,
@@ -228,7 +228,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Chicken Wings",
+    "name": "Skrzydła z kurczaka",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 203,
@@ -247,7 +247,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Ground Turkey",
+    "name": "Mięso mielone z indyka",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 189,
@@ -266,7 +266,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Duck Breast",
+    "name": "Pierś z kaczki",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 337,
@@ -285,7 +285,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Mackerel",
+    "name": "Makrela",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 262,
@@ -304,7 +304,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Sardines",
+    "name": "Sardynki",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 208,
@@ -323,7 +323,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Anchovies",
+    "name": "Anchois",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 210,
@@ -380,7 +380,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Chickpeas",
+    "name": "Ciecierzyca",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 164,
@@ -399,7 +399,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Black Beans",
+    "name": "Czarna fasola",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 132,
@@ -418,7 +418,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Lentils",
+    "name": "Soczewica",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 116,
@@ -437,7 +437,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Kidney Beans",
+    "name": "Fasola czerwona",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 127,
@@ -456,7 +456,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Pinto Beans",
+    "name": "Fasola pinto",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 143,
@@ -475,7 +475,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Greek Yogurt",
+    "name": "Jogurt grecki",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 59,
@@ -494,7 +494,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Cottage Cheese",
+    "name": "Twaróg",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 98,
@@ -532,7 +532,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Feta Cheese",
+    "name": "Ser feta",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 264,
@@ -551,7 +551,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Parmesan",
+    "name": "Parmezan",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 431,
@@ -570,7 +570,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Lettuce",
+    "name": "Sałata",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 15,
@@ -588,7 +588,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Tomatoes",
+    "name": "Pomidory",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 18,
@@ -606,7 +606,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Onion",
+    "name": "Cebula",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 40,
@@ -624,7 +624,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Garlic",
+    "name": "Czosnek",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 149,
@@ -642,7 +642,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Carrots",
+    "name": "Marchewka",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 41,
@@ -660,7 +660,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Broccoli",
+    "name": "Brokuły",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 34,
@@ -678,7 +678,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Spinach",
+    "name": "Szpinak",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 23,
@@ -714,7 +714,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Cucumber",
+    "name": "Ogórek",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 16,
@@ -732,7 +732,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Zucchini",
+    "name": "Cukinia",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 17,
@@ -750,7 +750,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Eggplant",
+    "name": "Bakłażan",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 25,
@@ -768,7 +768,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Mushrooms",
+    "name": "Grzyby",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 22,
@@ -786,7 +786,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Cauliflower",
+    "name": "Kalafior",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 25,
@@ -804,7 +804,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Cabbage",
+    "name": "Kapusta",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 25,
@@ -822,7 +822,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Kale",
+    "name": "Jarmuż",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 49,
@@ -840,7 +840,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Arugula",
+    "name": "Rukola",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 25,
@@ -858,7 +858,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Celery",
+    "name": "Seler",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 16,
@@ -876,7 +876,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Asparagus",
+    "name": "Szparagi",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 20,
@@ -894,7 +894,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Green Beans",
+    "name": "Fasolka szparagowa",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 31,
@@ -912,7 +912,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Peas",
+    "name": "Groszek",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 81,
@@ -930,7 +930,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Corn",
+    "name": "Kukurydza",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 86,
@@ -948,7 +948,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Potatoes",
+    "name": "Ziemniaki",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 77,
@@ -966,7 +966,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Sweet Potatoes",
+    "name": "Bataty",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 86,
@@ -984,7 +984,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Radishes",
+    "name": "Rzodkiewki",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 16,
@@ -1020,7 +1020,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Turnips",
+    "name": "Rzepa",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 28,
@@ -1056,7 +1056,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Fennel",
+    "name": "Fenkuł",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 31,
@@ -1074,7 +1074,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Brussels Sprouts",
+    "name": "Brukselka",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 43,
@@ -1092,7 +1092,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Artichokes",
+    "name": "Karczochy",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 47,
@@ -1146,7 +1146,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Swiss Chard",
+    "name": "Boćwina",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 19,
@@ -1164,7 +1164,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Collard Greens",
+    "name": "Kapusta włoska",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 32,
@@ -1200,7 +1200,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Watercress",
+    "name": "Rukiew wodna",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 11,
@@ -1218,7 +1218,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Romaine Lettuce",
+    "name": "Sałata rzymska",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 17,
@@ -1236,7 +1236,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Iceberg Lettuce",
+    "name": "Sałata lodowa",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 14,
@@ -1254,7 +1254,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Red Cabbage",
+    "name": "Kapusta czerwona",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 31,
@@ -1272,7 +1272,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Butternut Squash",
+    "name": "Dynia piżmowa",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 45,
@@ -1380,7 +1380,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Grapes",
+    "name": "Winogrona",
     "category": "fruit",
     "nutritional_info_per_100g": {
       "calories": 69,
@@ -1416,7 +1416,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Pineapple",
+    "name": "Ananas",
     "category": "fruit",
     "nutritional_info_per_100g": {
       "calories": 50,
@@ -1470,7 +1470,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Cherries",
+    "name": "Wiśnie",
     "category": "fruit",
     "nutritional_info_per_100g": {
       "calories": 63,
@@ -1596,7 +1596,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Avocado",
+    "name": "Awokado",
     "category": "fruit",
     "nutritional_info_per_100g": {
       "calories": 160,
@@ -1614,7 +1614,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Watermelon",
+    "name": "Arbuz",
     "category": "fruit",
     "nutritional_info_per_100g": {
       "calories": 30,
@@ -1632,7 +1632,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Cantaloupe",
+    "name": "Kantalupa",
     "category": "fruit",
     "nutritional_info_per_100g": {
       "calories": 34,
@@ -1650,7 +1650,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Honeydew",
+    "name": "Miodowy melon",
     "category": "fruit",
     "nutritional_info_per_100g": {
       "calories": 36,
@@ -1722,7 +1722,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Pomegranate",
+    "name": "Granat",
     "category": "fruit",
     "nutritional_info_per_100g": {
       "calories": 83,
@@ -1740,7 +1740,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Papaya",
+    "name": "Papaja",
     "category": "fruit",
     "nutritional_info_per_100g": {
       "calories": 43,
@@ -1758,7 +1758,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Coconut",
+    "name": "Kokos",
     "category": "fruit",
     "nutritional_info_per_100g": {
       "calories": 354,
@@ -1776,7 +1776,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Dates",
+    "name": "Daktyle",
     "category": "fruit",
     "nutritional_info_per_100g": {
       "calories": 282,
@@ -1794,7 +1794,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Figs",
+    "name": "Figi",
     "category": "fruit",
     "nutritional_info_per_100g": {
       "calories": 74,
@@ -1812,7 +1812,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Grapefruit",
+    "name": "Grejpfrut",
     "category": "fruit",
     "nutritional_info_per_100g": {
       "calories": 42,
@@ -1830,7 +1830,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Oats",
+    "name": "Płatki owsiane",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 389,
@@ -1868,7 +1868,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Brown Rice",
+    "name": "Ryż brązowy",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 111,
@@ -1887,7 +1887,7 @@
     "perishability": "stable"
   },
   {
-    "name": "White Rice",
+    "name": "Ryż biały",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 130,
@@ -1925,7 +1925,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Barley",
+    "name": "Jęczmień",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 123,
@@ -1963,7 +1963,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Couscous",
+    "name": "Kuskus",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 112,
@@ -2001,7 +2001,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Millet",
+    "name": "Proso",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 378,
@@ -2020,7 +2020,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Wheat Flour",
+    "name": "Mąka pszenna",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 364,
@@ -2039,7 +2039,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Whole Wheat Flour",
+    "name": "Mąka pełnoziarnista",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 340,
@@ -2058,7 +2058,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Bread",
+    "name": "Chleb",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 265,
@@ -2077,7 +2077,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Whole Grain Bread",
+    "name": "Chleb pełnoziarnisty",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 247,
@@ -2096,7 +2096,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Pita Bread",
+    "name": "Chleb pita",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 275,
@@ -2172,7 +2172,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Macaroni",
+    "name": "Makaron",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 371,
@@ -2267,7 +2267,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Wild Rice",
+    "name": "Ryż dziki",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 101,
@@ -2286,7 +2286,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Buckwheat",
+    "name": "Gryka",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 343,
@@ -2305,7 +2305,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Milk",
+    "name": "Mleko",
     "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 42,
@@ -2323,7 +2323,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Greek Yogurt",
+    "name": "Jogurt grecki",
     "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 59,
@@ -2341,7 +2341,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Cottage Cheese",
+    "name": "Twaróg",
     "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 98,
@@ -2377,7 +2377,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Feta Cheese",
+    "name": "Ser feta",
     "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 264,
@@ -2396,7 +2396,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Parmesan",
+    "name": "Parmezan",
     "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 431,
@@ -2415,7 +2415,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Cheddar Cheese",
+    "name": "Ser cheddar",
     "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 402,
@@ -2434,7 +2434,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Swiss Cheese",
+    "name": "Ser szwajcarski",
     "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 380,
@@ -2453,7 +2453,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Goat Cheese",
+    "name": "Ser kozi",
     "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 364,
@@ -2471,7 +2471,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Butter",
+    "name": "Masło",
     "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 717,
@@ -2490,7 +2490,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Heavy Cream",
+    "name": "Śmietanka",
     "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 345,
@@ -2508,7 +2508,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Sour Cream",
+    "name": "Śmietana",
     "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 198,
@@ -2526,7 +2526,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Cream Cheese",
+    "name": "Serek śmietankowy",
     "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 342,
@@ -2580,7 +2580,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Black Pepper",
+    "name": "Pieprz czarny",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 251,
@@ -2598,7 +2598,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Salt",
+    "name": "Sól",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 0,
@@ -2616,7 +2616,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Paprika",
+    "name": "Papryka słodka",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 282,
@@ -2634,7 +2634,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Cumin",
+    "name": "Kmin rzymski",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 375,
@@ -2652,7 +2652,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Turmeric",
+    "name": "Kurkuma",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 354,
@@ -2670,7 +2670,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Cinnamon",
+    "name": "Cynamon",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 247,
@@ -2688,7 +2688,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Ginger",
+    "name": "Imbir",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 80,
@@ -2706,7 +2706,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Garlic Powder",
+    "name": "Czosnek granulowany",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 331,
@@ -2724,7 +2724,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Onion Powder",
+    "name": "Cebula granulowana",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 341,
@@ -2760,7 +2760,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Basil",
+    "name": "Bazylia",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 22,
@@ -2778,7 +2778,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Thyme",
+    "name": "Tymianek",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 101,
@@ -2796,7 +2796,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Rosemary",
+    "name": "Rozmaryn",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 131,
@@ -2814,7 +2814,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Parsley",
+    "name": "Petruszka",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 36,
@@ -2832,7 +2832,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Cilantro",
+    "name": "Kolendra",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 23,
@@ -2850,7 +2850,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Bay Leaves",
+    "name": "Liście laurowe",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 313,
@@ -2868,7 +2868,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Chili Powder",
+    "name": "Papryka chili",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 282,
@@ -2886,7 +2886,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Cayenne Pepper",
+    "name": "Papryka cayenne",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 318,
@@ -2904,7 +2904,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Coriander",
+    "name": "Kolendra",
     "category": "spice",
     "nutritional_info_per_100g": {
       "calories": 298,
@@ -2940,7 +2940,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Lemon Juice",
+    "name": "Sok z cytryny",
     "category": "condiment",
     "nutritional_info_per_100g": {
       "calories": 22,
@@ -2958,7 +2958,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Tomato Sauce",
+    "name": "Sos pomidorowy",
     "category": "condiment",
     "nutritional_info_per_100g": {
       "calories": 29,
@@ -2977,7 +2977,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Honey",
+    "name": "Miód",
     "category": "condiment",
     "nutritional_info_per_100g": {
       "calories": 304,
@@ -2996,7 +2996,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Soy Sauce",
+    "name": "Sos sojowy",
     "category": "condiment",
     "nutritional_info_per_100g": {
       "calories": 53,
@@ -3015,7 +3015,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Balsamic Vinegar",
+    "name": "Ocet balsamiczny",
     "category": "condiment",
     "nutritional_info_per_100g": {
       "calories": 88,
@@ -3034,7 +3034,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Apple Cider Vinegar",
+    "name": "Ocet jabłkowy",
     "category": "condiment",
     "nutritional_info_per_100g": {
       "calories": 21,
@@ -3053,7 +3053,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Worcestershire Sauce",
+    "name": " Sos Worcestershire",
     "category": "condiment",
     "nutritional_info_per_100g": {
       "calories": 78,
@@ -3072,7 +3072,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Hot Sauce",
+    "name": "Sos pikantny",
     "category": "condiment",
     "nutritional_info_per_100g": {
       "calories": 6,
@@ -3091,7 +3091,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Mustard",
+    "name": "Musztarda",
     "category": "condiment",
     "nutritional_info_per_100g": {
       "calories": 66,
@@ -3129,7 +3129,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Mayonnaise",
+    "name": "Majonez",
     "category": "condiment",
     "nutritional_info_per_100g": {
       "calories": 680,
@@ -3166,7 +3166,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Fish Sauce",
+    "name": "Sos rybny",
     "category": "condiment",
     "nutritional_info_per_100g": {
       "calories": 35,
@@ -3185,7 +3185,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Miso Paste",
+    "name": "Pasta miso",
     "category": "condiment",
     "nutritional_info_per_100g": {
       "calories": 199,
@@ -3223,7 +3223,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Olive Oil",
+    "name": "Oliwa z oliwek",
     "category": "oil",
     "nutritional_info_per_100g": {
       "calories": 884,
@@ -3242,7 +3242,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Coconut Oil",
+    "name": "Olej kokosowy",
     "category": "oil",
     "nutritional_info_per_100g": {
       "calories": 862,
@@ -3261,7 +3261,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Vegetable Oil",
+    "name": "Olej roślinny",
     "category": "oil",
     "nutritional_info_per_100g": {
       "calories": 884,
@@ -3280,7 +3280,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Sesame Oil",
+    "name": "Olej sezamowy",
     "category": "oil",
     "nutritional_info_per_100g": {
       "calories": 884,
@@ -3299,7 +3299,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Avocado Oil",
+    "name": "Olej z awokado",
     "category": "oil",
     "nutritional_info_per_100g": {
       "calories": 884,
@@ -3337,7 +3337,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Orange Juice",
+    "name": "Sok pomarańczowy",
     "category": "beverage",
     "nutritional_info_per_100g": {
       "calories": 45,
@@ -3394,7 +3394,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Almond Milk",
+    "name": "Mleko migdałowe",
     "category": "beverage",
     "nutritional_info_per_100g": {
       "calories": 17,
@@ -3413,7 +3413,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Soy Milk",
+    "name": "Mleko sojowe",
     "category": "beverage",
     "nutritional_info_per_100g": {
       "calories": 33,
@@ -3432,7 +3432,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Oat Milk",
+    "name": "Mleko owsiane",
     "category": "beverage",
     "nutritional_info_per_100g": {
       "calories": 47,
@@ -3451,7 +3451,7 @@
     "perishability": "moderate"
   },
   {
-    "name": "Chicken Broth",
+    "name": "Bulion z kurczaka",
     "category": "beverage",
     "nutritional_info_per_100g": {
       "calories": 15,
@@ -3470,7 +3470,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Vegetable Broth",
+    "name": "Bulion warzywny",
     "category": "beverage",
     "nutritional_info_per_100g": {
       "calories": 12,
@@ -3489,7 +3489,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Beef Broth",
+    "name": "Bulion wołowy",
     "category": "beverage",
     "nutritional_info_per_100g": {
       "calories": 16,
@@ -3526,7 +3526,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Almonds",
+    "name": "Migdały",
     "category": "other",
     "nutritional_info_per_100g": {
       "calories": 579,
@@ -3544,7 +3544,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Walnuts",
+    "name": "Orzechy włoskie",
     "category": "other",
     "nutritional_info_per_100g": {
       "calories": 654,
@@ -3562,7 +3562,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Cashews",
+    "name": "Orzechy nerkowca",
     "category": "other",
     "nutritional_info_per_100g": {
       "calories": 553,
@@ -3580,7 +3580,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Peanuts",
+    "name": "Orzeszki ziemne",
     "category": "other",
     "nutritional_info_per_100g": {
       "calories": 567,
@@ -3598,7 +3598,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Sunflower Seeds",
+    "name": "Ziarna słonecznika",
     "category": "other",
     "nutritional_info_per_100g": {
       "calories": 584,
@@ -3616,7 +3616,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Pumpkin Seeds",
+    "name": "Ziarna dyni",
     "category": "other",
     "nutritional_info_per_100g": {
       "calories": 559,
@@ -3634,7 +3634,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Chia Seeds",
+    "name": "Nasiona chia",
     "category": "other",
     "nutritional_info_per_100g": {
       "calories": 486,
@@ -3652,7 +3652,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Flax Seeds",
+    "name": "Siemię lniane",
     "category": "other",
     "nutritional_info_per_100g": {
       "calories": 534,
@@ -3670,7 +3670,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Sesame Seeds",
+    "name": "Ziarna sezamu",
     "category": "other",
     "nutritional_info_per_100g": {
       "calories": 573,
@@ -3688,7 +3688,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Dried Cranberries",
+    "name": "Suszona żurawina",
     "category": "fruit",
     "nutritional_info_per_100g": {
       "calories": 308,
@@ -3724,7 +3724,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Mint",
+    "name": "Mięta",
     "category": "herb",
     "nutritional_info_per_100g": {
       "calories": 44,
@@ -3761,7 +3761,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Flour",
+    "name": "Mąka",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 364,
@@ -3781,7 +3781,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Maple Syrup",
+    "name": "Syrop klonowy",
     "category": "condiment",
     "nutritional_info_per_100g": {
       "calories": 260,
@@ -3799,7 +3799,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Cheese",
+    "name": "Ser",
     "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 402,
@@ -3818,7 +3818,7 @@
     "perishability": "perishable"
   },
   {
-    "name": "Peanut Butter",
+    "name": "Masło orzechowe",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 588,
@@ -3875,7 +3875,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Rice",
+    "name": "Ryż",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 130,
@@ -3914,7 +3914,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Pasta",
+    "name": "Makaron",
     "category": "grain",
     "nutritional_info_per_100g": {
       "calories": 371,
@@ -3933,7 +3933,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Dark Chocolate",
+    "name": "Czekolada gorzka",
     "category": "snack",
     "nutritional_info_per_100g": {
       "calories": 546,
@@ -3953,7 +3953,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Whipped Cream",
+    "name": "Bita śmietana",
     "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 257,
@@ -3971,7 +3971,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Apple",
+    "name": "Jabłko",
     "category": "fruit",
     "nutritional_info_per_100g": {
       "calories": 52,
@@ -3989,7 +3989,7 @@
     "perishability": "perishable"
   },
   {
-    "name": "Ham",
+    "name": "Szynka",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 145,
@@ -4008,7 +4008,7 @@
     "perishability": "perishable"
   },
   {
-    "name": "Mixed Greens",
+    "name": "Mieszanka sałat",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 23,
@@ -4026,7 +4026,7 @@
     "perishability": "highly_perishable"
   },
   {
-    "name": "Cherry Tomatoes",
+    "name": "Pomidor cherry",
     "category": "vegetable",
     "nutritional_info_per_100g": {
       "calories": 18,
@@ -4098,7 +4098,7 @@
     "perishability": "stable"
   },
   {
-    "name": "Almond Butter",
+    "name": "Masło migdałowe",
     "category": "protein",
     "nutritional_info_per_100g": {
       "calories": 614,
@@ -4114,5 +4114,42 @@
     "standard_unit": "g",
     "shelf_life_days": 180,
     "perishability": "stable"
+  },
+  {
+    "name": "Owoce leśne",
+    "category": "fruit",
+    "nutritional_info_per_100g": {
+      "calories": 57,
+      "protein": 0.7,
+      "carbs": 13.8,
+      "fat": 0.3,
+      "fiber": 2
+    },
+    "common_package_sizes": [
+      150,
+      300,
+      500
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 7,
+    "perishability": "highly_perishable"
+  },
+  {
+    "name": "Papryka",
+    "category": "vegetable",
+    "nutritional_info_per_100g": {
+      "calories": 31,
+      "protein": 1,
+      "carbs": 6,
+      "fat": 0.3,
+      "fiber": 2.1
+    },
+    "common_package_sizes": [
+      200,
+      400
+    ],
+    "standard_unit": "g",
+    "shelf_life_days": 10,
+    "perishability": "moderate"
   }
 ]
