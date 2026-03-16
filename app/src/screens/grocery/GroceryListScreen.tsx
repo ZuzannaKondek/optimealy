@@ -61,6 +61,7 @@ export const GroceryListScreen: React.FC = () => {
   const [groceryList, setGroceryList] = React.useState<GroceryList | null>(null);
   const [removingItem, setRemovingItem] = React.useState<GroceryItem | null>(null);
 
+  // Load grocery list on mount and when planId changes
   React.useEffect(() => {
     let cancelled = false;
     const load = async () => {
@@ -81,6 +82,21 @@ export const GroceryListScreen: React.FC = () => {
       cancelled = true;
     };
   }, [planId]);
+
+  // Manual refresh function
+  const handleRefresh = async () => {
+    if (!planId) return;
+    setIsLoading(true);
+    setError(null);
+    try {
+      const list = await planService.getGroceryList(planId, { groupBy: 'category' });
+      setGroceryList(list);
+    } catch (e: any) {
+      setError(e?.response?.data?.detail || 'Nie udało się pobrać listy produktów');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleAddToShoppingList = () => {
     // Get all items that are not already in pantry
@@ -167,7 +183,12 @@ export const GroceryListScreen: React.FC = () => {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Potrzebne produkty</Text>
+      <View style={styles.headerRow}>
+        <Text style={styles.title}>Potrzebne produkty</Text>
+        <TouchableOpacity onPress={handleRefresh} style={styles.refreshButton}>
+          <Text style={styles.refreshButtonText}>↻</Text>
+        </TouchableOpacity>
+      </View>
       <Text style={styles.subtitle}>
         Produkty: {groceryList.total_items} • Do kupienia: {itemsToBuy.length} • Odpady: {Math.round(groceryList.estimated_total_waste_g)}g
       </Text>
@@ -232,6 +253,18 @@ const styles = StyleSheet.create({
     fontWeight: typography.fontWeight.bold,
     color: colors.textPrimary,
     marginBottom: spacing.xs,
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  refreshButton: {
+    padding: spacing.sm,
+  },
+  refreshButtonText: {
+    fontSize: 24,
+    color: colors.primary,
   },
   subtitle: {
     fontSize: typography.fontSize.md,

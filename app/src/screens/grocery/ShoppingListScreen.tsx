@@ -60,6 +60,7 @@ export const ShoppingListScreen: React.FC = () => {
   const [groceryList, setGroceryList] = React.useState<GroceryList | null>(null);
   const [removingItem, setRemovingItem] = React.useState<GroceryItem | null>(null);
 
+  // Load grocery list on mount and when planId changes
   React.useEffect(() => {
     let cancelled = false;
     const load = async () => {
