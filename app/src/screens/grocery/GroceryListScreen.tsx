@@ -10,6 +10,27 @@ import type { GroceryList, GroceryItem } from '../../types/models';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
+const categoryTranslations: Record<string, string> = {
+  vegetable: 'Warzywa',
+  fruit: 'Owoce',
+  dairy: 'Nabiał',
+  protein: 'Białko',
+  grain: 'Zboża',
+  spice: 'Przyprawy',
+  condiment: 'Przyprawy',
+  oil: 'Oleje',
+  beverage: 'Napoje',
+  bakery: 'Pieczywo',
+  frozen: 'Mrożonki',
+  snacks: 'Przekąski',
+  canned: 'Konserwy',
+  other: 'Inne',
+};
+
+const translateCategory = (category: string): string => {
+  return categoryTranslations[category.toLowerCase()] || category;
+};
+
 type RouteParams = {
   planId: string;
 };
@@ -200,7 +221,7 @@ export const GroceryListScreen: React.FC = () => {
       )}
 
       {categories.map((category) => (
-        <CategorySection key={category} title={category}>
+        <CategorySection key={category} title={translateCategory(category)}>
           {grouped[category].map((item) => {
             const isRemoving = removingItem?.item_id === item.item_id;
             if (isRemoving) {

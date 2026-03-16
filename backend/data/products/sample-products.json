@@ -476,7 +476,7 @@
   },
   {
     "name": "Jogurt grecki",
-    "category": "protein",
+    "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 59,
       "protein": 10,
@@ -533,7 +533,7 @@
   },
   {
     "name": "Ser feta",
-    "category": "protein",
+    "category": "dairy",
     "nutritional_info_per_100g": {
       "calories": 264,
       "protein": 14,

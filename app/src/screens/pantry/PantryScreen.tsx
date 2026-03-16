@@ -21,7 +21,30 @@ import {
 } from 'react-native';
 import { usePantry, type PantryStaple } from '../../hooks/usePantry';
 import { productService, type ProductSearchResult } from '../../services/productService';
+import { CategorySection } from '../../components/grocery/CategorySection';
 import { colors, spacing, typography } from '../../theme';
+
+const categoryTranslations: Record<string, string> = {
+  vegetable: 'Warzywa',
+  fruit: 'Owoce',
+  dairy: 'Nabiał',
+  protein: 'Białko',
+  grain: 'Zboża',
+  spice: 'Przyprawy',
+  condiment: 'Przyprawy',
+  oil: 'Oleje',
+  beverage: 'Napoje',
+  bakery: 'Pieczywo',
+  frozen: 'Mrożonki',
+  snacks: 'Przekąski',
+  canned: 'Konserwy',
+  other: 'Inne',
+};
+
+const translateCategory = (category?: string): string => {
+  if (!category) return 'Inne';
+  return categoryTranslations[category.toLowerCase()] || category;
+};
 
 export const PantryScreen: React.FC = () => {
   const { items, staples, isLoading, error, fetchPantry, fetchStaples, updatePantry, searchProducts } = usePantry();
@@ -211,6 +234,15 @@ export const PantryScreen: React.FC = () => {
       }))
   ];
 
+  // Group products by category
+  const groupedByCategory: Record<string, typeof pantryProducts> = {};
+  for (const product of pantryProducts) {
+    const cat = product.category || 'other';
+    if (!groupedByCategory[cat]) groupedByCategory[cat] = [];
+    groupedByCategory[cat].push(product);
+  }
+  const categories = Object.keys(groupedByCategory).sort();
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.content}>
@@ -242,7 +274,7 @@ export const PantryScreen: React.FC = () => {
                 onPress={() => addSearchedProduct(product)}
               >
                 <Text style={styles.searchResultName}>{product.product_name}</Text>
-                <Text style={styles.searchResultCategory}>{product.category}</Text>
+                <Text style={styles.searchResultCategory}>{translateCategory(product.category)}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -257,19 +289,20 @@ export const PantryScreen: React.FC = () => {
         {/* Pantry Items */}
         {pantryProducts.length > 0 ? (
           <View style={styles.itemsList}>
-            {pantryProducts.map((product) => (
-              <PantryItemCard
-                key={product.product_id}
-                productId={product.product_id}
-                productName={product.product_name}
-                category={product.category}
-                icon={product.icon}
-                quantity={quantities.get(product.product_id)?.quantity}
-                expiryDate={quantities.get(product.product_id)?.expiryDate}
-                onToggle={() => toggleItem(product.product_id, 500, product.product_name, product.category)}
-                onQuantityChange={(qty) => updateQuantity(product.product_id, qty)}
-                onExpiryDateChange={(date) => updateExpiryDate(product.product_id, date)}
-              />
+            {categories.map((category) => (
+              <CategorySection key={category} title={translateCategory(category)}>
+                {groupedByCategory[category].map((product) => (
+                  <PantryItemCard
+                    key={product.product_id}
+                    productId={product.product_id}
+                    productName={product.product_name}
+                    category={product.category}
+                    icon={product.icon}
+                    isStaple={product.isStaple}
+                    onToggle={() => toggleItem(product.product_id, 500, product.product_name, product.category)}
+                  />
+                ))}
+              </CategorySection>
             ))}
           </View>
         ) : (
@@ -396,7 +429,7 @@ const PantryItemCard: React.FC<PantryItemCardProps> = ({
         <Text style={styles.itemIcon}>{icon}</Text>
         <View style={styles.itemInfo}>
           <Text style={styles.itemName} numberOfLines={1}>{productName}</Text>
-          <Text style={styles.itemCategory}>{category}</Text>
+          <Text style={styles.itemCategory}>{translateCategory(category)}</Text>
         </View>
         <TouchableOpacity onPress={onToggle} style={styles.removeButton}>
           <Text style={styles.removeButtonText}>×</Text>
