@@ -16,6 +16,21 @@ import type {
   GroceryList,
 } from '../../shared/types/api-contracts';
 
+type ToggleMealCompleteResponse = {
+  message?: string;
+  completion?: {
+    id: string;
+    completed_at: string;
+  };
+  pantry_updated?: boolean;
+  deducted_ingredients?: Record<string, number>;
+  updated_pantry?: Array<{
+    product_id: string;
+    quantity_g: number;
+    product_name: string;
+  }>;
+};
+
 export const planService = {
   /**
    * Create a new optimized meal plan.
@@ -129,12 +144,21 @@ export const planService = {
     return response.data;
   },
 
-  async toggleMealComplete(mealId: string, completed: boolean): Promise<void> {
+  async toggleMealComplete(
+    mealId: string,
+    completed: boolean
+  ): Promise<ToggleMealCompleteResponse> {
     if (completed) {
-      await apiClient.post(`/meal-plans/meals/${mealId}/complete`);
-      return;
+      const response = await apiClient.post<ToggleMealCompleteResponse>(
+        `/meal-plans/meals/${mealId}/complete`
+      );
+      return response.data;
     }
-    await apiClient.delete(`/meal-plans/meals/${mealId}/complete`);
+
+    const response = await apiClient.delete<ToggleMealCompleteResponse>(
+      `/meal-plans/meals/${mealId}/complete`
+    );
+    return response.data;
   },
 
   async activatePlan(planId: string): Promise<MealPlanDetail> {

@@ -160,21 +160,21 @@ async def update_user_pantry(
     that already exist, adds new items for those that don't). Does NOT remove
     any existing pantry items.
     """
-    # Validate that all product IDs exist
-    product_ids = [UUID(item.product_id) for item in request.items]
-    query = select(Product).where(Product.id.in_(product_ids))
-    result = await db.execute(query)
-    products = {str(p.id): p for p in result.scalars().all()}
-
-    if len(products) != len(product_ids):
-        raise HTTPException(status_code=400, detail="One or more invalid product IDs")
-
-    # Validate quantities are positive
+    processed_items: List[tuple[Product, PantryItemInput]] = []
     for item in request.items:
         if item.quantity_g <= 0:
             raise HTTPException(
                 status_code=400, detail=f"Quantity must be positive for product {item.product_id}"
             )
+
+        product = await ProductService.resolve_product_identifier(db, item.product_id)
+        if not product:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Product '{item.product_id}' not found when updating pantry",
+            )
+
+        processed_items.append((product, item))
 
     # Get existing pantry items for this user
     existing_stmt = select(UserPantryItem).where(UserPantryItem.user_id == current_user.id)
@@ -185,8 +185,8 @@ async def update_user_pantry(
     # Note: We NO LONGER delete items not in the request - this is an additive update
     from datetime import date
 
-    for item in request.items:
-        product_id = item.product_id
+    for product, item in processed_items:
+        product_id = str(product.id)
         expiry = None
         if item.expiry_date:
             try:

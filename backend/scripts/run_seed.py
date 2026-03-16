@@ -90,9 +90,9 @@ def run_migrations() -> int:
         # Docker: alembic is in backend/alembic
         alembic_cwd = backend_root.parent
 
-    # First, try to stamp to merge revision to fix multiple heads issue
+    # First, stamp to the merge revision to fix multiple heads issue
     subprocess.run(
-        ["alembic", "stamp", "merge_two_heads"],
+        ["alembic", "stamp", "m9n0o1p2q3r4"],
         cwd=alembic_cwd,
         capture_output=True,
         text=True,

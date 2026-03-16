@@ -1,9 +1,14 @@
 """Product service for querying products."""
+
 from typing import List, Optional
-from sqlalchemy import select
+from uuid import UUID as UUIDValue
+
+from sqlalchemy import select, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.models.product import Product
+from src.models.product_alias import ProductAlias
+from src.utils.canonical import canonicalize_string
 
 
 class ProductService:
@@ -17,21 +22,16 @@ class ProductService:
     ) -> List[Product]:
         """
         Get all products with pagination.
-        
+
         Args:
             db: Database session
             limit: Maximum number of products to return
             offset: Number of products to skip
-            
+
         Returns:
             List of Product objects
         """
-        stmt = (
-            select(Product)
-            .limit(limit)
-            .offset(offset)
-            .order_by(Product.name)
-        )
+        stmt = select(Product).limit(limit).offset(offset).order_by(Product.name)
         result = await db.execute(stmt)
         return list(result.scalars().all())
 
@@ -42,11 +42,11 @@ class ProductService:
     ) -> Optional[Product]:
         """
         Get a product by its ID.
-        
+
         Args:
             db: Database session
             product_id: UUID of the product
-            
+
         Returns:
             Product object if found, None otherwise
         """
@@ -61,17 +61,17 @@ class ProductService:
     ) -> List[Product]:
         """
         Get multiple products by their IDs.
-        
+
         Args:
             db: Database session
             product_ids: List of product UUIDs
-            
+
         Returns:
             List of Product objects
         """
         if not product_ids:
             return []
-        
+
         stmt = select(Product).where(Product.id.in_(product_ids))
         result = await db.execute(stmt)
         return list(result.scalars().all())
@@ -84,20 +84,17 @@ class ProductService:
     ) -> List[Product]:
         """
         Get products by category.
-        
+
         Args:
             db: Database session
             category: Product category
             limit: Maximum number of products to return
-            
+
         Returns:
             List of Product objects
         """
         stmt = (
-            select(Product)
-            .where(Product.category == category)
-            .limit(limit)
-            .order_by(Product.name)
+            select(Product).where(Product.category == category).limit(limit).order_by(Product.name)
         )
         result = await db.execute(stmt)
         return list(result.scalars().all())
@@ -110,12 +107,12 @@ class ProductService:
     ) -> List[Product]:
         """
         Search products by name.
-        
+
         Args:
             db: Database session
             search_term: Search term to match against product names
             limit: Maximum number of products to return
-            
+
         Returns:
             List of Product objects matching the search term
         """
@@ -127,3 +124,40 @@ class ProductService:
         )
         result = await db.execute(stmt)
         return list(result.scalars().all())
+
+    @staticmethod
+    async def resolve_product_identifier(
+        db: AsyncSession,
+        identifier: str,
+    ) -> Optional[Product]:
+        """Return a product by UUID, canonical key, or alias."""
+
+        if not identifier or not identifier.strip():
+            return None
+
+        identifier = identifier.strip()
+
+        canonical_key = canonicalize_string(identifier)
+        try:
+            uuid_value = UUIDValue(identifier)
+        except (ValueError, TypeError):
+            uuid_value = None
+
+        conditions = []
+        if uuid_value is not None:
+            conditions.append(Product.id == uuid_value)
+        if canonical_key:
+            conditions.append(Product.canonical_key == canonical_key)
+            conditions.append(ProductAlias.alias == canonical_key)
+
+        if not conditions:
+            return None
+
+        stmt = (
+            select(Product)
+            .outerjoin(ProductAlias, ProductAlias.product_id == Product.id)
+            .where(or_(*conditions))
+            .limit(1)
+        )
+        result = await db.execute(stmt)
+        return result.scalar_one_or_none()

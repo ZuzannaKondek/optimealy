@@ -6,18 +6,20 @@ from uuid import UUID
 import logging
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, and_, func
+from sqlalchemy import select, and_, func, or_
 from sqlalchemy.exc import IntegrityError
 import sqlalchemy as sa
 
-from src.models.meal_plan import MealPlan, Meal
+from src.models.meal_plan import MealPlan, Meal, DailyMenu
 from src.models.meal_completion import MealCompletion
 from src.models.user_pantry_item import UserPantryItem
 from src.models.recipe_ingredient import RecipeIngredient
 from src.models.recipe import Recipe
 from src.models.product import Product
+from src.models.product_alias import ProductAlias
 from src.services.grocery_service import GroceryService
 from src.utils.unitConversion import convert_to_grams
+from src.utils.canonical import canonicalize_string
 
 logger = logging.getLogger(__name__)
 
@@ -196,19 +198,17 @@ class PlanExecutionService:
             raise ValueError("Meal already completed")
 
         # 2. Get meal with recipe - include ownership check via MealPlan
-        meal_stmt = select(Meal).options(selectinload(Meal.recipe)).where(Meal.id == meal_id)
+        meal_stmt = (
+            select(Meal)
+            .join(DailyMenu, Meal.daily_menu_id == DailyMenu.id)
+            .join(MealPlan, DailyMenu.meal_plan_id == MealPlan.id)
+            .options(selectinload(Meal.recipe))
+            .where(Meal.id == meal_id, MealPlan.user_id == user_id)
+        )
         meal_result = await db.execute(meal_stmt)
         meal = meal_result.scalar_one_or_none()
 
         if not meal:
-            raise ValueError("Meal not found")
-
-        # Ownership guard: verify meal belongs to user's plan
-        plan_stmt = select(MealPlan).where(
-            MealPlan.id == meal.daily_menu.meal_plan_id, MealPlan.user_id == user_id
-        )
-        plan_result = await db.execute(plan_stmt)
-        if not plan_result.scalar_one_or_none():
             raise ValueError("Meal not found")
 
         recipe = meal.recipe
@@ -226,7 +226,7 @@ class PlanExecutionService:
         ingredients = ing_result.scalars().all()
 
         # 4. Deduct from pantry
-        deducted = {}
+        deducted: Dict[str, Dict[str, Any]] = {}
         for ing in ingredients:
             # Use shared helper for consistent calculation
             ing_info = _calculate_ingredient_grams_for_meal(
@@ -241,6 +241,31 @@ class PlanExecutionService:
             pantry_result = await db.execute(pantry_stmt)
             pantry_item = pantry_result.scalar_one_or_none()
 
+            if not pantry_item:
+                canonical_key = None
+                product_name = ing.product.name if ing.product else None
+                if ing.product and ing.product.canonical_key:
+                    canonical_key = ing.product.canonical_key
+                elif product_name:
+                    canonical_key = canonicalize_string(product_name)
+
+                if canonical_key:
+                    fallback_stmt = (
+                        select(UserPantryItem)
+                        .join(Product, UserPantryItem.product_id == Product.id)
+                        .outerjoin(ProductAlias, ProductAlias.product_id == Product.id)
+                        .where(
+                            UserPantryItem.user_id == user_id,
+                            or_(
+                                Product.canonical_key == canonical_key,
+                                ProductAlias.alias == canonical_key,
+                            ),
+                        )
+                        .limit(1)
+                    )
+                    fallback_result = await db.execute(fallback_stmt)
+                    pantry_item = fallback_result.scalar_one_or_none()
+
             if pantry_item:
                 old_quantity = float(pantry_item.quantity_g)
                 new_quantity = max(0, old_quantity - quantity_needed)
@@ -251,10 +276,20 @@ class PlanExecutionService:
                 else:
                     pantry_item.quantity_g = new_quantity
 
-                deducted[str(ing.product_id)] = quantity_needed
+                deducted[str(ing.product_id)] = {
+                    "quantity": quantity_needed,
+                    "deducted_product_id": str(pantry_item.product_id),
+                }
             else:
+                logger.warning(
+                    f"Product {ing.product_id} ({ing.product.name if ing.product else 'Unknown'}) "
+                    f"not found in pantry for user {user_id}, cannot deduct {quantity_needed}g"
+                )
                 # Item not in pantry, still track deduction
-                deducted[str(ing.product_id)] = quantity_needed
+                deducted[str(ing.product_id)] = {
+                    "quantity": quantity_needed,
+                    "deducted_product_id": None,
+                }
 
         # 5. Create completion record
         completion = MealCompletion(
@@ -269,12 +304,29 @@ class PlanExecutionService:
         await db.refresh(completion)
 
         # 6. Fetch updated pantry
-        updated_pantry = await db.execute(
-            select(UserPantryItem).where(UserPantryItem.user_id == user_id)
+        updated_pantry_stmt = (
+            select(UserPantryItem, Product)
+            .join(Product, UserPantryItem.product_id == Product.id, isouter=True)
+            .where(UserPantryItem.user_id == user_id)
         )
-        pantry_items = updated_pantry.scalars().all()
 
-        return {"completion": completion, "updated_pantry": pantry_items}
+        updated_pantry_result = await db.execute(updated_pantry_stmt)
+        pantry_rows = updated_pantry_result.all()
+
+        serialized_pantry = [
+            {
+                "product_id": str(pantry_item.product_id),
+                "quantity_g": float(pantry_item.quantity_g),
+                "product_name": product.name if product else "Unknown",
+            }
+            for pantry_item, product in pantry_rows
+        ]
+
+        return {
+            "completion": completion,
+            "updated_pantry": serialized_pantry,
+            "ingredients_deducted": deducted,
+        }
 
     @staticmethod
     async def uncomplete_meal(
@@ -300,11 +352,19 @@ class PlanExecutionService:
             raise ValueError("Completion not found")
 
         # Restore pantry quantities
-        for product_id_str, quantity in completion.ingredients_deducted.items():
-            product_id = UUID(product_id_str)
+        for ingredient_id_str, snapshot in completion.ingredients_deducted.items():
+            if isinstance(snapshot, (int, float)):
+                quantity = float(snapshot)
+                deducted_product_id = None
+            else:
+                quantity = float(snapshot.get("quantity", 0))
+                deducted_product_id = snapshot.get("deducted_product_id")
+            target_product_id = (
+                UUID(deducted_product_id) if deducted_product_id else UUID(ingredient_id_str)
+            )
 
             pantry_stmt = select(UserPantryItem).where(
-                UserPantryItem.user_id == user_id, UserPantryItem.product_id == product_id
+                UserPantryItem.user_id == user_id, UserPantryItem.product_id == target_product_id
             )
             pantry_result = await db.execute(pantry_stmt)
             pantry_item = pantry_result.scalar_one_or_none()
@@ -314,7 +374,7 @@ class PlanExecutionService:
             else:
                 # Create pantry item if it doesn't exist
                 pantry_item = UserPantryItem(
-                    user_id=user_id, product_id=product_id, quantity_g=float(quantity)
+                    user_id=user_id, product_id=target_product_id, quantity_g=float(quantity)
                 )
                 db.add(pantry_item)
 
@@ -327,7 +387,7 @@ class PlanExecutionService:
         updated_pantry = await db.execute(
             select(UserPantryItem).where(UserPantryItem.user_id == user_id)
         )
-        return updated_pantry.scalars().all()
+        return list(updated_pantry.scalars().all())
 
     @staticmethod
     async def get_today_meals(
@@ -356,8 +416,6 @@ class PlanExecutionService:
             return []
 
         # Get meals for today (this implementation needs DailyMenu lookup by day_number)
-        from src.models.meal_plan import DailyMenu
-
         daily_menu_stmt = select(DailyMenu).where(
             DailyMenu.meal_plan_id == plan_id, DailyMenu.day_number == current_day
         )

@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { planService } from '../../services/planService';
+import { pantryService } from '../../services/pantryService';
 import { colors, typography, spacing } from '../../theme';
 
 interface TodayMealIngredient {
@@ -81,6 +82,14 @@ export const TodayScreen: React.FC = () => {
     }
   }, []);
 
+  const refreshPantry = useCallback(async () => {
+    try {
+      await pantryService.getPantry();
+    } catch (err: any) {
+      console.warn('Failed to refresh pantry after meal toggle', err);
+    }
+  }, []);
+
   useFocusEffect(
     useCallback(() => {
       loadData();
@@ -107,8 +116,9 @@ export const TodayScreen: React.FC = () => {
             m.id === meal.id
               ? { ...m, is_completed: false, completed_at: null }
               : m
-          )
+            )
         );
+        await refreshPantry();
       } catch (err: any) {
         Alert.alert('Błąd', err.response?.data?.detail || 'Nie udało się odznaczyć posiłku');
         // Revert on error
@@ -124,15 +134,16 @@ export const TodayScreen: React.FC = () => {
             m.id === meal.id
               ? { ...m, is_completed: true, completed_at: new Date().toISOString() }
               : m
-          )
+            )
         );
+        await refreshPantry();
       } catch (err: any) {
         Alert.alert('Błąd', err.response?.data?.detail || 'Nie udało się oznaczyć posiłku');
         // Revert on error
         await loadData();
       }
     }
-  }, [loadData]);
+  }, [loadData, refreshPantry]);
 
   if (isLoading) {
     return (

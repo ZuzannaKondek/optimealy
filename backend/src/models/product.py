@@ -8,6 +8,7 @@ if TYPE_CHECKING:
     from src.models.recipe_ingredient import RecipeIngredient
     from src.models.grocery import GroceryItem
     from src.models.user_ingredient_preference import UserIngredientPreference
+    from src.models.product_alias import ProductAlias
 from sqlalchemy import String, Text, Integer, Numeric, DateTime, Index
 from sqlalchemy.dialects.postgresql import UUID, JSONB, ARRAY
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -31,6 +32,7 @@ class Product(Base):
 
     # Basic Information
     name: Mapped[str] = mapped_column(String(255), nullable=False, unique=True, index=True)
+    canonical_key: Mapped[str] = mapped_column(String(100), nullable=False, unique=True, index=True)
     category: Mapped[str] = mapped_column(String(50), nullable=False, index=True)
 
     # Nutritional Information (per 100g)
@@ -95,6 +97,11 @@ class Product(Base):
     user_preferences: Mapped[List["UserIngredientPreference"]] = relationship(
         "UserIngredientPreference",
         back_populates="product",
+    )
+    product_aliases: Mapped[List["ProductAlias"]] = relationship(
+        "ProductAlias",
+        back_populates="product",
+        cascade="all, delete-orphan",
     )
 
     # Indexes

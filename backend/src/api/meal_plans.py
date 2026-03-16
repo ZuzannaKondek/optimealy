@@ -856,6 +856,9 @@ async def complete_meal(
             db=db, meal_id=UUID(meal_id), user_id=current_user.id
         )
 
+        deducted_ingredients = result.get("ingredients_deducted", {})
+        updated_pantry = result.get("updated_pantry", [])
+
         return {
             "message": "Meal completed successfully",
             "completion": {
@@ -863,6 +866,8 @@ async def complete_meal(
                 "completed_at": result["completion"].completed_at.isoformat(),
             },
             "pantry_updated": True,
+            "deducted_ingredients": deducted_ingredients,
+            "updated_pantry": updated_pantry,
         }
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
