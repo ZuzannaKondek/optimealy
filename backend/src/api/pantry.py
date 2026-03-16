@@ -197,7 +197,7 @@ async def update_user_pantry(
         if product_id in existing_items:
             # Update existing pantry item - ADD the quantity (cumulative)
             existing_item = existing_items[product_id]
-            existing_item.quantity_g = existing_item.quantity_g + float(item.quantity_g)
+            existing_item.quantity_g = float(existing_item.quantity_g) + float(item.quantity_g)
             if expiry:
                 existing_item.expiry_date = expiry
         else:

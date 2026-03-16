@@ -20,6 +20,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { usePantry, type PantryStaple } from '../../hooks/usePantry';
+import { useToast } from '../../hooks/useToast';
 import { productService, type ProductSearchResult } from '../../services/productService';
 import { CategorySection } from '../../components/grocery/CategorySection';
 import { colors, spacing, typography } from '../../theme';
@@ -48,6 +49,7 @@ const translateCategory = (category?: string): string => {
 
 export const PantryScreen: React.FC = () => {
   const { items, staples, isLoading, error, fetchPantry, fetchStaples, updatePantry, searchProducts } = usePantry();
+  const { showToast, ToastContainer } = useToast();
   
   // Track quantities per product ID with product details
   const [quantities, setQuantities] = useState<Map<string, { quantity: number; expiryDate?: string; productName?: string; category?: string }>>(new Map());
@@ -161,17 +163,30 @@ export const PantryScreen: React.FC = () => {
 
   const handleSave = async () => {
     setIsSaving(true);
+    // Quick toast test
+    showToast('Test toast', 'info');
+    
     try {
-      const itemsArray = Array.from(quantities.entries()).map(([product_id, data]) => ({
-        product_id,
-        quantity_g: data.quantity,
-        expiry_date: data.expiryDate,
-      }));
+      // Only save items with positive quantity
+      const itemsArray = Array.from(quantities.entries())
+        .filter(([_, data]) => data.quantity > 0)
+        .map(([product_id, data]) => ({
+          product_id,
+          quantity_g: data.quantity,
+          expiry_date: data.expiryDate || undefined,
+        }));
       
+      console.log('Saving pantry:', JSON.stringify({ items: itemsArray }));
       await updatePantry(itemsArray);
-      Alert.alert('Sukces', 'Spiżarnia zaktualizowana pomyślnie!');
+      showToast('Zapisano zmiany', 'success');
     } catch (err: any) {
-      Alert.alert('Błąd', err.message || 'Nie udało się zaktualizować spiżarni');
+      console.error('Pantry save error:', err?.response?.data || err.message);
+      const errorDetail = err?.response?.data?.detail;
+      const errorMessage = errorDetail 
+        ? (typeof errorDetail === 'string' ? errorDetail : JSON.stringify(errorDetail))
+        : err?.message || 'Nie udało się zaktualizować spiżarni';
+      Alert.alert('Błąd', errorMessage);
+      showToast('Błąd zapisu', 'error');
     } finally {
       setIsSaving(false);
     }
@@ -245,6 +260,7 @@ export const PantryScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <ToastContainer />
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.content}>
         <Text style={styles.title}>Moja spiżarnia</Text>
         <Text style={styles.subtitle}>
