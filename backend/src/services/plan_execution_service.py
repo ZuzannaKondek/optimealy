@@ -302,8 +302,14 @@ class PlanExecutionService:
         if not daily_menu:
             return []
 
-        # Get meals with completions
-        meals_stmt = select(Meal).where(Meal.daily_menu_id == daily_menu.id)
+        # Get meals with completions - eager load recipe to avoid lazy loading issues in async
+        from sqlalchemy.orm import selectinload
+
+        meals_stmt = (
+            select(Meal)
+            .options(selectinload(Meal.recipe))
+            .where(Meal.daily_menu_id == daily_menu.id)
+        )
         meals_result = await db.execute(meals_stmt)
         meals = meals_result.scalars().all()
 

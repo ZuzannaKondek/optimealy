@@ -813,6 +813,7 @@ async def get_today_meals(
                 "id": str(meal.id),
                 "meal_type": meal.meal_type,
                 "recipe_id": str(meal.recipe_id),
+                "recipe_name": meal.recipe.name if meal.recipe else "Unknown",
                 "servings": float(meal.servings),
                 "is_completed": meal_data["is_completed"],
                 "completed_at": meal_data["completed_at"].isoformat()
