@@ -13,6 +13,14 @@ import { useFocusEffect } from '@react-navigation/native';
 import { planService } from '../../services/planService';
 import { colors, typography, spacing } from '../../theme';
 
+interface TodayMealIngredient {
+  product_id: string;
+  product_name: string;
+  original_quantity_value: number;
+  original_quantity_unit: string;
+  grams: number;
+}
+
 interface TodayMeal {
   id: string;
   meal_type: string;
@@ -27,6 +35,7 @@ interface TodayMeal {
     carbs_g: number;
     fat_g: number;
   };
+  ingredients: TodayMealIngredient[];
 }
 
 interface ActivePlan {
@@ -42,6 +51,7 @@ export const TodayScreen: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [expandedMealId, setExpandedMealId] = useState<string | null>(null);
 
   const loadData = useCallback(async () => {
     try {
@@ -81,6 +91,10 @@ export const TodayScreen: React.FC = () => {
     setIsRefreshing(true);
     await loadData();
   }, [loadData]);
+
+  const handleToggleExpand = useCallback((mealId: string) => {
+    setExpandedMealId(prev => prev === mealId ? null : mealId);
+  }, []);
 
   const handleToggleMeal = useCallback(async (meal: TodayMeal) => {
     if (meal.is_completed) {
@@ -211,57 +225,85 @@ export const TodayScreen: React.FC = () => {
       </View>
 
       <View style={styles.mealsContainer}>
-        <Text style={styles.hintText}>Kliknij na posiłek, aby zaznaczyć lub odznaczyć</Text>
+        <Text style={styles.hintText}>Kliknij na posiłek, aby zaznaczyć • Strzałka ▼ aby zobaczyć składniki</Text>
         {todayMeals.map((meal) => (
-          <TouchableOpacity
-            key={meal.id}
-            style={[
-              styles.mealCard,
-              meal.is_completed && styles.mealCardCompleted,
-            ]}
-            onPress={() => handleToggleMeal(meal)}
-            activeOpacity={0.7}
-          >
-            <View style={styles.mealCheckbox}>
-              {meal.is_completed && (
-                <Text style={styles.checkmark}>✓</Text>
-              )}
-            </View>
-            
-            <View style={styles.mealContent}>
-              <Text style={[
-                styles.mealType,
-                meal.is_completed && styles.mealTypeCompleted,
-              ]}>
-                {formatMealType(meal.meal_type)}
-              </Text>
-              
-              <Text style={[
-                styles.mealTitle,
-                meal.is_completed && styles.mealTitleCompleted,
-              ]}>
-                {meal.recipe_name}
-              </Text>
-              
-              <View style={styles.nutritionRow}>
-                <Text style={styles.nutritionText}>
-                  {Math.round(meal.nutritional_info.calories)} kcal
-                </Text>
-                <Text style={styles.nutritionDivider}>•</Text>
-                <Text style={styles.nutritionText}>
-                  B: {Math.round(meal.nutritional_info.protein_g)}g
-                </Text>
-                <Text style={styles.nutritionDivider}>•</Text>
-                <Text style={styles.nutritionText}>
-                  W: {Math.round(meal.nutritional_info.carbs_g)}g
-                </Text>
-                <Text style={styles.nutritionDivider}>•</Text>
-                <Text style={styles.nutritionText}>
-                  T: {Math.round(meal.nutritional_info.fat_g)}g
-                </Text>
+          <View key={meal.id}>
+            <TouchableOpacity
+              style={[
+                styles.mealCard,
+                meal.is_completed && styles.mealCardCompleted,
+              ]}
+              onPress={() => handleToggleMeal(meal)}
+              activeOpacity={0.7}
+            >
+              <View style={styles.mealCheckbox}>
+                {meal.is_completed && (
+                  <Text style={styles.checkmark}>✓</Text>
+                )}
               </View>
-            </View>
-          </TouchableOpacity>
+              
+              <View style={styles.mealContent}>
+                <Text style={[
+                  styles.mealType,
+                  meal.is_completed && styles.mealTypeCompleted,
+                ]}>
+                  {formatMealType(meal.meal_type)}
+                </Text>
+                
+                <Text style={[
+                  styles.mealTitle,
+                  meal.is_completed && styles.mealTitleCompleted,
+                ]}>
+                  {meal.recipe_name}
+                </Text>
+                
+                <View style={styles.nutritionRow}>
+                  <Text style={styles.nutritionText}>
+                    {Math.round(meal.nutritional_info.calories)} kcal
+                  </Text>
+                  <Text style={styles.nutritionDivider}>•</Text>
+                  <Text style={styles.nutritionText}>
+                    B: {Math.round(meal.nutritional_info.protein_g)}g
+                  </Text>
+                  <Text style={styles.nutritionDivider}>•</Text>
+                  <Text style={styles.nutritionText}>
+                    W: {Math.round(meal.nutritional_info.carbs_g)}g
+                  </Text>
+                  <Text style={styles.nutritionDivider}>•</Text>
+                  <Text style={styles.nutritionText}>
+                    T: {Math.round(meal.nutritional_info.fat_g)}g
+                  </Text>
+                </View>
+              </View>
+
+              <TouchableOpacity 
+                style={styles.expandButton}
+                onPress={() => handleToggleExpand(meal.id)}
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              >
+                <Text style={styles.expandIcon}>
+                  {expandedMealId === meal.id ? '▲' : '▼'}
+                </Text>
+              </TouchableOpacity>
+            </TouchableOpacity>
+
+            {expandedMealId === meal.id && meal.ingredients && meal.ingredients.length > 0 && (
+              <View style={styles.ingredientsContainer}>
+                <Text style={styles.ingredientsTitle}>Składniki:</Text>
+                {meal.ingredients.map((ing, index) => (
+                  <View key={ing.product_id} style={styles.ingredientRow}>
+                    <Text style={styles.ingredientName}>{ing.product_name}</Text>
+                    <Text style={styles.ingredientAmount}>
+                      {ing.grams}g
+                      {ing.original_quantity_unit && ing.original_quantity_unit !== 'g' && (
+                        <Text style={styles.ingredientOriginal}> ({ing.original_quantity_value}{ing.original_quantity_unit})</Text>
+                      )}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            )}
+          </View>
         ))}
       </View>
 
@@ -396,6 +438,49 @@ const styles = StyleSheet.create({
   },
   nutritionDivider: {
     marginHorizontal: spacing.xs,
+    color: colors.textTertiary,
+  },
+  expandButton: {
+    padding: spacing.xs,
+    marginLeft: spacing.xs,
+  },
+  expandIcon: {
+    fontSize: 20,
+  },
+  ingredientsContainer: {
+    backgroundColor: colors.backgroundSecondary,
+    borderRadius: 8,
+    padding: spacing.md,
+    marginTop: -spacing.sm,
+    marginBottom: spacing.md,
+    marginLeft: 44,
+  },
+  ingredientsTitle: {
+    fontSize: typography.fontSize.sm,
+    fontWeight: typography.fontWeight.semiBold,
+    color: colors.text,
+    marginBottom: spacing.sm,
+  },
+  ingredientRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: spacing.xs,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  ingredientName: {
+    fontSize: typography.fontSize.sm,
+    color: colors.textPrimary,
+    flex: 1,
+  },
+  ingredientAmount: {
+    fontSize: typography.fontSize.sm,
+    fontWeight: typography.fontWeight.medium,
+    color: colors.primary,
+  },
+  ingredientOriginal: {
+    fontSize: typography.fontSize.xs,
     color: colors.textTertiary,
   },
   celebrationContainer: {

@@ -831,6 +831,7 @@ async def get_today_meals(
                     "carbs_g": nutritional_info.get("carbs", 0),
                     "fat_g": nutritional_info.get("fat", 0),
                 },
+                "ingredients": meal_data.get("ingredients", []),
             }
         )
 

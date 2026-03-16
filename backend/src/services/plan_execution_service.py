@@ -14,11 +14,42 @@ from src.models.meal_plan import MealPlan, Meal
 from src.models.meal_completion import MealCompletion
 from src.models.user_pantry_item import UserPantryItem
 from src.models.recipe_ingredient import RecipeIngredient
+from src.models.recipe import Recipe
 from src.models.product import Product
 from src.services.grocery_service import GroceryService
 from src.utils.unitConversion import convert_to_grams
 
 logger = logging.getLogger(__name__)
+
+
+def _calculate_ingredient_grams_for_meal(
+    meal_servings: float, recipe_total_servings: float, ingredient: RecipeIngredient
+) -> Dict[str, Any]:
+    """
+    Calculate ingredient quantity in grams for a specific meal serving size.
+
+    Args:
+        meal_servings: Number of servings for this meal in the plan
+        recipe_total_servings: Total servings the recipe was designed for
+        ingredient: The RecipeIngredient to calculate
+
+    Returns:
+        Dict with product info, original quantity, and calculated grams
+    """
+    # Convert ingredient quantity to grams
+    quantity_g = convert_to_grams(float(ingredient.quantity_value), ingredient.quantity_unit)
+
+    # Scale by ratio of meal servings to recipe total servings
+    scale = meal_servings / recipe_total_servings if recipe_total_servings > 0 else meal_servings
+    quantity_needed_g = quantity_g * scale
+
+    return {
+        "product_id": str(ingredient.product_id),
+        "product_name": ingredient.product.name if ingredient.product else "Unknown",
+        "original_quantity_value": float(ingredient.quantity_value),
+        "original_quantity_unit": ingredient.quantity_unit,
+        "grams": round(quantity_needed_g, 2),
+    }
 
 
 class PlanExecutionService:
@@ -154,6 +185,8 @@ class PlanExecutionService:
         Raises:
             ValueError: If meal already completed or not found
         """
+        from sqlalchemy.orm import selectinload
+
         # 1. Check if already completed
         existing_stmt = select(MealCompletion).where(
             MealCompletion.meal_id == meal_id, MealCompletion.user_id == user_id
@@ -162,27 +195,44 @@ class PlanExecutionService:
         if existing_result.scalar_one_or_none():
             raise ValueError("Meal already completed")
 
-        # 2. Get meal with recipe and ingredients
-        meal_stmt = select(Meal).where(Meal.id == meal_id)
+        # 2. Get meal with recipe - include ownership check via MealPlan
+        meal_stmt = select(Meal).options(selectinload(Meal.recipe)).where(Meal.id == meal_id)
         meal_result = await db.execute(meal_stmt)
         meal = meal_result.scalar_one_or_none()
 
         if not meal:
             raise ValueError("Meal not found")
 
-        # 3. Get recipe ingredients
-        ing_stmt = select(RecipeIngredient).where(RecipeIngredient.recipe_id == meal.recipe_id)
+        # Ownership guard: verify meal belongs to user's plan
+        plan_stmt = select(MealPlan).where(
+            MealPlan.id == meal.daily_menu.meal_plan_id, MealPlan.user_id == user_id
+        )
+        plan_result = await db.execute(plan_stmt)
+        if not plan_result.scalar_one_or_none():
+            raise ValueError("Meal not found")
+
+        recipe = meal.recipe
+        recipe_total_servings = (
+            float(recipe.total_servings) if recipe and recipe.total_servings else 1.0
+        )
+
+        # 3. Get recipe ingredients (with product eager load)
+        ing_stmt = (
+            select(RecipeIngredient)
+            .options(selectinload(RecipeIngredient.product))
+            .where(RecipeIngredient.recipe_id == meal.recipe_id)
+        )
         ing_result = await db.execute(ing_stmt)
         ingredients = ing_result.scalars().all()
 
         # 4. Deduct from pantry
         deducted = {}
         for ing in ingredients:
-            # Convert ingredient quantity to grams
-            quantity_g = convert_to_grams(float(ing.quantity_value), ing.quantity_unit)
-
-            # Calculate actual quantity for this meal (scaled by servings)
-            quantity_needed = quantity_g * float(meal.servings)
+            # Use shared helper for consistent calculation
+            ing_info = _calculate_ingredient_grams_for_meal(
+                float(meal.servings), recipe_total_servings, ing
+            )
+            quantity_needed = ing_info["grams"]
 
             # Get current pantry item
             pantry_stmt = select(UserPantryItem).where(
@@ -284,10 +334,10 @@ class PlanExecutionService:
         db: AsyncSession, plan_id: UUID, user_id: UUID
     ) -> List[Dict[str, Any]]:
         """
-        Get today's meals from an active plan with completion status.
+        Get today's meals from an active plan with completion status and ingredients.
 
         Returns:
-            List of meals with completion info
+            List of meals with completion info and ingredient gramatures
         """
         # Get plan
         plan_stmt = select(MealPlan).where(MealPlan.id == plan_id, MealPlan.user_id == user_id)
@@ -317,18 +367,22 @@ class PlanExecutionService:
         if not daily_menu:
             return []
 
-        # Get meals with completions - eager load recipe to avoid lazy loading issues in async
+        # Get meals with completions - eager load recipe and ingredients to avoid lazy loading issues
         from sqlalchemy.orm import selectinload
 
         meals_stmt = (
             select(Meal)
-            .options(selectinload(Meal.recipe))
+            .options(
+                selectinload(Meal.recipe)
+                .selectinload(Recipe.recipe_ingredients)
+                .selectinload(RecipeIngredient.product)
+            )
             .where(Meal.daily_menu_id == daily_menu.id)
         )
         meals_result = await db.execute(meals_stmt)
         meals = meals_result.scalars().all()
 
-        # For each meal, check if completed
+        # For each meal, check if completed and calculate ingredients
         result = []
         for meal in meals:
             completion_stmt = select(MealCompletion).where(
@@ -337,11 +391,24 @@ class PlanExecutionService:
             completion_result = await db.execute(completion_stmt)
             completion = completion_result.scalar_one_or_none()
 
+            # Calculate ingredient grams for this meal
+            ingredients = []
+            if meal.recipe and meal.recipe.recipe_ingredients:
+                recipe_total_servings = (
+                    float(meal.recipe.total_servings) if meal.recipe.total_servings else 1.0
+                )
+                for ing in meal.recipe.recipe_ingredients:
+                    ing_info = _calculate_ingredient_grams_for_meal(
+                        float(meal.servings), recipe_total_servings, ing
+                    )
+                    ingredients.append(ing_info)
+
             result.append(
                 {
                     "meal": meal,
                     "is_completed": completion is not None,
                     "completed_at": completion.completed_at if completion else None,
+                    "ingredients": ingredients,
                 }
             )
 
