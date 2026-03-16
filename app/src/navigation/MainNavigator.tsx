@@ -6,11 +6,13 @@
  * Each tab has its own stack navigator to keep tabs visible on all screens.
  */
 
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ActivityIndicator, View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { colors, spacing, typography } from '../theme';
+import { planService } from '../services/planService';
 
 const Tab = createBottomTabNavigator();
 
@@ -84,9 +86,51 @@ import { ShoppingListScreen } from '../screens/grocery/ShoppingListScreen';
 
 const GroceryStack = createStackNavigator();
 
-// Simple wrapper - ShoppingListScreen will handle empty state itself
+// Wrapper that auto-loads active plan's shopping list when accessed directly
 const ShoppingListWrapper: React.FC = () => {
-  return <ShoppingListScreen />;
+  const [isLoading, setIsLoading] = useState(true);
+  const [activePlanId, setActivePlanId] = useState<string | undefined>(undefined);
+
+  useFocusEffect(
+    useCallback(() => {
+      let cancelled = false;
+
+      const fetchActivePlan = async () => {
+        setIsLoading(true);
+        try {
+          const plan = await planService.getActivePlan();
+          if (!cancelled) {
+            setActivePlanId(plan?.id);
+          }
+        } catch (e) {
+          if (!cancelled) {
+            setActivePlanId(undefined);
+          }
+        } finally {
+          if (!cancelled) {
+            setIsLoading(false);
+          }
+        }
+      };
+
+      fetchActivePlan();
+
+      return () => {
+        cancelled = true;
+      };
+    }, [])
+  );
+
+  if (isLoading) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color={colors.primary} />
+      </View>
+    );
+  }
+
+  // Pass the active plan ID as prop to ShoppingListScreen
+  return <ShoppingListScreen planId={activePlanId} />;
 };
 
 const GroceryStackScreen = () => (

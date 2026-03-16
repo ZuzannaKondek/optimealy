@@ -72,9 +72,11 @@ const AnimatedGroceryItem: React.FC<{
   );
 };
 
-export const ShoppingListScreen: React.FC = () => {
+export const ShoppingListScreen: React.FC<{ planId?: string }> = ({ planId: propPlanId }) => {
   const route = useRoute();
-  const { planId } = (route.params as RouteParams) ?? {};
+  // Use prop planId if provided (from wrapper), otherwise fall back to route params
+  const { planId: routePlanId } = (route.params as RouteParams) ?? {};
+  const planId = propPlanId ?? routePlanId;
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -149,8 +151,8 @@ export const ShoppingListScreen: React.FC = () => {
     );
   }
 
-  // Show ALL items (both needed and already in pantry)
-  const allItems = groceryList.items;
+  // Only show items that need to be bought (not already in pantry)
+  const allItems = groceryList.items.filter((item: GroceryItem) => item.status === 'needed');
 
   // Group by category
   const grouped: Record<string, GroceryItem[]> = {};
@@ -161,16 +163,23 @@ export const ShoppingListScreen: React.FC = () => {
 
   const categories = Object.keys(grouped).sort();
 
-  // Count items still needed to buy
-  const itemsToBuyCount = allItems.filter((item: GroceryItem) => item.status === 'needed').length;
+  // Count items still needed to buy (allItems already filtered to 'needed' status)
+  const itemsToBuyCount = allItems.length;
+
+  // Check if items exist but are already in pantry
+  const hasItemsInPantry = groceryList.items.some((item: GroceryItem) => item.status !== 'needed');
 
   if (allItems.length === 0) {
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.content}>
         <Text style={styles.title}>Zakupy</Text>
         <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>Brak produktów na liście</Text>
-          <Text style={styles.emptySubtext}>Wygeneruj listę zakupów z planu posiłków</Text>
+          <Text style={styles.emptyText}>
+            {hasItemsInPantry ? 'Wszystko masz w spiżarni!' : 'Brak produktów na liście'}
+          </Text>
+          <Text style={styles.emptySubtext}>
+            {hasItemsInPantry ? 'Produkty z Twojego planu są już w spiżarni' : 'Wygeneruj listę zakupów z planu posiłków'}
+          </Text>
         </View>
       </ScrollView>
     );
