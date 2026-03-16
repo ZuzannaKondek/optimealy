@@ -60,6 +60,9 @@ export const PantryScreen: React.FC = () => {
   const [searchResults, setSearchResults] = useState<ProductSearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showSearchResults, setShowSearchResults] = useState(false);
+  
+  // Focus mode: when a product is added from search, show only that product
+  const [focusedProductId, setFocusedProductId] = useState<string | null>(null);
 
   // Load pantry and staples on mount
   useEffect(() => {
@@ -155,6 +158,8 @@ export const PantryScreen: React.FC = () => {
       }
       return newMap;
     });
+    // Focus on this product so user can edit it
+    setFocusedProductId(product.product_id);
     setSearchQuery('');
     setSearchResults([]);
     setShowSearchResults(false);
@@ -230,7 +235,8 @@ export const PantryScreen: React.FC = () => {
   };
 
   // Get products that are in the pantry (either from staples or stored product details)
-  const pantryProducts = [
+  // If focusedProductId is set, show only that product
+  const allPantryProducts = [
     ...staples.filter(s => quantities.has(s.product_id)).map(s => ({
       product_id: s.product_id,
       product_name: s.product_name,
@@ -248,6 +254,11 @@ export const PantryScreen: React.FC = () => {
         isStaple: false,
       }))
   ];
+  
+  // Filter to show only focused product, or all if no focus
+  const pantryProducts = focusedProductId 
+    ? allPantryProducts.filter(p => p.product_id === focusedProductId)
+    : allPantryProducts;
 
   // Group products by category
   const groupedByCategory: Record<string, typeof pantryProducts> = {};
@@ -296,6 +307,16 @@ export const PantryScreen: React.FC = () => {
           </View>
         )}
 
+        {/* Exit focus mode button */}
+        {focusedProductId && (
+          <TouchableOpacity 
+            style={styles.exitFocusButton} 
+            onPress={() => setFocusedProductId(null)}
+          >
+            <Text style={styles.exitFocusText}>Pokaż wszystkie produkty</Text>
+          </TouchableOpacity>
+        )}
+
         <View style={styles.counterContainer}>
           <Text style={styles.counterText}>
             {quantities.size} produktów w spiżarni
@@ -307,17 +328,24 @@ export const PantryScreen: React.FC = () => {
           <View style={styles.itemsList}>
             {categories.map((category) => (
               <CategorySection key={category} title={translateCategory(category)}>
-                {groupedByCategory[category].map((product) => (
-                  <PantryItemCard
-                    key={product.product_id}
-                    productId={product.product_id}
-                    productName={product.product_name}
-                    category={product.category}
-                    icon={product.icon}
-                    isStaple={product.isStaple}
-                    onToggle={() => toggleItem(product.product_id, 500, product.product_name, product.category)}
-                  />
-                ))}
+                {groupedByCategory[category].map((product) => {
+                  const itemData = quantities.get(product.product_id);
+                  return (
+                    <PantryItemCard
+                      key={product.product_id}
+                      productId={product.product_id}
+                      productName={product.product_name}
+                      category={product.category}
+                      icon={product.icon}
+                      isStaple={product.isStaple}
+                      quantity={itemData?.quantity}
+                      expiryDate={itemData?.expiryDate}
+                      onToggle={() => toggleItem(product.product_id, 500, product.product_name, product.category)}
+                      onQuantityChange={(qty) => updateQuantity(product.product_id, qty)}
+                      onExpiryDateChange={(date) => updateExpiryDate(product.product_id, date)}
+                    />
+                  );
+                })}
               </CategorySection>
             ))}
           </View>
@@ -580,6 +608,20 @@ const styles = StyleSheet.create({
   searchResultCategory: {
     fontSize: typography.fontSize.sm,
     color: colors.textSecondary,
+  },
+  exitFocusButton: {
+    backgroundColor: colors.secondary + '20',
+    padding: spacing.md,
+    borderRadius: spacing.borderRadius,
+    marginBottom: spacing.md,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.secondary,
+  },
+  exitFocusText: {
+    color: colors.secondary,
+    fontSize: typography.fontSize.md,
+    fontWeight: typography.fontWeight.medium,
   },
   counterContainer: {
     backgroundColor: colors.primary + '15',
