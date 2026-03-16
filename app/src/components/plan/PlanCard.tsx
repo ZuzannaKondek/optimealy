@@ -13,6 +13,7 @@ export const PlanCard: React.FC<Props> = ({ plan, onPress }) => {
     plan.estimated_food_waste_g != null ? `${Math.round(plan.estimated_food_waste_g)}g odpadów` : 'Odpady: —';
 
   // Display execution status when available (draft/active/completed/cancelled), else optimization status
+  // Note: cancelled plans can be re-activated, so show as "Szkic" (Draft)
   const displayStatus =
     plan.execution_status === 'draft'
       ? 'Szkic'
@@ -21,17 +22,20 @@ export const PlanCard: React.FC<Props> = ({ plan, onPress }) => {
       : plan.execution_status === 'completed'
       ? 'Zakończony'
       : plan.execution_status === 'cancelled'
-      ? 'Anulowany'
+      ? 'Szkic'  // Cancelled plans can be re-activated, treat as draft
       : plan.optimization_status;
 
   // Styling: prefer execution_status for user-facing state, fall back to optimization_status
+  // Note: cancelled plans can be re-activated, so style like draft
   const statusStyle =
     plan.execution_status === 'draft'
       ? styles.statusDefault
       : plan.execution_status === 'active'
       ? styles.statusCompleted
-      : plan.execution_status === 'completed' || plan.execution_status === 'cancelled'
+      : plan.execution_status === 'completed'
       ? styles.statusCompleted
+      : plan.execution_status === 'cancelled'
+      ? styles.statusDefault  // Cancelled plans can be re-activated, style like draft
       : plan.optimization_status === 'completed'
       ? styles.statusCompleted
       : plan.optimization_status === 'failed'

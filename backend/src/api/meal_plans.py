@@ -706,16 +706,22 @@ async def delete_meal_plan(
     """
     Delete a meal plan.
     """
-    deleted = await MealPlanService.delete_meal_plan(
-        db=db,
-        plan_id=plan_id,
-        user_id=str(current_user.id),
-    )
+    try:
+        deleted = await MealPlanService.delete_meal_plan(
+            db=db,
+            plan_id=plan_id,
+            user_id=str(current_user.id),
+        )
 
-    if not deleted:
+        if not deleted:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Meal plan not found",
+            )
+    except ValueError as e:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Meal plan not found",
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e),
         )
 
 
@@ -776,8 +782,8 @@ async def cancel_meal_plan(
         )
 
         return {
-            "message": "Plan cancelled successfully",
-            "plan": {"id": str(plan.id), "execution_status": plan.execution_status},
+            "plan_id": str(plan.id),
+            "execution_status": plan.execution_status,
         }
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))

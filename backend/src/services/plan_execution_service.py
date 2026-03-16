@@ -48,7 +48,11 @@ class PlanExecutionService:
         if not plan:
             raise ValueError("Plan not found")
 
-        if plan.execution_status != "draft":
+        # Idempotent: if already active, just return success
+        if plan.execution_status == "active":
+            return {"plan": plan, "updated_pantry": []}
+
+        if plan.execution_status not in ("draft", "cancelled"):
             raise ValueError(f"Plan already {plan.execution_status}")
 
         # 2. Check for existing active plan
@@ -107,6 +111,7 @@ class PlanExecutionService:
 
         - Pantry remains unchanged
         - Updates plan status to 'cancelled'
+        - Idempotent: cancelling an already cancelled plan returns success
         """
         stmt = select(MealPlan).where(MealPlan.id == plan_id, MealPlan.user_id == user_id)
         result = await db.execute(stmt)
@@ -114,6 +119,10 @@ class PlanExecutionService:
 
         if not plan:
             raise ValueError("Plan not found")
+
+        # Idempotent: if already cancelled, just return success
+        if plan.execution_status == "cancelled":
+            return plan
 
         if plan.execution_status != "active":
             raise ValueError("Plan is not active")

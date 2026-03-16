@@ -136,7 +136,8 @@ export const planService = {
   },
 
   async cancelPlan(planId: string): Promise<MealPlanDetail> {
-    const response = await apiClient.post<MealPlanDetail>(`/meal-plans/${planId}/cancel`);
-    return response.data;
+    const response = await apiClient.post<{ plan_id: string; execution_status: string }>(`/meal-plans/${planId}/cancel`);
+    // Fetch the full plan detail after cancel
+    return await apiClient.get<MealPlanDetail>(`/meal-plans/${planId}`).then(r => r.data);
   },
 };

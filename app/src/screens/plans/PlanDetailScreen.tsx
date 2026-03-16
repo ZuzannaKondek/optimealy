@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { usePlans } from '../../hooks/usePlans';
+import { useToast } from '../../hooks/useToast';
 import { DayCard } from '../../components/plan/DayCard';
 import { colors, spacing, typography } from '../../theme';
 import { planService } from '../../services/planService';
@@ -16,40 +17,69 @@ export const PlanDetailScreen: React.FC = () => {
   const { planId } = (route.params as RouteParams) ?? {};
 
   const { selectedPlan, isLoadingDetail, error, fetchPlanDetail, fetchPlans, setSelectedPlan } = usePlans();
+  const { showToast, ToastContainer } = useToast();
   const [isActivating, setIsActivating] = useState(false);
+  const [isCancelling, setIsCancelling] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
 
   const handleActivatePlan = async () => {
+    if (!planId) {
+      Alert.alert('Błąd', 'Brak ID planu');
+      return;
+    }
     try {
       setIsActivating(true);
       const updatedPlan = await planService.activatePlan(planId);
       // Update local state immediately so button disappears right away
       setSelectedPlan(updatedPlan);
-      Alert.alert(
-        'Plan aktywny! 🎉',
-        'Twój plan posiłków jest teraz aktywny. Wszystkie produkty zostały dodane do Twojej spiżarni.',
-        [
-          {
-            text: 'Zobacz dzisiaj',
-            onPress: () => navigation.navigate('Today' as never),
-          },
-          {
-            text: 'OK',
-            style: 'cancel',
-          },
-        ]
-      );
+      showToast('Plan rozpoczęty', 'success');
       // Also refresh from server to ensure consistency
       await fetchPlanDetail(planId);
     } catch (err: any) {
-      Alert.alert(
-        'Błąd',
-        err.response?.data?.detail || 'Nie udało się aktywować planu'
-      );
+      const errorDetail = err.response?.data?.detail || '';
+      if (err.response?.status === 409 || errorDetail.includes('already have an active plan')) {
+        Alert.alert(
+          'Plan już aktywny',
+          'Masz już aktywny plan. Najpierw zakończ lub anuluj bieżący plan.'
+        );
+      } else {
+        Alert.alert(
+          'Błąd',
+          errorDetail || 'Nie udało się aktywować planu'
+        );
+      }
     } finally {
       setIsActivating(false);
     }
+  };
+
+  const executeCancelPlan = async () => {
+    setShowCancelConfirm(false);
+    if (!planId) {
+      Alert.alert('Błąd', 'Brak ID planu');
+      return;
+    }
+    try {
+      console.log('Canceling plan:', planId);
+      setIsCancelling(true);
+      const updatedPlan = await planService.cancelPlan(planId);
+      console.log('Cancel response:', updatedPlan);
+      setSelectedPlan(updatedPlan);
+      showToast('Plan anulowany', 'success');
+      await fetchPlanDetail(planId);
+    } catch (err: any) {
+      console.log('Cancel error:', err);
+      Alert.alert('Błąd', err.response?.data?.detail || 'Nie udało się anulować planu');
+    } finally {
+      setIsCancelling(false);
+    }
+  };
+
+  const handleCancelPlan = () => {
+    console.log('handleCancelPlan called, planId:', planId);
+    setShowCancelConfirm(true);
   };
 
   const handleDeletePlan = () => {
@@ -58,6 +88,10 @@ export const PlanDetailScreen: React.FC = () => {
   };
 
   const confirmDelete = async () => {
+    if (!planId) {
+      Alert.alert('Błąd', 'Brak ID planu');
+      return;
+    }
     console.log('Delete confirmed, planId:', planId);
     setShowDeleteConfirm(false);
     try {
@@ -72,6 +106,8 @@ export const PlanDetailScreen: React.FC = () => {
     } catch (err: any) {
       console.log('Delete error:', err);
       setIsDeleting(false);
+      const errorMessage = err.response?.data?.detail || 'Nie udało się usunąć planu';
+      Alert.alert('Błąd', errorMessage);
     }
   };
 
@@ -98,7 +134,9 @@ export const PlanDetailScreen: React.FC = () => {
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <>
+      <ToastContainer />
+      <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.title}>
         {selectedPlan.name || `${selectedPlan.start_date} • ${selectedPlan.duration_days} dni`}
       </Text>
@@ -119,7 +157,19 @@ export const PlanDetailScreen: React.FC = () => {
           <Text style={styles.groceryButtonText}>Potrzebne produkty</Text>
         </TouchableOpacity>
 
-        {selectedPlan.execution_status === 'draft' && (
+        {selectedPlan.execution_status === 'active' && (
+          <TouchableOpacity
+            style={[styles.cancelButton, isCancelling && styles.buttonDisabled]}
+            onPress={handleCancelPlan}
+            disabled={isCancelling}
+          >
+            <Text style={styles.cancelButtonText}>
+              {isCancelling ? 'Anulowanie...' : 'Anuluj plan'}
+            </Text>
+          </TouchableOpacity>
+        )}
+
+        {(selectedPlan.execution_status === 'draft' || selectedPlan.execution_status === 'cancelled') && (
           <TouchableOpacity
             style={[styles.activateButton, isActivating && styles.buttonDisabled]}
             onPress={handleActivatePlan}
@@ -131,28 +181,30 @@ export const PlanDetailScreen: React.FC = () => {
           </TouchableOpacity>
         )}
 
-        {(selectedPlan.execution_status === 'completed' || selectedPlan.execution_status === 'cancelled') && (
+        {selectedPlan.execution_status === 'completed' && (
           <View style={styles.statusBadge}>
             <Text style={styles.statusBadgeText}>
-              {selectedPlan.execution_status === 'completed' ? '✓ Zakończony' : '✕ Anulowany'}
+              Zakończony
             </Text>
           </View>
         )}
       </View>
 
-      {/* Delete Plan Button - works for all statuses */}
-      <TouchableOpacity
-        style={[styles.deleteButton, isDeleting && styles.buttonDisabled]}
-        onPress={() => {
-          console.log('Delete button pressed');
-          handleDeletePlan();
-        }}
-        disabled={isDeleting}
-      >
-        <Text style={styles.deleteButtonText}>
-          {isDeleting ? 'Usuwanie...' : 'Usuń plan'}
-        </Text>
-      </TouchableOpacity>
+      {/* Delete Plan Button - hidden for active plans, must cancel first */}
+      {selectedPlan.execution_status !== 'active' && (
+        <TouchableOpacity
+          style={[styles.deleteButton, isDeleting && styles.buttonDisabled]}
+          onPress={() => {
+            console.log('Delete button pressed');
+            handleDeletePlan();
+          }}
+          disabled={isDeleting}
+        >
+          <Text style={styles.deleteButtonText}>
+            {isDeleting ? 'Usuwanie...' : 'Usuń plan'}
+          </Text>
+        </TouchableOpacity>
+      )}
 
       <Text style={styles.sectionTitle}>Dni</Text>
       {selectedPlan.daily_menus.map((day) => (
@@ -191,7 +243,32 @@ export const PlanDetailScreen: React.FC = () => {
           </View>
         </View>
       )}
+
+      {/* Cancel Confirmation Modal */}
+      {showCancelConfirm && (
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Anulować plan?</Text>
+            <Text style={styles.modalText}>Czy na pewno chcesz anulować ten plan? Produkty w spiżarni pozostaną bez zmian.</Text>
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={styles.modalCancelButton}
+                onPress={() => setShowCancelConfirm(false)}
+              >
+                <Text style={styles.modalCancelText}>Nie</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.modalDeleteButton}
+                onPress={executeCancelPlan}
+              >
+                <Text style={styles.modalDeleteText}>Tak, anuluj</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      )}
     </ScrollView>
+    </>
   );
 };
 
@@ -260,6 +337,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   activateButtonText: {
+    color: colors.white,
+    fontSize: typography.fontSize.md,
+    fontWeight: typography.fontWeight.bold,
+  },
+  cancelButton: {
+    marginTop: spacing.sm,
+    backgroundColor: colors.warning,
+    borderRadius: spacing.borderRadius,
+    paddingVertical: spacing.md,
+    alignItems: 'center',
+  },
+  cancelButtonText: {
     color: colors.white,
     fontSize: typography.fontSize.md,
     fontWeight: typography.fontWeight.bold,
