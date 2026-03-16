@@ -6,7 +6,7 @@ Endpoints for managing user pantry items (ingredients they already have).
 from typing import List, Optional
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -236,3 +236,36 @@ async def search_products(q: str, limit: int = 20, db: AsyncSession = Depends(ge
         )
         for product in products
     ]
+
+
+@router.delete("/items/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_pantry_item(
+    product_id: str,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Delete a product from user's pantry.
+
+    Removes the specified product entirely from the user's pantry.
+    """
+    from uuid import UUID
+
+    try:
+        uuid_product_id = UUID(product_id)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid product ID format")
+
+    # Find and delete the pantry item
+    stmt = select(UserPantryItem).where(
+        UserPantryItem.user_id == current_user.id,
+        UserPantryItem.product_id == uuid_product_id,
+    )
+    result = await db.execute(stmt)
+    pantry_item = result.scalar_one_or_none()
+
+    if not pantry_item:
+        raise HTTPException(status_code=404, detail="Pantry item not found")
+
+    await db.delete(pantry_item)
+    await db.commit()

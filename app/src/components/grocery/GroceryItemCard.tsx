@@ -8,11 +8,10 @@ type Props = {
   onPress?: () => void;
 };
 
-export const GroceryItemCard: React.FC<Props> = ({ item, onPress }) => {
+export const GroceryItemCard: React.FC<Props> = ({ item, onPress, onDelete }) => {
   const isAlreadyOwned = item.status === 'already_have';
-  const isNeeded = item.status === 'needed';
   const isPurchased = item.status === 'purchased';
-  const isClickable = !isAlreadyOwned && !isNeeded && !!onPress;
+  const isClickable = !isAlreadyOwned && !!onPress;
   const statusLabel = isAlreadyOwned ? 'Mam' : isPurchased ? 'Kupione' : 'Potrzebne';
 
   const recipes = item.used_in_recipes ?? [];

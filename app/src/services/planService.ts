@@ -112,6 +112,13 @@ export const planService = {
     return response.data;
   },
 
+  /**
+   * Delete a single item from the grocery list.
+   */
+  async deleteGroceryItem(planId: string, itemId: string): Promise<void> {
+    await apiClient.delete(`/meal-plans/${planId}/grocery/items/${itemId}`);
+  },
+
   async getActivePlan(): Promise<MealPlanSummary | null> {
     const response = await apiClient.get<MealPlanSummary>('/meal-plans/active');
     return response.data;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert, Animated, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Alert, Animated, Dimensions } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { planService } from '../../services/planService';
 import { pantryService } from '../../services/pantryService';
@@ -103,28 +103,6 @@ export const ShoppingListScreen: React.FC = () => {
     };
   }, [planId]);
 
-  const handleAddAllToPantry = async () => {
-    if (itemsToBuy.length === 0) {
-      Alert.alert('Info', 'Wszystkie produkty są już w spiżarni');
-      return;
-    }
-
-    try {
-      await pantryService.updatePantry(
-        itemsToBuy.map((item: GroceryItem) => ({
-          product_id: item.product_id,
-          quantity_g: item.required_quantity_g,
-        }))
-      );
-      Alert.alert('Sukces', `Dodano ${itemsToBuy.length} produktów do spiżarni`);
-      // Reload the list
-      const list = await planService.getGroceryList(planId, { groupBy: 'category' });
-      setGroceryList(list);
-    } catch (e: any) {
-      Alert.alert('Błąd', e?.response?.data?.detail || 'Nie udało się dodać produktów do spiżarni');
-    }
-  };
-
   const handleItemBought = async (item: GroceryItem) => {
     // Start animation - don't refresh list yet
     setRemovingItem(item);
@@ -151,10 +129,12 @@ export const ShoppingListScreen: React.FC = () => {
     }
   };
 
+  // If no planId provided, show empty state with option to select a plan
   if (!planId) {
     return (
       <View style={styles.center}>
-        <Text style={styles.errorText}>Brak planId</Text>
+        <Text style={styles.emptyTitle}>Wybierz plan</Text>
+        <Text style={styles.emptySubtext}>Przejdź do szczegółów planu, aby zobaczyć listę zakupów</Text>
       </View>
     );
   }
@@ -169,25 +149,28 @@ export const ShoppingListScreen: React.FC = () => {
     );
   }
 
-  // Filter to only items NOT in pantry (to buy)
-  const itemsToBuy = groceryList.items.filter((item: GroceryItem) => item.status !== 'already_have');
+  // Show ALL items (both needed and already in pantry)
+  const allItems = groceryList.items;
 
   // Group by category
   const grouped: Record<string, GroceryItem[]> = {};
-  for (const item of itemsToBuy) {
+  for (const item of allItems) {
     const key = item.category || 'other';
     grouped[key] = grouped[key] ? [...grouped[key], item] : [item];
   }
 
   const categories = Object.keys(grouped).sort();
 
-  if (itemsToBuy.length === 0) {
+  // Count items still needed to buy
+  const itemsToBuyCount = allItems.filter((item: GroceryItem) => item.status === 'needed').length;
+
+  if (allItems.length === 0) {
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.content}>
         <Text style={styles.title}>Zakupy</Text>
         <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>Wszystko masz w spiżarni!</Text>
-          <Text style={styles.emptySubtext}>Nie musisz niczego kupować</Text>
+          <Text style={styles.emptyText}>Brak produktów na liście</Text>
+          <Text style={styles.emptySubtext}>Wygeneruj listę zakupów z planu posiłków</Text>
         </View>
       </ScrollView>
     );
@@ -197,12 +180,14 @@ export const ShoppingListScreen: React.FC = () => {
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.title}>Zakupy</Text>
       <Text style={styles.subtitle}>
-        Do kupienia: {itemsToBuy.length} produktów
+        {itemsToBuyCount > 0 ? `Do kupienia: ${itemsToBuyCount} produktów` : 'Wszystko masz w spiżarni!'}
       </Text>
 
-      <TouchableOpacity style={styles.addAllButton} onPress={handleAddAllToPantry}>
-        <Text style={styles.addAllButtonText}>Dodaj wszystkie do spiżarni</Text>
-      </TouchableOpacity>
+      {itemsToBuyCount > 0 && (
+        <Text style={styles.subtitle}>
+          Stuknij w produkt gdy masz go w koszyku, aby przenieść do spiżarni
+        </Text>
+      )}
 
       {categories.map((category) => (
         <CategorySection key={category} title={translateCategory(category)}>
@@ -218,7 +203,11 @@ export const ShoppingListScreen: React.FC = () => {
               );
             }
             return (
-              <GroceryItemCard key={item.item_id} item={item} onPress={() => handleItemBought(item)} />
+              <GroceryItemCard 
+                key={item.item_id} 
+                item={item} 
+                onPress={() => handleItemBought(item)} 
+              />
             );
           })}
         </CategorySection>
@@ -266,6 +255,13 @@ const styles = StyleSheet.create({
     color: colors.error,
     textAlign: 'center',
   },
+  emptyTitle: {
+    fontSize: typography.fontSize.lg,
+    fontWeight: typography.fontWeight.semiBold,
+    color: colors.textPrimary,
+    marginBottom: spacing.xs,
+    textAlign: 'center',
+  },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -295,18 +291,6 @@ const styles = StyleSheet.create({
     fontWeight: typography.fontWeight.semiBold,
     color: colors.textPrimary,
     marginBottom: spacing.xs,
-  },
-  addAllButton: {
-    backgroundColor: colors.primary,
-    paddingVertical: spacing.md,
-    borderRadius: spacing.borderRadius,
-    alignItems: 'center',
-    marginBottom: spacing.lg,
-  },
-  addAllButtonText: {
-    color: colors.white,
-    fontSize: typography.fontSize.md,
-    fontWeight: typography.fontWeight.semiBold,
   },
   meta: {
     fontSize: typography.fontSize.sm,

@@ -48,11 +48,13 @@ const translateCategory = (category?: string): string => {
 };
 
 export const PantryScreen: React.FC = () => {
-  const { items, staples, isLoading, error, fetchPantry, fetchStaples, updatePantry, searchProducts } = usePantry();
+  const { items, staples, isLoading, error, fetchPantry, fetchStaples, updatePantry, searchProducts, deletePantryItem } = usePantry();
   const { showToast, ToastContainer } = useToast();
   
   // Track quantities per product ID with product details
   const [quantities, setQuantities] = useState<Map<string, { quantity: number; expiryDate?: string; productName?: string; category?: string }>>(new Map());
+  // Track which items exist in backend (for delete functionality)
+  const [existingItemIds, setExistingItemIds] = useState<Set<string>>(new Set());
   const [isSaving, setIsSaving] = useState(false);
 
   // Search state
@@ -79,6 +81,7 @@ export const PantryScreen: React.FC = () => {
   // Update quantities map when items load (sync from backend with product details)
   useEffect(() => {
     const newQuantities = new Map<string, { quantity: number; expiryDate?: string; productName?: string; category?: string }>();
+    const newExistingIds = new Set<string>();
     items.forEach((item) => {
       newQuantities.set(item.product_id, { 
         quantity: item.quantity_g, 
@@ -86,8 +89,10 @@ export const PantryScreen: React.FC = () => {
         productName: item.product_name,
         category: item.category,
       });
+      newExistingIds.add(item.product_id);
     });
     setQuantities(newQuantities);
+    setExistingItemIds(newExistingIds);
   }, [items]);
 
   // Debounced search
@@ -330,6 +335,7 @@ export const PantryScreen: React.FC = () => {
               <CategorySection key={category} title={translateCategory(category)}>
                 {groupedByCategory[category].map((product) => {
                   const itemData = quantities.get(product.product_id);
+                  const isExistingItem = existingItemIds.has(product.product_id);
                   return (
                     <PantryItemCard
                       key={product.product_id}
@@ -341,6 +347,13 @@ export const PantryScreen: React.FC = () => {
                       quantity={itemData?.quantity}
                       expiryDate={itemData?.expiryDate}
                       onToggle={() => toggleItem(product.product_id, 500, product.product_name, product.category)}
+                      onDelete={() => {
+                        if (isExistingItem) {
+                          deletePantryItem(product.product_id);
+                        } else {
+                          toggleItem(product.product_id, 500, product.product_name, product.category);
+                        }
+                      }}
                       onQuantityChange={(qty) => updateQuantity(product.product_id, qty)}
                       onExpiryDateChange={(date) => updateExpiryDate(product.product_id, date)}
                     />
@@ -414,6 +427,7 @@ interface PantryItemCardProps {
   quantity: number | undefined;
   expiryDate: string | undefined;
   onToggle: () => void;
+  onDelete: () => void;
   onQuantityChange: (quantity: number) => void;
   onExpiryDateChange: (date: string) => void;
 }
@@ -425,6 +439,7 @@ const PantryItemCard: React.FC<PantryItemCardProps> = ({
   quantity,
   expiryDate,
   onToggle, 
+  onDelete,
   onQuantityChange,
   onExpiryDateChange 
 }) => {
@@ -475,7 +490,7 @@ const PantryItemCard: React.FC<PantryItemCardProps> = ({
           <Text style={styles.itemName} numberOfLines={1}>{productName}</Text>
           <Text style={styles.itemCategory}>{translateCategory(category)}</Text>
         </View>
-        <TouchableOpacity onPress={onToggle} style={styles.removeButton}>
+        <TouchableOpacity onPress={onDelete} style={styles.removeButton}>
           <Text style={styles.removeButtonText}>×</Text>
         </TouchableOpacity>
       </View>

@@ -113,11 +113,39 @@ export const usePantry = () => {
     }
   }, []);
 
+  /**
+   * Delete a single pantry item by product ID
+   */
+  const deletePantryItem = useCallback(async (productId: string) => {
+    setState((prev) => ({ ...prev, isLoading: true, error: null }));
+
+    try {
+      await pantryService.deletePantryItem(productId);
+      
+      // Update local state immediately (remove from items array)
+      setState((prev) => ({
+        ...prev,
+        items: prev.items.filter((item) => item.product_id !== productId),
+        isLoading: false,
+      }));
+      
+      return true;
+    } catch (error: any) {
+      setState((prev) => ({
+        ...prev,
+        isLoading: false,
+        error: error.message || 'Nie udało się usunąć produktu ze spiżarni',
+      }));
+      throw error;
+    }
+  }, []);
+
   return {
     ...state,
     fetchPantry,
     fetchStaples,
     updatePantry,
     searchProducts,
+    deletePantryItem,
   };
 };

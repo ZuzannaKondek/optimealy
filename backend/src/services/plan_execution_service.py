@@ -194,7 +194,13 @@ class PlanExecutionService:
             if pantry_item:
                 old_quantity = float(pantry_item.quantity_g)
                 new_quantity = max(0, old_quantity - quantity_needed)
-                pantry_item.quantity_g = new_quantity
+
+                if new_quantity == 0:
+                    # Delete pantry item entirely when quantity reaches 0
+                    await db.delete(pantry_item)
+                else:
+                    pantry_item.quantity_g = new_quantity
+
                 deducted[str(ing.product_id)] = quantity_needed
             else:
                 # Item not in pantry, still track deduction

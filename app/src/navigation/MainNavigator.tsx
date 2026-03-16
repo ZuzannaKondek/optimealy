@@ -6,10 +6,10 @@
  * Each tab has its own stack navigator to keep tabs visible on all screens.
  */
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, ActivityIndicator, Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { colors, spacing, typography } from '../theme';
 
 const Tab = createBottomTabNavigator();
@@ -80,83 +80,13 @@ const PantryStackScreen = () => (
 import { SettingsScreen } from '../screens/settings/SettingsScreen';
 import { ChangePasswordScreen } from '../screens/settings/ChangePasswordScreen';
 import { AboutScreen } from '../screens/settings/AboutScreen';
-import { planService } from '../services/planService';
 import { ShoppingListScreen } from '../screens/grocery/ShoppingListScreen';
 
 const GroceryStack = createStackNavigator();
 
-// Wrapper to get active plan and navigate to ShoppingList
-const GroceryListWrapper: React.FC<{ navigation: any }> = ({ navigation }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  
-  useEffect(() => {
-    const getActivePlanAndNavigate = async () => {
-      try {
-        const activePlan = await planService.getActivePlan();
-        if (activePlan) {
-          navigation.navigate('ShoppingList', { planId: activePlan.plan_id });
-        }
-      } catch (e) {
-        console.error('Failed to get active plan:', e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    getActivePlanAndNavigate();
-  }, [navigation]);
-
-  if (isLoading) {
-    return (
-      <View style={styles.loading}>
-        <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Ładowanie...</Text>
-      </View>
-    );
-  }
-
-  return (
-    <View style={styles.loading}>
-      <Text style={styles.noPlanText}>Brak aktywnego planu</Text>
-      <Text style={styles.noPlanSubtext}>Utwórz plan, aby zobaczyć listę produktów</Text>
-    </View>
-  );
-};
-
-// Wrapper to get active plan and navigate to ShoppingList
-const ShoppingListWrapper: React.FC<{ navigation: any }> = ({ navigation }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  
-  useEffect(() => {
-    const getActivePlanAndNavigate = async () => {
-      try {
-        const activePlan = await planService.getActivePlan();
-        if (activePlan) {
-          navigation.navigate('ShoppingList', { planId: activePlan.plan_id });
-        }
-      } catch (e) {
-        console.error('Failed to get active plan:', e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    getActivePlanAndNavigate();
-  }, [navigation]);
-
-  if (isLoading) {
-    return (
-      <View style={styles.loading}>
-        <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Ładowanie...</Text>
-      </View>
-    );
-  }
-
-  return (
-    <View style={styles.loading}>
-      <Text style={styles.noPlanText}>Brak aktywnego planu</Text>
-      <Text style={styles.noPlanSubtext}>Utwórz plan, aby zobaczyć listę zakupów</Text>
-    </View>
-  );
+// Simple wrapper - ShoppingListScreen will handle empty state itself
+const ShoppingListWrapper: React.FC = () => {
+  return <ShoppingListScreen />;
 };
 
 const GroceryStackScreen = () => (
