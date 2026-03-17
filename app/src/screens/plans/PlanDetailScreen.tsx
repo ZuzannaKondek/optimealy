@@ -176,7 +176,7 @@ export const PlanDetailScreen: React.FC = () => {
             disabled={isActivating}
           >
             <Text style={styles.activateButtonText}>
-              {isActivating ? 'Aktywacja...' : 'Kup produkty i rozpocznij plan'}
+              {isActivating ? 'Rozpoczynanie...' : 'Rozpocznij plan'}
             </Text>
           </TouchableOpacity>
         )}

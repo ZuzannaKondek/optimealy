@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { planService } from '../../services/planService';
+import { useGroceryNavigation } from '../../stores/groceryNavigationStore';
 import { GroceryItemCard } from '../../components/grocery/GroceryItemCard';
 import { CategorySection } from '../../components/grocery/CategorySection';
 import { colors, spacing, typography } from '../../theme';
@@ -78,6 +79,8 @@ export const GroceryListScreen: React.FC = () => {
     }
   };
 
+  const { setPendingPlanId, setTargetTab } = useGroceryNavigation();
+
   const handleAddToShoppingList = () => {
     // Get all items that are not already in pantry
     const itemsToAdd = groceryList.items.filter((item: GroceryItem) => item.status !== 'already_have');
@@ -87,11 +90,21 @@ export const GroceryListScreen: React.FC = () => {
       return;
     }
 
-    // Navigate to Zakupy tab with the planId
-    navigation.navigate('Grocery', {
-      screen: 'ShoppingList',
-      params: { planId },
-    });
+    // Store the planId in global state so Grocery tab can read it
+    setPendingPlanId(planId);
+    setTargetTab('Grocery');
+    
+    // Navigate to the Zakupy tab
+    // Get parent (HomeStack), then its parent (Tab.Navigator)
+    const homeStack = navigation.getParent();
+    const tabNavigator = homeStack?.getParent();
+    
+    if (tabNavigator) {
+      tabNavigator.navigate('Grocery');
+    } else {
+      // Fallback for wide screen mode where there's no Tab.Navigator
+      navigation.navigate('HomeMain');
+    }
   };
 
   if (!planId) {
@@ -227,4 +240,3 @@ const styles = StyleSheet.create({
     fontWeight: typography.fontWeight.semiBold,
   },
 });
-

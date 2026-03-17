@@ -154,8 +154,8 @@ export const ShoppingListScreen: React.FC<{ planId?: string }> = ({ planId: prop
     );
   }
 
-  // Only show items that need to be bought (not already in pantry)
-  const allItems = groceryList.items.filter((item: GroceryItem) => item.status === 'needed');
+  // Only show items that need to be bought (not already in pantry) - consistent with GroceryListScreen
+  const allItems = groceryList.items.filter((item: GroceryItem) => item.status !== 'already_have');
 
   // Group by category
   const grouped: Record<string, GroceryItem[]> = {};
@@ -166,7 +166,7 @@ export const ShoppingListScreen: React.FC<{ planId?: string }> = ({ planId: prop
 
   const categories = Object.keys(grouped).sort();
 
-  // Count items still needed to buy (allItems already filtered to 'needed' status)
+  // Count items still needed to buy (allItems already filtered to exclude 'already_have')
   const itemsToBuyCount = allItems.length;
 
   // Check if items exist but are already in pantry

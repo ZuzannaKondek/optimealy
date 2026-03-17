@@ -738,7 +738,6 @@ async def activate_meal_plan(
     Activate a meal plan for execution.
 
     This will:
-    - Add all grocery items to the user's pantry
     - Mark the plan as active
     - Only one plan can be active at a time
     """
@@ -755,7 +754,6 @@ async def activate_meal_plan(
                 "id": str(result["plan"].id),
                 "execution_status": result["plan"].execution_status,
             },
-            "pantry_updated": True,
         }
     except ValueError as e:
         if "already have an active plan" in str(e):

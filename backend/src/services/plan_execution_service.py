@@ -63,7 +63,6 @@ class PlanExecutionService:
         Activate a meal plan for execution.
 
         - Validates no other active plan exists
-        - Adds grocery list to pantry (additive)
         - Updates plan status to 'active'
 
         Returns:
@@ -96,34 +95,7 @@ class PlanExecutionService:
         if active_result.scalar_one_or_none():
             raise ValueError("You already have an active plan. Please complete or cancel it first.")
 
-        # 3. Get grocery list and add to pantry (additive)
-        grocery_list = await GroceryService.generate_grocery_list(
-            db, plan_id=str(plan_id), user_id=str(user_id), exclude_owned=False
-        )
-
-        for item in grocery_list.items:
-            # Get or create pantry item
-            pantry_stmt = select(UserPantryItem).where(
-                UserPantryItem.user_id == user_id, UserPantryItem.product_id == item.product_id
-            )
-            pantry_result = await db.execute(pantry_stmt)
-            pantry_item = pantry_result.scalar_one_or_none()
-
-            if pantry_item:
-                # Add to existing quantity
-                pantry_item.quantity_g = float(pantry_item.quantity_g) + float(
-                    item.required_quantity_g
-                )
-            else:
-                # Create new pantry item
-                pantry_item = UserPantryItem(
-                    user_id=user_id,
-                    product_id=item.product_id,
-                    quantity_g=float(item.required_quantity_g),
-                )
-                db.add(pantry_item)
-
-        # 4. Update plan status
+        # 3. Update plan status
         plan.execution_status = "active"
 
         await db.commit()

@@ -8,19 +8,20 @@
  * Feature 6: Navigation Chrome - Adds sidebar layout on wide screens (web/tablet)
  */
 
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, ActivityIndicator, View, useWindowDimensions, TouchableOpacity, Text } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import { colors, spacing, typography } from '../theme';
 import { planService } from '../services/planService';
+import { useGroceryNavigation } from '../stores/groceryNavigationStore';
 
 // Sidebar breakpoint for wide screens (web/tablet)
 const SIDEBAR_BREAKPOINT = 768;
 
 // Tab configuration
-type TabRoute = 'Home' | 'Today' | 'Pantry' | 'Grocery' | 'Settings';
+export type TabRoute = 'Home' | 'Today' | 'Pantry' | 'Grocery' | 'Settings';
 
 interface TabConfig {
   name: TabRoute;
@@ -107,39 +108,40 @@ import { ShoppingListScreen } from '../screens/grocery/ShoppingListScreen';
 const GroceryStack = createStackNavigator();
 
 // Wrapper that auto-loads active plan's shopping list when accessed directly
-const ShoppingListWrapper: React.FC = () => {
+// Also uses the grocery navigation store for planId from GroceryListScreen
+const ShoppingListWrapper: React.FC<{ passedPlanId?: string }> = ({ passedPlanId: propPlanId }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [activePlanId, setActivePlanId] = useState<string | undefined>(undefined);
+  const route = useRoute<any>();
+  const { pendingPlanId, clearPendingPlanId } = useGroceryNavigation();
 
-  useFocusEffect(
-    useCallback(() => {
-      let cancelled = false;
-
-      const fetchActivePlan = async () => {
-        setIsLoading(true);
-        try {
-          const plan = await planService.getActivePlan();
-          if (!cancelled) {
-            setActivePlanId(plan?.id);
-          }
-        } catch (e) {
-          if (!cancelled) {
-            setActivePlanId(undefined);
-          }
-        } finally {
-          if (!cancelled) {
-            setIsLoading(false);
-          }
-        }
-      };
-
-      fetchActivePlan();
-
-      return () => {
-        cancelled = true;
-      };
-    }, [])
-  );
+  // Handle planId from all sources: props, store, or route params
+  // Only run once on mount to avoid re-triggering when pendingPlanId gets cleared
+  React.useEffect(() => {
+    // Priority: propPlanId > pendingPlanId > route.params > active plan
+    let planId = propPlanId ?? route.params?.planId;
+    
+    // Use pendingPlanId only if it exists (not null/undefined)
+    if (!planId && pendingPlanId) {
+      planId = pendingPlanId;
+      // Clear the pending planId after using it
+      clearPendingPlanId();
+    }
+    
+    if (planId) {
+      setActivePlanId(planId);
+    } else {
+      // No planId from any source, try to get active plan
+      planService.getActivePlan()
+        .then((plan) => {
+          setActivePlanId(plan?.id);
+        })
+        .catch(() => {
+          setActivePlanId(undefined);
+        });
+    }
+    setIsLoading(false);
+  }, []); // Empty deps - only run once on mount
 
   if (isLoading) {
     return (
@@ -149,35 +151,43 @@ const ShoppingListWrapper: React.FC = () => {
     );
   }
 
+  // Use activePlanId which is set based on priority: prop > store > route > active plan
   return <ShoppingListScreen planId={activePlanId} />;
 };
 
-const GroceryStackScreen = () => (
-  <GroceryStack.Navigator
-    screenOptions={{
-      headerStyle: { backgroundColor: colors.surface },
-      headerTintColor: colors.textPrimary,
-      headerTitleStyle: { fontWeight: typography.fontWeight.semiBold },
-      headerBackTitleVisible: false,
-    }}
-  >
-    <GroceryStack.Screen 
-      name="ShoppingListMain" 
-      component={ShoppingListWrapper} 
-      options={{ headerShown: false }} 
-    />
-    <GroceryStack.Screen 
-      name="ShoppingList" 
-      component={ShoppingListScreen} 
-      options={{ title: 'Zakupy' }} 
-    />
-    <GroceryStack.Screen 
-      name="GroceryList" 
-      component={GroceryListScreen} 
-      options={{ title: 'Potrzebne produkty' }} 
-    />
-  </GroceryStack.Navigator>
-);
+// GroceryStackScreen receives route params from parent (Tab) navigator
+const GroceryStackScreen = () => {
+  const route = useRoute<any>();
+  const passedPlanId = route.params?.planId;
+  
+  return (
+    <GroceryStack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: colors.surface },
+        headerTintColor: colors.textPrimary,
+        headerTitleStyle: { fontWeight: typography.fontWeight.semiBold },
+        headerBackTitleVisible: false,
+      }}
+    >
+      <GroceryStack.Screen 
+        name="ShoppingListMain" 
+        options={{ headerShown: false }}
+      >
+        {() => <ShoppingListWrapper passedPlanId={passedPlanId} />}
+      </GroceryStack.Screen>
+      <GroceryStack.Screen 
+        name="ShoppingList" 
+        component={ShoppingListScreen} 
+        options={{ title: 'Zakupy' }} 
+      />
+      <GroceryStack.Screen 
+        name="GroceryList" 
+        component={GroceryListScreen} 
+        options={{ title: 'Potrzebne produkty' }} 
+      />
+    </GroceryStack.Navigator>
+  );
+};
 
 const SettingsStack = createStackNavigator();
 
@@ -375,6 +385,13 @@ export const MainNavigator: React.FC = () => {
 // Wide screen navigator with sidebar on left
 const WideScreenNavigator: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<TabRoute>('Home');
+  const { targetTab, clearTargetTab } = useGroceryNavigation();
+
+  React.useEffect(() => {
+    if (!targetTab) return;
+    setCurrentTab(targetTab);
+    clearTargetTab();
+  }, [targetTab, clearTargetTab]);
 
   const navigateToTab = (tab: TabRoute) => {
     setCurrentTab(tab);
