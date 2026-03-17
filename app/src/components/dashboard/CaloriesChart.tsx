@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: spacing.borderRadius,
     padding: spacing.md,
-    flex: 1
+    height: 210,
+    overflow: 'hidden'
   } as ViewStyle,
   title: {
     fontSize: typography.fontSize.sm,

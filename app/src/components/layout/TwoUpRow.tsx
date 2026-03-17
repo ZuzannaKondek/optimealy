@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     gap: spacing.md,
+    alignItems: 'flex-start',
   } as ViewStyle,
   column: {
     flexDirection: 'column',
@@ -54,9 +55,11 @@ const styles = StyleSheet.create({
   } as ViewStyle,
   halfWidth: {
     flex: 1,
+    minHeight: 210,
   } as ViewStyle,
   fullWidth: {
     width: '100%',
+    minHeight: 210,
   } as ViewStyle,
   firstItem: {
     marginBottom: spacing.md,
