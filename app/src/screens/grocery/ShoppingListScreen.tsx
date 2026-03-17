@@ -3,8 +3,11 @@ import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Alert, Animated,
 import { useRoute } from '@react-navigation/native';
 import { planService } from '../../services/planService';
 import { pantryService } from '../../services/pantryService';
-import { CategorySection } from '../../components/grocery/CategorySection';
 import { GroceryItemCard } from '../../components/grocery/GroceryItemCard';
+import { ColumnBoard } from '../../components/layout/ColumnBoard';
+import { Section } from '../../components/layout/Section';
+import { Screen } from '../../components/layout/Screen';
+import { ScreenHeader } from '../../components/layout/ScreenHeader';
 import { colors, spacing, typography } from '../../theme';
 import type { GroceryList, GroceryItem } from '../../types/models';
 
@@ -186,42 +189,38 @@ export const ShoppingListScreen: React.FC<{ planId?: string }> = ({ planId: prop
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Zakupy</Text>
-      <Text style={styles.subtitle}>
-        {itemsToBuyCount > 0 ? `Do kupienia: ${itemsToBuyCount} produktów` : 'Wszystko masz w spiżarni!'}
-      </Text>
-
-      {itemsToBuyCount > 0 && (
-        <Text style={styles.subtitle}>
+    <Screen>
+      <ScreenHeader
+        title="Zakupy"
+        subtitle={itemsToBuyCount > 0 ? `Do kupienia: ${itemsToBuyCount} produktów` : 'Wszystko masz w spiżarni!'}
+      />
+      <Section title="Wskazówki">
+        <Text style={styles.sectionText}>
           Stuknij w produkt gdy masz go w koszyku, aby przenieść do spiżarni
         </Text>
-      )}
-
-      {categories.map((category) => (
-        <CategorySection key={category} title={translateCategory(category)}>
-          {grouped[category].map((item) => {
-            if (removingItem?.item_id === item.item_id) {
-              return (
-                <AnimatedGroceryItem
-                  key={item.item_id}
-                  item={item}
-                  onPress={() => {}}
-                  onAnimationComplete={handleAnimationComplete}
-                />
-              );
-            }
-            return (
-              <GroceryItemCard 
-                key={item.item_id} 
-                item={item} 
-                onPress={() => handleItemBought(item)} 
-              />
-            );
-          })}
-        </CategorySection>
-      ))}
-    </ScrollView>
+      </Section>
+      <ColumnBoard
+        categories={categories}
+        groupedItems={grouped}
+        translateCategory={translateCategory}
+        renderItem={(item) =>
+          removingItem?.item_id === item.item_id ? (
+            <AnimatedGroceryItem
+              key={item.item_id}
+              item={item}
+              onPress={() => {}}
+              onAnimationComplete={handleAnimationComplete}
+            />
+          ) : (
+            <GroceryItemCard
+              key={item.item_id}
+              item={item}
+              onPress={() => handleItemBought(item)}
+            />
+          )
+        }
+      />
+    </Screen>
   );
 };
 
@@ -255,11 +254,6 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     marginBottom: spacing.xs,
   },
-  subtitle: {
-    fontSize: typography.fontSize.md,
-    color: colors.textSecondary,
-    marginBottom: spacing.lg,
-  },
   errorText: {
     color: colors.error,
     textAlign: 'center',
@@ -286,6 +280,11 @@ const styles = StyleSheet.create({
   emptySubtext: {
     fontSize: typography.fontSize.md,
     color: colors.textSecondary,
+  },
+  sectionText: {
+    fontSize: typography.fontSize.sm,
+    color: colors.textSecondary,
+    lineHeight: 20,
   },
   card: {
     backgroundColor: colors.surface,
