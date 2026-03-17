@@ -3,9 +3,10 @@
  * Replace AUTHOR_NAME and PROMOTOR_TITLE_NAME with your details.
  */
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { Screen } from '../../components/layout/Screen';
 import { ScreenHeader } from '../../components/layout/ScreenHeader';
+import { Section } from '../../components/layout/Section';
 import { colors, spacing, typography } from '../../theme';
 
 const AUTHOR_NAME = '[Imię Nazwisko]';
@@ -15,7 +16,7 @@ export const AboutScreen: React.FC = () => {
   return (
     <Screen>
       <ScreenHeader title="O serwisie" />
-      <View style={styles.content}>
+      <Section title="O serwisie">
         <Text style={styles.paragraph}>
           Autorem niniejszego serwisu jest {AUTHOR_NAME}.
         </Text>
@@ -25,15 +26,12 @@ export const AboutScreen: React.FC = () => {
           {PROMOTOR_TITLE_NAME} na Wydziale Zarządzania i Komunikacji Społecznej
           Uniwersytetu Jagiellońskiego.
         </Text>
-      </View>
+      </Section>
     </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  content: {
-    marginTop: spacing.md,
-  },
   paragraph: {
     fontSize: typography.fontSize.md,
     color: colors.textPrimary,

@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import { Input } from '../../components/common/Input';
 import { Button } from '../../components/common/Button';
 import { Screen } from '../../components/layout/Screen';
 import { ScreenHeader } from '../../components/layout/ScreenHeader';
-import { colors, spacing, typography } from '../../theme';
+import { Section } from '../../components/layout/Section';
 import { authService } from '../../services/authService';
 
 export const ChangePasswordScreen: React.FC = () => {
@@ -36,7 +36,7 @@ export const ChangePasswordScreen: React.FC = () => {
         title="Zmień hasło"
         subtitle="Ze względów bezpieczeństwa najpierw wprowadź swoje obecne hasło."
       />
-      <View style={styles.form}>
+      <Section title="Zmiana hasła">
         <Input
           label="Obecne hasło"
           value={currentPassword}
@@ -45,14 +45,8 @@ export const ChangePasswordScreen: React.FC = () => {
         />
         <Input label="Nowe hasło" value={newPassword} onChangeText={setNewPassword} secureTextEntry />
         <Button title="Zaktualizuj hasło" onPress={onSubmit} loading={isSubmitting} />
-      </View>
+      </Section>
     </Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  form: {
-    marginTop: spacing.md,
-  },
-});
 
