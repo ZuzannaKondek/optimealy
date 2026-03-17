@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { Input } from '../../components/common/Input';
 import { Button } from '../../components/common/Button';
+import { Screen } from '../../components/layout/Screen';
+import { ScreenHeader } from '../../components/layout/ScreenHeader';
 import { colors, spacing, typography } from '../../theme';
 import { authService } from '../../services/authService';
 
@@ -29,40 +31,28 @@ export const ChangePasswordScreen: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Zmień hasło</Text>
-      <Text style={styles.subtitle}>Ze względów bezpieczeństwa najpierw wprowadź swoje obecne hasło.</Text>
-
-      <Input
-        label="Obecne hasło"
-        value={currentPassword}
-        onChangeText={setCurrentPassword}
-        secureTextEntry
+    <Screen>
+      <ScreenHeader
+        title="Zmień hasło"
+        subtitle="Ze względów bezpieczeństwa najpierw wprowadź swoje obecne hasło."
       />
-      <Input label="Nowe hasło" value={newPassword} onChangeText={setNewPassword} secureTextEntry />
-
-      <Button title="Zaktualizuj hasło" onPress={onSubmit} loading={isSubmitting} />
-    </View>
+      <View style={styles.form}>
+        <Input
+          label="Obecne hasło"
+          value={currentPassword}
+          onChangeText={setCurrentPassword}
+          secureTextEntry
+        />
+        <Input label="Nowe hasło" value={newPassword} onChangeText={setNewPassword} secureTextEntry />
+        <Button title="Zaktualizuj hasło" onPress={onSubmit} loading={isSubmitting} />
+      </View>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-    padding: spacing.screenPadding,
-    paddingTop: spacing.lg,
-  },
-  title: {
-    fontSize: typography.fontSize.xxxl,
-    fontWeight: typography.fontWeight.bold,
-    color: colors.textPrimary,
-    marginBottom: spacing.xs,
-  },
-  subtitle: {
-    fontSize: typography.fontSize.md,
-    color: colors.textSecondary,
-    marginBottom: spacing.lg,
+  form: {
+    marginTop: spacing.md,
   },
 });
 

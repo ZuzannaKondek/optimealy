@@ -8,6 +8,7 @@ type Props = {
   scroll?: boolean;
   style?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
+  refreshControl?: React.ReactElement;
 };
 
 export const Screen: React.FC<Props> = ({
@@ -15,6 +16,7 @@ export const Screen: React.FC<Props> = ({
   scroll = true,
   style,
   contentContainerStyle,
+  refreshControl,
 }) => {
   if (scroll) {
     return (
@@ -23,6 +25,7 @@ export const Screen: React.FC<Props> = ({
           style={styles.scroll}
           contentContainerStyle={[styles.content, contentContainerStyle]}
           showsVerticalScrollIndicator={false}
+          refreshControl={refreshControl}
         >
           {children}
         </ScrollView>

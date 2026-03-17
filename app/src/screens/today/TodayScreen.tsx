@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
   ActivityIndicator,
   Alert,
@@ -12,6 +11,7 @@ import {
 import { useFocusEffect } from '@react-navigation/native';
 import { planService } from '../../services/planService';
 import { pantryService } from '../../services/pantryService';
+import { Screen } from '../../components/layout/Screen';
 import { colors, typography, spacing } from '../../theme';
 
 interface TodayMealIngredient {
@@ -147,38 +147,43 @@ export const TodayScreen: React.FC = () => {
 
   if (isLoading) {
     return (
-      <View style={styles.centered}>
-        <ActivityIndicator size="large" color={colors.primary} />
-      </View>
+      <Screen scroll={false}>
+        <View style={styles.centered}>
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
+      </Screen>
     );
   }
 
   if (!activePlan) {
     return (
-      <View style={styles.centered}>
-        <Text style={styles.emptyTitle}>Brak aktywnego planu</Text>
-        <Text style={styles.emptyText}>
-          Utwórz i aktywuj plan posiłków, aby zobaczyć dzisiejsze posiłki
-        </Text>
-      </View>
+      <Screen scroll={false}>
+        <View style={styles.centered}>
+          <Text style={styles.emptyTitle}>Brak aktywnego planu</Text>
+          <Text style={styles.emptyText}>
+            Utwórz i aktywuj plan posiłków, aby zobaczyć dzisiejsze posiłki
+          </Text>
+        </View>
+      </Screen>
     );
   }
 
   if (error) {
     return (
-      <View style={styles.centered}>
-        <Text style={styles.errorText}>Błąd: {error}</Text>
-        <TouchableOpacity style={styles.retryButton} onPress={loadData}>
-          <Text style={styles.retryButtonText}>Spróbuj ponownie</Text>
-        </TouchableOpacity>
-      </View>
+      <Screen scroll={false}>
+        <View style={styles.centered}>
+          <Text style={styles.errorText}>Błąd: {error}</Text>
+          <TouchableOpacity style={styles.retryButton} onPress={loadData}>
+            <Text style={styles.retryButtonText}>Spróbuj ponownie</Text>
+          </TouchableOpacity>
+        </View>
+      </Screen>
     );
   }
 
   if (todayMeals.length === 0) {
     return (
-      <ScrollView
-        style={styles.container}
+      <Screen
         refreshControl={
           <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
         }
@@ -199,7 +204,7 @@ export const TodayScreen: React.FC = () => {
             Ta data jest poza zakresem Twojego planu
           </Text>
         </View>
-      </ScrollView>
+      </Screen>
     );
   }
 
@@ -210,8 +215,7 @@ export const TodayScreen: React.FC = () => {
     .reduce((sum, m) => sum + m.nutritional_info.calories, 0);
 
   return (
-    <ScrollView
-      style={styles.container}
+    <Screen
       refreshControl={
         <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
       }
@@ -301,7 +305,7 @@ export const TodayScreen: React.FC = () => {
             {expandedMealId === meal.id && meal.ingredients && meal.ingredients.length > 0 && (
               <View style={styles.ingredientsContainer}>
                 <Text style={styles.ingredientsTitle}>Składniki:</Text>
-                {meal.ingredients.map((ing, index) => (
+                {meal.ingredients.map((ing) => (
                   <View key={ing.product_id} style={styles.ingredientRow}>
                     <Text style={styles.ingredientName}>{ing.product_name}</Text>
                     <Text style={styles.ingredientAmount}>
@@ -323,7 +327,7 @@ export const TodayScreen: React.FC = () => {
           <Text style={styles.celebrationText}>🎉 Wszystko gotowe na dziś!</Text>
         </View>
       )}
-    </ScrollView>
+    </Screen>
   );
 };
 
@@ -339,10 +343,6 @@ function formatMealType(type: string): string {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
   centered: {
     flex: 1,
     justifyContent: 'center',
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: typography.fontSize.xxl,
     fontWeight: typography.fontWeight.bold,
-    color: colors.text,
+    color: colors.textPrimary,
     marginBottom: spacing.xs,
   },
   subtitle: {
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
   progressText: {
     fontSize: typography.fontSize.md,
     fontWeight: typography.fontWeight.semiBold,
-    color: colors.text,
+    color: colors.textPrimary,
   },
   caloriesText: {
     fontSize: typography.fontSize.sm,
@@ -424,7 +424,7 @@ const styles = StyleSheet.create({
   mealType: {
     fontSize: typography.fontSize.lg,
     fontWeight: typography.fontWeight.semiBold,
-    color: colors.text,
+    color: colors.textPrimary,
     marginBottom: spacing.xs,
   },
   mealTypeCompleted: {
@@ -469,7 +469,7 @@ const styles = StyleSheet.create({
   ingredientsTitle: {
     fontSize: typography.fontSize.sm,
     fontWeight: typography.fontWeight.semiBold,
-    color: colors.text,
+    color: colors.textPrimary,
     marginBottom: spacing.sm,
   },
   ingredientRow: {
@@ -506,7 +506,7 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: typography.fontSize.xl,
     fontWeight: typography.fontWeight.bold,
-    color: colors.text,
+    color: colors.textPrimary,
     marginBottom: spacing.sm,
   },
   emptyText: {
