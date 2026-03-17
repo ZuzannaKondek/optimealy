@@ -12,6 +12,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { planService } from '../../services/planService';
 import { pantryService } from '../../services/pantryService';
 import { Screen } from '../../components/layout/Screen';
+import { ScreenHeader } from '../../components/layout/ScreenHeader';
 import { colors, typography, spacing } from '../../theme';
 
 interface TodayMealIngredient {
@@ -188,16 +189,14 @@ export const TodayScreen: React.FC = () => {
           <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
         }
       >
-        <View style={styles.header}>
-          <Text style={styles.title}>Dzisiaj</Text>
-          <Text style={styles.subtitle}>
-            {new Date().toLocaleDateString('pl-PL', { 
-              weekday: 'long', 
-              month: 'long', 
-              day: 'numeric' 
-            })}
-          </Text>
-        </View>
+        <ScreenHeader
+          title="Dzisiaj"
+          subtitle={new Date().toLocaleDateString('pl-PL', { 
+            weekday: 'long', 
+            month: 'long', 
+            day: 'numeric' 
+          })}
+        />
         <View style={styles.centered}>
           <Text style={styles.emptyTitle}>Brak posiłków dzisiaj</Text>
           <Text style={styles.emptyText}>
@@ -220,23 +219,22 @@ export const TodayScreen: React.FC = () => {
         <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
       }
     >
-      <View style={styles.header}>
-        <Text style={styles.title}>Dzisiaj</Text>
-        <Text style={styles.subtitle}>
-          {new Date().toLocaleDateString('pl-PL', { 
-            weekday: 'long', 
-            month: 'long', 
-            day: 'numeric' 
-          })}
+      <ScreenHeader
+        title="Dzisiaj"
+        subtitle={new Date().toLocaleDateString('pl-PL', { 
+          weekday: 'long', 
+          month: 'long', 
+          day: 'numeric' 
+        })}
+      />
+
+      <View style={styles.progressContainer}>
+        <Text style={styles.progressText}>
+          {completedCount} z {todayMeals.length} posiłków ukończonych
         </Text>
-        <View style={styles.progressContainer}>
-          <Text style={styles.progressText}>
-            {completedCount} z {todayMeals.length} posiłków ukończonych
-          </Text>
-          <Text style={styles.caloriesText}>
-            {Math.round(completedCalories)} / {Math.round(totalCalories)} kcal
-          </Text>
-        </View>
+        <Text style={styles.caloriesText}>
+          {Math.round(completedCalories)} / {Math.round(totalCalories)} kcal
+        </Text>
       </View>
 
       <View style={styles.mealsContainer}>

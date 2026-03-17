@@ -48,8 +48,8 @@ const HomeStack = createStackNavigator();
 const HomeStackScreen = () => (
   <HomeStack.Navigator
     screenOptions={{
-      headerStyle: { backgroundColor: colors.primary },
-      headerTintColor: colors.white,
+      headerStyle: { backgroundColor: colors.surface },
+      headerTintColor: colors.textPrimary,
       headerTitleStyle: { fontWeight: typography.fontWeight.semiBold },
       headerBackTitleVisible: false,
     }}
@@ -70,8 +70,8 @@ const TodayStack = createStackNavigator();
 const TodayStackScreen = () => (
   <TodayStack.Navigator
     screenOptions={{
-      headerStyle: { backgroundColor: colors.primary },
-      headerTintColor: colors.white,
+      headerStyle: { backgroundColor: colors.surface },
+      headerTintColor: colors.textPrimary,
       headerTitleStyle: { fontWeight: typography.fontWeight.semiBold },
       headerBackTitleVisible: false,
     }}
@@ -88,8 +88,8 @@ const PantryStack = createStackNavigator();
 const PantryStackScreen = () => (
   <PantryStack.Navigator
     screenOptions={{
-      headerStyle: { backgroundColor: colors.primary },
-      headerTintColor: colors.white,
+      headerStyle: { backgroundColor: colors.surface },
+      headerTintColor: colors.textPrimary,
       headerTitleStyle: { fontWeight: typography.fontWeight.semiBold },
       headerBackTitleVisible: false,
     }}
@@ -155,8 +155,8 @@ const ShoppingListWrapper: React.FC = () => {
 const GroceryStackScreen = () => (
   <GroceryStack.Navigator
     screenOptions={{
-      headerStyle: { backgroundColor: colors.primary },
-      headerTintColor: colors.white,
+      headerStyle: { backgroundColor: colors.surface },
+      headerTintColor: colors.textPrimary,
       headerTitleStyle: { fontWeight: typography.fontWeight.semiBold },
       headerBackTitleVisible: false,
     }}
@@ -164,7 +164,7 @@ const GroceryStackScreen = () => (
     <GroceryStack.Screen 
       name="ShoppingListMain" 
       component={ShoppingListWrapper} 
-      options={{ title: 'Zakupy' }} 
+      options={{ headerShown: false }} 
     />
     <GroceryStack.Screen 
       name="ShoppingList" 
@@ -184,8 +184,8 @@ const SettingsStack = createStackNavigator();
 const SettingsStackScreen = () => (
   <SettingsStack.Navigator
     screenOptions={{
-      headerStyle: { backgroundColor: colors.primary },
-      headerTintColor: colors.white,
+      headerStyle: { backgroundColor: colors.surface },
+      headerTintColor: colors.textPrimary,
       headerTitleStyle: { fontWeight: typography.fontWeight.semiBold },
       headerBackTitleVisible: false,
     }}
