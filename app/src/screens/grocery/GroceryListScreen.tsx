@@ -243,14 +243,14 @@ const styles = StyleSheet.create({
   },
   addAllButton: {
     backgroundColor: colors.primary,
-    paddingVertical: spacing.md,
+    paddingVertical: spacing.sm,
     borderRadius: spacing.borderRadius,
     alignItems: 'center',
     marginBottom: spacing.lg,
   },
   addAllButtonText: {
     color: colors.white,
-    fontSize: typography.fontSize.md,
+    fontSize: typography.fontSize.sm,
     fontWeight: typography.fontWeight.semiBold,
   },
   columnsContainer: {
