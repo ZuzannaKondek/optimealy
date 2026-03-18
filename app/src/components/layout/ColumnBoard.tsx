@@ -1,6 +1,8 @@
 import React from 'react';
-import { ScrollView, View, Text, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Dimensions } from 'react-native';
 import { colors, spacing, typography } from '../../theme';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 type Props<T> = {
   categories: string[];
@@ -19,6 +21,8 @@ export const ColumnBoard = <T,>({
     return null;
   }
 
+  const columnWidth = (SCREEN_WIDTH - spacing.md * 2 - spacing.md * (categories.length - 1)) / categories.length;
+
   return (
     <View style={styles.board}>
       <ScrollView
@@ -29,7 +33,7 @@ export const ColumnBoard = <T,>({
         {categories.map((category) => {
           const items = groupedItems[category] ?? [];
           return (
-            <View key={category} style={styles.column}>
+            <View key={category} style={[styles.column, { width: columnWidth }]}>
               <Text style={styles.columnTitle}>{translateCategory(category)}</Text>
               <View style={styles.columnBody}>
                 {items.length > 0 ? (
@@ -54,11 +58,10 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.sm,
   },
   column: {
-    minWidth: 220,
-    backgroundColor: colors.surfaceVariant,
+    backgroundColor: colors.surface,
     borderColor: colors.border,
     borderWidth: 1,
-    borderRadius: spacing.borderRadiusMedium,
+    borderRadius: spacing.borderRadius,
     padding: spacing.md,
     marginRight: spacing.md,
   },
