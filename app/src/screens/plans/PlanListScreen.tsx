@@ -4,6 +4,8 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { usePlans } from '../../hooks/usePlans';
 import { PlanCard } from '../../components/plan/PlanCard';
 import { colors, spacing, typography } from '../../theme';
+import { Screen } from '../../components/layout/Screen';
+import { ScreenHeader } from '../../components/layout/ScreenHeader';
 
 const PAGE_SIZE = 10;
 
@@ -41,22 +43,19 @@ export const PlanListScreen: React.FC = () => {
     setHasMore(newLen - prevLen === PAGE_SIZE);
   };
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity
-          onPress={() => navigation.navigate('CreatePlan')}
-          style={styles.headerButton}
-        >
-          <Text style={styles.headerButtonText}>+ Utwórz</Text>
-        </TouchableOpacity>
-      ),
-    });
-  }, [navigation]);
+  const handleCreatePlan = () => {
+    navigation.navigate('CreatePlan');
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Moje plany</Text>
+    <Screen>
+      <ScreenHeader
+        title="Moje plany"
+        rightAction={{
+          label: '+ Utwórz',
+          onPress: handleCreatePlan,
+        }}
+      />
 
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
@@ -101,23 +100,11 @@ export const PlanListScreen: React.FC = () => {
           }
         />
       )}
-    </View>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  title: {
-    fontSize: typography.fontSize.xxl,
-    fontWeight: typography.fontWeight.bold,
-    color: colors.textPrimary,
-    paddingHorizontal: spacing.screenPadding,
-    paddingTop: spacing.md,
-    paddingBottom: spacing.sm,
-  },
   listContent: {
     paddingHorizontal: spacing.screenPadding,
     paddingBottom: spacing.lg,
@@ -146,14 +133,6 @@ const styles = StyleSheet.create({
   footer: {
     paddingVertical: spacing.md,
     alignItems: 'center',
-  },
-  headerButton: {
-    marginRight: spacing.md,
-  },
-  headerButtonText: {
-    color: colors.white,
-    fontSize: typography.fontSize.md,
-    fontWeight: typography.fontWeight.semiBold,
   },
   createButton: {
     marginTop: spacing.md,

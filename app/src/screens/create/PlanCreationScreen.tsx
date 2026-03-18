@@ -24,6 +24,8 @@ import { MealTypeSelector, type MealType } from '../../components/create/MealTyp
 import { PlanCreationErrorModal } from '../../components/create/PlanCreationErrorModal';
 import { PlanCreationLoadingModal } from '../../components/create/PlanCreationLoadingModal';
 import { getApiErrorMessage } from '../../utils/apiErrors';
+import { Screen } from '../../components/layout/Screen';
+import { ScreenHeader } from '../../components/layout/ScreenHeader';
 
 /**
  * Calculate macro targets based on calories using balanced diet ratios:
@@ -208,11 +210,11 @@ export const PlanCreationScreen: React.FC = () => {
         message={creationState.error || 'Optymalizator nie mógł znaleźć planu spełniającego Twoje ograniczenia.'}
         onDismiss={resetCreationState}
       />
-      <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Utwórz plan posiłków</Text>
-      <Text style={styles.subtitle}>
-        Wygeneruj zoptymalizowany plan posiłków, który zminimalizuje marnotrawstwo żywności
-      </Text>
+      <Screen>
+        <ScreenHeader
+          title="Utwórz plan posiłków"
+          subtitle="Wygeneruj zoptymalizowany plan posiłków, który zminimalizuje marnotrawstwo żywności"
+        />
 
       {/* Plan name */}
       <View style={styles.section}>
@@ -374,30 +376,12 @@ export const PlanCreationScreen: React.FC = () => {
         dodane w przyszłej aktualizacji. Na razie algorytm użyje wszystkich dostępnych
         przepisów.
       </Text>
-    </ScrollView>
+      </Screen>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  content: {
-    padding: spacing.screenPadding,
-  },
-  title: {
-    fontSize: typography.fontSize.xxxl,
-    fontWeight: typography.fontWeight.bold,
-    color: colors.textPrimary,
-    marginBottom: spacing.sm,
-  },
-  subtitle: {
-    fontSize: typography.fontSize.md,
-    color: colors.textSecondary,
-    marginBottom: spacing.lg,
-  },
   section: {
     marginBottom: spacing.md,
   },
