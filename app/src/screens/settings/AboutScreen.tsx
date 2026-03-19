@@ -9,8 +9,8 @@ import { ScreenHeader } from '../../components/layout/ScreenHeader';
 import { Section } from '../../components/layout/Section';
 import { colors, spacing, typography } from '../../theme';
 
-const AUTHOR_NAME = '[Imię Nazwisko]';
-const PROMOTOR_TITLE_NAME = '[tytuł, imię i nazwisko promotora]';
+const AUTHOR_NAME = 'Zuzanna Kondek';
+const PROMOTOR_TITLE_NAME = 'dr. Marka Dei';
 
 export const AboutScreen: React.FC = () => {
   return (

@@ -56,10 +56,10 @@ const HomeStackScreen = () => (
     }}
   >
     <HomeStack.Screen name="HomeMain" component={UserPanelScreen} options={{ headerShown: false }} />
-    <HomeStack.Screen name="CreatePlan" component={PlanCreationScreen} options={{ title: 'Utwórz plan' }} />
-    <HomeStack.Screen name="PlanDetail" component={PlanDetailScreen} options={{ title: 'Szczegóły planu' }} />
-    <HomeStack.Screen name="DayDetail" component={DayDetailScreen} options={{ title: 'Szczegóły dnia' }} />
-    <HomeStack.Screen name="GroceryList" component={GroceryListScreen} options={{ title: 'Potrzebne produkty' }} />
+    <HomeStack.Screen name="CreatePlan" component={PlanCreationScreen} options={{ headerShown: false }} />
+    <HomeStack.Screen name="PlanDetail" component={PlanDetailScreen} options={{ headerShown: false }} />
+    <HomeStack.Screen name="DayDetail" component={DayDetailScreen} options={{ headerShown: false }} />
+    <HomeStack.Screen name="GroceryList" component={GroceryListScreen} options={{ headerShown: false }} />
   </HomeStack.Navigator>
 );
 
@@ -201,8 +201,8 @@ const SettingsStackScreen = () => (
     }}
   >
     <SettingsStack.Screen name="SettingsMain" component={SettingsScreen} options={{ headerShown: false }} />
-    <SettingsStack.Screen name="ChangePassword" component={ChangePasswordScreen} options={{ title: 'Zmień hasło' }} />
-    <SettingsStack.Screen name="About" component={AboutScreen} options={{ title: 'O serwisie' }} />
+    <SettingsStack.Screen name="ChangePassword" component={ChangePasswordScreen} options={{ headerShown: false }} />
+    <SettingsStack.Screen name="About" component={AboutScreen} options={{ headerShown: false }} />
   </SettingsStack.Navigator>
 );
 

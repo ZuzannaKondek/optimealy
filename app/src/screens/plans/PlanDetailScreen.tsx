@@ -150,61 +150,62 @@ export const PlanDetailScreen: React.FC = () => {
           <Text style={styles.metric}>Redukcja odpadów: {selectedPlan.waste_reduction_percentage}%</Text>
         ) : null}
 
-        <TouchableOpacity
-          style={styles.groceryButton}
-          onPress={() => navigation.navigate('GroceryList' as never, { planId: selectedPlan.plan_id } as never)}
-        >
-          <Text style={styles.groceryButtonText}>Potrzebne produkty</Text>
-        </TouchableOpacity>
-
-        {selectedPlan.execution_status === 'active' && (
+        <View style={styles.buttonsRow}>
           <TouchableOpacity
-            style={[styles.cancelButton, isCancelling && styles.buttonDisabled]}
-            onPress={handleCancelPlan}
-            disabled={isCancelling}
+            style={styles.groceryButton}
+            onPress={() => navigation.navigate('GroceryList' as never, { planId: selectedPlan.plan_id } as never)}
           >
-            <Text style={styles.cancelButtonText}>
-              {isCancelling ? 'Anulowanie...' : 'Anuluj plan'}
-            </Text>
+            <Text style={styles.groceryButtonText}>Potrzebne produkty</Text>
           </TouchableOpacity>
-        )}
 
-        {(selectedPlan.execution_status === 'draft' || selectedPlan.execution_status === 'cancelled') && (
-          <TouchableOpacity
-            style={[styles.activateButton, isActivating && styles.buttonDisabled]}
-            onPress={handleActivatePlan}
-            disabled={isActivating}
-          >
-            <Text style={styles.activateButtonText}>
-              {isActivating ? 'Rozpoczynanie...' : 'Rozpocznij plan'}
-            </Text>
-          </TouchableOpacity>
-        )}
+          {selectedPlan.execution_status === 'active' && (
+            <TouchableOpacity
+              style={[styles.cancelButton, isCancelling && styles.buttonDisabled]}
+              onPress={handleCancelPlan}
+              disabled={isCancelling}
+            >
+              <Text style={styles.cancelButtonText}>
+                {isCancelling ? 'Anulowanie...' : 'Anuluj plan'}
+              </Text>
+            </TouchableOpacity>
+          )}
 
-        {selectedPlan.execution_status === 'completed' && (
-          <View style={styles.statusBadge}>
-            <Text style={styles.statusBadgeText}>
-              Zakończony
-            </Text>
-          </View>
-        )}
+          {(selectedPlan.execution_status === 'draft' || selectedPlan.execution_status === 'cancelled') && (
+            <TouchableOpacity
+              style={[styles.activateButton, isActivating && styles.buttonDisabled]}
+              onPress={handleActivatePlan}
+              disabled={isActivating}
+            >
+              <Text style={styles.activateButtonText}>
+                {isActivating ? 'Rozpocznij...' : 'Rozpocznij'}
+              </Text>
+            </TouchableOpacity>
+          )}
+
+          {selectedPlan.execution_status === 'completed' && (
+            <View style={styles.statusBadge}>
+              <Text style={styles.statusBadgeText}>
+                Zakończony
+              </Text>
+            </View>
+          )}
+
+          {selectedPlan.execution_status !== 'active' && (
+            <TouchableOpacity
+              style={[styles.deleteButtonSmall, isDeleting && styles.buttonDisabled]}
+              onPress={() => {
+                console.log('Delete button pressed');
+                handleDeletePlan();
+              }}
+              disabled={isDeleting}
+            >
+              <Text style={styles.deleteButtonSmallText}>
+                {isDeleting ? '...' : 'Usuń'}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
-
-      {/* Delete Plan Button - hidden for active plans, must cancel first */}
-      {selectedPlan.execution_status !== 'active' && (
-        <TouchableOpacity
-          style={[styles.deleteButton, isDeleting && styles.buttonDisabled]}
-          onPress={() => {
-            console.log('Delete button pressed');
-            handleDeletePlan();
-          }}
-          disabled={isDeleting}
-        >
-          <Text style={styles.deleteButtonText}>
-            {isDeleting ? 'Usuwanie...' : 'Usuń plan'}
-          </Text>
-        </TouchableOpacity>
-      )}
 
       <Text style={styles.sectionTitle}>Dni</Text>
       {selectedPlan.daily_menus.map((day) => (
@@ -317,8 +318,13 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.sm,
     color: colors.textSecondary,
   },
-  groceryButton: {
+  buttonsRow: {
+    flexDirection: 'row',
+    gap: spacing.sm,
     marginTop: spacing.sm,
+  },
+  groceryButton: {
+    flex: 1,
     backgroundColor: colors.primary,
     borderRadius: spacing.borderRadius,
     paddingVertical: spacing.sm,
@@ -326,38 +332,38 @@ const styles = StyleSheet.create({
   },
   groceryButtonText: {
     color: colors.white,
-    fontSize: typography.fontSize.md,
+    fontSize: typography.fontSize.sm,
     fontWeight: typography.fontWeight.semiBold,
   },
   activateButton: {
-    marginTop: spacing.sm,
+    flex: 1,
     backgroundColor: colors.success,
     borderRadius: spacing.borderRadius,
-    paddingVertical: spacing.md,
+    paddingVertical: spacing.sm,
     alignItems: 'center',
   },
   activateButtonText: {
     color: colors.white,
-    fontSize: typography.fontSize.md,
+    fontSize: typography.fontSize.sm,
     fontWeight: typography.fontWeight.bold,
   },
   cancelButton: {
-    marginTop: spacing.sm,
+    flex: 1,
     backgroundColor: colors.warning,
     borderRadius: spacing.borderRadius,
-    paddingVertical: spacing.md,
+    paddingVertical: spacing.sm,
     alignItems: 'center',
   },
   cancelButtonText: {
     color: colors.white,
-    fontSize: typography.fontSize.md,
+    fontSize: typography.fontSize.sm,
     fontWeight: typography.fontWeight.bold,
   },
   buttonDisabled: {
     opacity: 0.5,
   },
   statusBadge: {
-    marginTop: spacing.sm,
+    flex: 1,
     padding: spacing.sm,
     backgroundColor: colors.backgroundSecondary,
     borderRadius: spacing.borderRadius,
@@ -379,6 +385,18 @@ const styles = StyleSheet.create({
   deleteButtonText: {
     color: colors.white,
     fontSize: typography.fontSize.md,
+    fontWeight: typography.fontWeight.bold,
+  },
+  deleteButtonSmall: {
+    flex: 1,
+    backgroundColor: colors.error,
+    borderRadius: spacing.borderRadius,
+    paddingVertical: spacing.sm,
+    alignItems: 'center',
+  },
+  deleteButtonSmallText: {
+    color: colors.white,
+    fontSize: typography.fontSize.sm,
     fontWeight: typography.fontWeight.bold,
   },
   sectionTitle: {

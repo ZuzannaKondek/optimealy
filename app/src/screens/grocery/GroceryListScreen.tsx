@@ -4,7 +4,6 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { planService } from '../../services/planService';
 import { useGroceryNavigation } from '../../stores/groceryNavigationStore';
 import { GroceryItemCard } from '../../components/grocery/GroceryItemCard';
-import { CategorySection } from '../../components/grocery/CategorySection';
 import { colors, spacing, typography } from '../../theme';
 import type { GroceryList, GroceryItem } from '../../types/models';
 
@@ -164,17 +163,32 @@ export const GroceryListScreen: React.FC = () => {
         </TouchableOpacity>
       )}
 
-      {categories.map((category) => (
-        <CategorySection key={category} title={translateCategory(category)}>
-          {grouped[category].map((item) => (
-            <GroceryItemCard 
-              key={item.item_id} 
-              item={item} 
-              onPress={undefined} 
-            />
-          ))}
-        </CategorySection>
-      ))}
+      {categories.length > 0 && (
+        <View style={styles.columnsContainer}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.scrollContent}
+          >
+            {categories.map((category) => {
+              const items = grouped[category] || [];
+              if (!items.length) return null;
+              return (
+                <View key={category} style={styles.column}>
+                  <Text style={styles.columnTitle}>{translateCategory(category)}</Text>
+                  {items.map((item) => (
+                    <GroceryItemCard
+                      key={item.item_id}
+                      item={item}
+                      onPress={undefined}
+                    />
+                  ))}
+                </View>
+              );
+            })}
+          </ScrollView>
+        </View>
+      )}
     </ScrollView>
   );
 };
@@ -229,14 +243,35 @@ const styles = StyleSheet.create({
   },
   addAllButton: {
     backgroundColor: colors.primary,
-    paddingVertical: spacing.md,
+    paddingVertical: spacing.sm,
     borderRadius: spacing.borderRadius,
     alignItems: 'center',
     marginBottom: spacing.lg,
   },
   addAllButtonText: {
     color: colors.white,
+    fontSize: typography.fontSize.sm,
+    fontWeight: typography.fontWeight.semiBold,
+  },
+  columnsContainer: {
+    marginBottom: spacing.lg,
+  },
+  scrollContent: {
+    paddingVertical: spacing.sm,
+  },
+  column: {
+    minWidth: 180,
+    marginRight: spacing.md,
+    padding: spacing.md,
+    backgroundColor: colors.surface,
+    borderRadius: spacing.borderRadius,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  columnTitle: {
     fontSize: typography.fontSize.md,
     fontWeight: typography.fontWeight.semiBold,
+    color: colors.textPrimary,
+    marginBottom: spacing.sm,
   },
 });
