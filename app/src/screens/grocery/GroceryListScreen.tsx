@@ -1,11 +1,33 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import { planService } from '../../services/planService';
+import { useGroceryNavigation } from '../../stores/groceryNavigationStore';
 import { GroceryItemCard } from '../../components/grocery/GroceryItemCard';
 import { CategorySection } from '../../components/grocery/CategorySection';
 import { colors, spacing, typography } from '../../theme';
 import type { GroceryList, GroceryItem } from '../../types/models';
+
+const categoryTranslations: Record<string, string> = {
+  vegetable: 'Warzywa',
+  fruit: 'Owoce',
+  dairy: 'Nabiał',
+  protein: 'Białko',
+  grain: 'Zboża',
+  spice: 'Przyprawy',
+  condiment: 'Przyprawy',
+  oil: 'Oleje',
+  beverage: 'Napoje',
+  bakery: 'Pieczywo',
+  frozen: 'Mrożonki',
+  snacks: 'Przekąski',
+  canned: 'Konserwy',
+  other: 'Inne',
+};
+
+const translateCategory = (category: string): string => {
+  return categoryTranslations[category.toLowerCase()] || category;
+};
 
 type RouteParams = {
   planId: string;
@@ -13,12 +35,14 @@ type RouteParams = {
 
 export const GroceryListScreen: React.FC = () => {
   const route = useRoute();
+  const navigation = useNavigation<any>();
   const { planId } = (route.params as RouteParams) ?? {};
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [groceryList, setGroceryList] = React.useState<GroceryList | null>(null);
 
+  // Load grocery list on mount and when planId changes
   React.useEffect(() => {
     let cancelled = false;
     const load = async () => {
@@ -28,7 +52,7 @@ export const GroceryListScreen: React.FC = () => {
         const list = await planService.getGroceryList(planId, { groupBy: 'category' });
         if (!cancelled) setGroceryList(list);
       } catch (e: any) {
-        if (!cancelled) setError(e?.response?.data?.detail || 'Failed to load grocery list');
+        if (!cancelled) setError(e?.response?.data?.detail || 'Nie udało się pobrać listy produktów');
       } finally {
         if (!cancelled) setIsLoading(false);
       }
@@ -40,10 +64,53 @@ export const GroceryListScreen: React.FC = () => {
     };
   }, [planId]);
 
+  // Manual refresh function
+  const handleRefresh = async () => {
+    if (!planId) return;
+    setIsLoading(true);
+    setError(null);
+    try {
+      const list = await planService.getGroceryList(planId, { groupBy: 'category' });
+      setGroceryList(list);
+    } catch (e: any) {
+      setError(e?.response?.data?.detail || 'Nie udało się pobrać listy produktów');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const { setPendingPlanId, setTargetTab } = useGroceryNavigation();
+
+  const handleAddToShoppingList = () => {
+    // Get all items that are not already in pantry
+    const itemsToAdd = groceryList.items.filter((item: GroceryItem) => item.status !== 'already_have');
+    
+    if (itemsToAdd.length === 0) {
+      Alert.alert('Info', 'Wszystkie produkty są już w spiżarni');
+      return;
+    }
+
+    // Store the planId in global state so Grocery tab can read it
+    setPendingPlanId(planId);
+    setTargetTab('Grocery');
+    
+    // Navigate to the Zakupy tab
+    // Get parent (HomeStack), then its parent (Tab.Navigator)
+    const homeStack = navigation.getParent();
+    const tabNavigator = homeStack?.getParent();
+    
+    if (tabNavigator) {
+      tabNavigator.navigate('Grocery');
+    } else {
+      // Fallback for wide screen mode where there's no Tab.Navigator
+      navigation.navigate('HomeMain');
+    }
+  };
+
   if (!planId) {
     return (
       <View style={styles.center}>
-        <Text style={styles.errorText}>Missing planId</Text>
+        <Text style={styles.errorText}>Brak planId</Text>
       </View>
     );
   }
@@ -52,11 +119,13 @@ export const GroceryListScreen: React.FC = () => {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Generating grocery list…</Text>
+        <Text style={styles.loadingText}>Generowanie listy produktów…</Text>
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
       </View>
     );
   }
+
+  const itemsToBuy = groceryList.items.filter((item: GroceryItem) => item.status !== 'already_have');
 
   const grouped: Record<string, GroceryItem[]> = {};
   for (const item of groceryList.items) {
@@ -64,19 +133,45 @@ export const GroceryListScreen: React.FC = () => {
     grouped[key] = grouped[key] ? [...grouped[key], item] : [item];
   }
 
+  // Sort items: needed (not already owned) first, then owned
+  for (const key of Object.keys(grouped)) {
+    grouped[key].sort((a, b) => {
+      const aNeeded = a.status !== 'already_have';
+      const bNeeded = b.status !== 'already_have';
+      if (aNeeded && !bNeeded) return -1;
+      if (!aNeeded && bNeeded) return 1;
+      return 0;
+    });
+  }
+
   const categories = Object.keys(grouped).sort();
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Grocery List</Text>
+      <View style={styles.headerRow}>
+        <Text style={styles.title}>Potrzebne produkty</Text>
+        <TouchableOpacity onPress={handleRefresh} style={styles.refreshButton}>
+          <Text style={styles.refreshButtonText}>↻</Text>
+        </TouchableOpacity>
+      </View>
       <Text style={styles.subtitle}>
-        Items: {groceryList.total_items} • Waste: {Math.round(groceryList.estimated_total_waste_g)}g
+        Produkty: {groceryList.total_items} • Do kupienia: {itemsToBuy.length} • Odpady: {Math.round(groceryList.estimated_total_waste_g)}g
       </Text>
 
+      {itemsToBuy.length > 0 && (
+        <TouchableOpacity style={styles.addAllButton} onPress={handleAddToShoppingList}>
+          <Text style={styles.addAllButtonText}>Dodaj do listy zakupów</Text>
+        </TouchableOpacity>
+      )}
+
       {categories.map((category) => (
-        <CategorySection key={category} title={category}>
+        <CategorySection key={category} title={translateCategory(category)}>
           {grouped[category].map((item) => (
-            <GroceryItemCard key={item.item_id} item={item} />
+            <GroceryItemCard 
+              key={item.item_id} 
+              item={item} 
+              onPress={undefined} 
+            />
           ))}
         </CategorySection>
       ))}
@@ -111,6 +206,18 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     marginBottom: spacing.xs,
   },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  refreshButton: {
+    padding: spacing.sm,
+  },
+  refreshButtonText: {
+    fontSize: 24,
+    color: colors.primary,
+  },
   subtitle: {
     fontSize: typography.fontSize.md,
     color: colors.textSecondary,
@@ -120,5 +227,16 @@ const styles = StyleSheet.create({
     color: colors.error,
     textAlign: 'center',
   },
+  addAllButton: {
+    backgroundColor: colors.primary,
+    paddingVertical: spacing.md,
+    borderRadius: spacing.borderRadius,
+    alignItems: 'center',
+    marginBottom: spacing.lg,
+  },
+  addAllButtonText: {
+    color: colors.white,
+    fontSize: typography.fontSize.md,
+    fontWeight: typography.fontWeight.semiBold,
+  },
 });
-

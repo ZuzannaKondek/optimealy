@@ -12,19 +12,19 @@ export const HomepageScreen: React.FC = () => {
       <View style={styles.content}>
         <Text style={styles.title}>OptiMeal</Text>
         <Text style={styles.subtitle}>
-          Build an optimized meal plan that meets your nutrition goals while minimizing food waste.
+          Stwórz zoptymalizowany plan posiłków, który spełni Twoje cele żywieniowe i zminimalizuje marnotrawstwo żywności.
         </Text>
       </View>
 
       <View style={styles.buttonContainer}>
         <Button
-          title="Create Account"
+          title="Załóż konto"
           onPress={() => navigation.navigate('Registration' as never)}
           variant="primary"
           style={styles.primaryButton}
         />
         <Button
-          title="Login"
+          title="Zaloguj się"
           onPress={() => navigation.navigate('Login' as never)}
           variant="secondary"
           style={styles.secondaryButton}

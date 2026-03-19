@@ -48,7 +48,7 @@ export const PlanListScreen: React.FC = () => {
           onPress={() => navigation.navigate('CreatePlan')}
           style={styles.headerButton}
         >
-          <Text style={styles.headerButtonText}>+ Create</Text>
+          <Text style={styles.headerButtonText}>+ Utwórz</Text>
         </TouchableOpacity>
       ),
     });
@@ -56,14 +56,14 @@ export const PlanListScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>My Plans</Text>
+      <Text style={styles.title}>Moje plany</Text>
 
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
       {isLoading && plans.length === 0 ? (
         <View style={styles.center}>
           <ActivityIndicator size="large" color={colors.primary} />
-          <Text style={styles.loadingText}>Loading plans…</Text>
+          <Text style={styles.loadingText}>Ładowanie planów…</Text>
         </View>
       ) : (
         <FlatList
@@ -89,12 +89,12 @@ export const PlanListScreen: React.FC = () => {
           ListEmptyComponent={
             !isLoading ? (
               <View style={styles.center}>
-                <Text style={styles.emptyText}>No meal plans yet.</Text>
+                <Text style={styles.emptyText}>Brak planów posiłków.</Text>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('CreatePlan')}
                   style={styles.createButton}
                 >
-                  <Text style={styles.createButtonText}>Create Your First Plan</Text>
+                  <Text style={styles.createButtonText}>Utwórz pierwszy plan</Text>
                 </TouchableOpacity>
               </View>
             ) : null

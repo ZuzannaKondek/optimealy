@@ -12,6 +12,7 @@ from .user_ingredient_preference import UserIngredientPreference
 from .grocery import GroceryList, GroceryItem
 from .meal_completion import MealCompletion
 from .user_pantry_item import UserPantryItem
+from .product_alias import ProductAlias
 
 __all__ = [
     "User",
@@ -26,4 +27,5 @@ __all__ = [
     "GroceryItem",
     "MealCompletion",
     "UserPantryItem",
+    "ProductAlias",
 ]

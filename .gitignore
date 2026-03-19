@@ -1,11 +1,15 @@
 # OptiMeal Root .gitignore
-
+docs
+*.prd
+codemap.md
 # Environment files
+AGENTS.md
 .env
 .env.local
 .env.*.local
 *.env
-
+.slim
+§
 # OS
 .DS_Store
 Thumbs.db

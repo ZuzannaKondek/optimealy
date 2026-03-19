@@ -6,9 +6,9 @@ Endpoints for managing user pantry items (ingredients they already have).
 from typing import List, Optional
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
-from sqlalchemy import select, delete
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database.connection import get_db
@@ -154,34 +154,39 @@ async def update_user_pantry(
     db: AsyncSession = Depends(get_db),
 ):
     """
-    Update user's pantry items with quantities.
+    Add items to user's pantry.
 
-    Replaces the entire pantry with the provided list of items and their quantities.
+    Adds the provided items to existing pantry items (adds quantities for items
+    that already exist, adds new items for those that don't). Does NOT remove
+    any existing pantry items.
     """
-    # Validate that all product IDs exist
-    product_ids = [UUID(item.product_id) for item in request.items]
-    query = select(Product).where(Product.id.in_(product_ids))
-    result = await db.execute(query)
-    products = {str(p.id): p for p in result.scalars().all()}
-
-    if len(products) != len(product_ids):
-        raise HTTPException(status_code=400, detail="One or more invalid product IDs")
-
-    # Validate quantities are positive
+    processed_items: List[tuple[Product, PantryItemInput]] = []
     for item in request.items:
         if item.quantity_g <= 0:
             raise HTTPException(
                 status_code=400, detail=f"Quantity must be positive for product {item.product_id}"
             )
 
-    # Delete existing pantry items for this user
-    delete_query = delete(UserPantryItem).where(UserPantryItem.user_id == current_user.id)
-    await db.execute(delete_query)
+        product = await ProductService.resolve_product_identifier(db, item.product_id)
+        if not product:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Product '{item.product_id}' not found when updating pantry",
+            )
 
-    # Insert new pantry items with user-specified quantities
+        processed_items.append((product, item))
+
+    # Get existing pantry items for this user
+    existing_stmt = select(UserPantryItem).where(UserPantryItem.user_id == current_user.id)
+    existing_result = await db.execute(existing_stmt)
+    existing_items = {str(item.product_id): item for item in existing_result.scalars().all()}
+
+    # Process items: merge quantities for existing items, add new items
+    # Note: We NO LONGER delete items not in the request - this is an additive update
     from datetime import date
 
-    for item in request.items:
+    for product, item in processed_items:
+        product_id = str(product.id)
         expiry = None
         if item.expiry_date:
             try:
@@ -189,13 +194,21 @@ async def update_user_pantry(
             except ValueError:
                 pass  # Ignore invalid dates
 
-        pantry_item = UserPantryItem(
-            user_id=current_user.id,
-            product_id=UUID(item.product_id),
-            quantity_g=item.quantity_g,
-            expiry_date=expiry,
-        )
-        db.add(pantry_item)
+        if product_id in existing_items:
+            # Update existing pantry item - ADD the quantity (cumulative)
+            existing_item = existing_items[product_id]
+            existing_item.quantity_g = float(existing_item.quantity_g) + float(item.quantity_g)
+            if expiry:
+                existing_item.expiry_date = expiry
+        else:
+            # Add new pantry item
+            pantry_item = UserPantryItem(
+                user_id=current_user.id,
+                product_id=UUID(product_id),
+                quantity_g=item.quantity_g,
+                expiry_date=expiry,
+            )
+            db.add(pantry_item)
 
     await db.commit()
 
@@ -223,3 +236,36 @@ async def search_products(q: str, limit: int = 20, db: AsyncSession = Depends(ge
         )
         for product in products
     ]
+
+
+@router.delete("/items/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_pantry_item(
+    product_id: str,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Delete a product from user's pantry.
+
+    Removes the specified product entirely from the user's pantry.
+    """
+    from uuid import UUID
+
+    try:
+        uuid_product_id = UUID(product_id)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid product ID format")
+
+    # Find and delete the pantry item
+    stmt = select(UserPantryItem).where(
+        UserPantryItem.user_id == current_user.id,
+        UserPantryItem.product_id == uuid_product_id,
+    )
+    result = await db.execute(stmt)
+    pantry_item = result.scalar_one_or_none()
+
+    if not pantry_item:
+        raise HTTPException(status_code=404, detail="Pantry item not found")
+
+    await db.delete(pantry_item)
+    await db.commit()

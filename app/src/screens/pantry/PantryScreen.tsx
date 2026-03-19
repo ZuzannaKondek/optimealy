@@ -6,28 +6,35 @@
  * Helps reduce waste calculations by accounting for existing inventory.
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
-  TextInput,
   TouchableOpacity,
   ActivityIndicator,
   Alert,
-  FlatList,
   Keyboard,
 } from 'react-native';
-import { usePantry, type PantryStaple } from '../../hooks/usePantry';
-import { productService, type ProductSearchResult } from '../../services/productService';
+import { Screen } from '../../components/layout/Screen';
+import { ScreenHeader } from '../../components/layout/ScreenHeader';
+import { Section } from '../../components/layout/Section';
+import { PantryToolbar } from '../../features/pantry/ui/PantryToolbar';
+import { PantryCategoryBoard } from '../../features/pantry/ui/PantryCategoryBoard';
+import { usePantry } from '../../hooks/usePantry';
+import { useToast } from '../../hooks/useToast';
+import { type ProductSearchResult } from '../../services/productService';
 import { colors, spacing, typography } from '../../theme';
+import { translateCategory } from '../../features/pantry/utils/translateCategory';
 
 export const PantryScreen: React.FC = () => {
-  const { items, staples, isLoading, error, fetchPantry, fetchStaples, updatePantry, searchProducts } = usePantry();
+  const { items, staples, isLoading, error, fetchPantry, fetchStaples, updatePantry, searchProducts, deletePantryItem } = usePantry();
+  const { showToast, ToastContainer } = useToast();
   
-  // Track quantities per product ID with optional expiry date
-  const [quantities, setQuantities] = useState<Map<string, { quantity: number; expiryDate?: string }>>(new Map());
+  // Track quantities per product ID with product details
+  const [quantities, setQuantities] = useState<Map<string, { quantity: number; expiryDate?: string; productName?: string; category?: string }>>(new Map());
+  // Track which items exist in backend (for delete functionality)
+  const [existingItemIds, setExistingItemIds] = useState<Set<string>>(new Set());
   const [isSaving, setIsSaving] = useState(false);
 
   // Search state
@@ -35,6 +42,9 @@ export const PantryScreen: React.FC = () => {
   const [searchResults, setSearchResults] = useState<ProductSearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showSearchResults, setShowSearchResults] = useState(false);
+  
+  // Focus mode: when a product is added from search, show only that product
+  const [focusedProductId, setFocusedProductId] = useState<string | null>(null);
 
   // Load pantry and staples on mount
   useEffect(() => {
@@ -48,16 +58,21 @@ export const PantryScreen: React.FC = () => {
     loadData();
   }, [fetchPantry, fetchStaples]);
 
-  // Update quantities map when items load
+  // Update quantities map when items load (sync from backend with product details)
   useEffect(() => {
-    const newQuantities = new Map<string, { quantity: number; expiryDate?: string }>();
+    const newQuantities = new Map<string, { quantity: number; expiryDate?: string; productName?: string; category?: string }>();
+    const newExistingIds = new Set<string>();
     items.forEach((item) => {
       newQuantities.set(item.product_id, { 
         quantity: item.quantity_g, 
-        expiryDate: item.expiry_date 
+        expiryDate: item.expiry_date,
+        productName: item.product_name,
+        category: item.category,
       });
+      newExistingIds.add(item.product_id);
     });
     setQuantities(newQuantities);
+    setExistingItemIds(newExistingIds);
   }, [items]);
 
   // Debounced search
@@ -83,13 +98,13 @@ export const PantryScreen: React.FC = () => {
     return () => clearTimeout(timer);
   }, [searchQuery, searchProducts]);
 
-  const toggleItem = (productId: string, defaultQuantity: number) => {
+  const toggleItem = (productId: string, defaultQuantity: number, productName?: string, category?: string) => {
     setQuantities((prev) => {
       const newMap = new Map(prev);
       if (newMap.has(productId)) {
         newMap.delete(productId);
       } else {
-        newMap.set(productId, { quantity: defaultQuantity });
+        newMap.set(productId, { quantity: defaultQuantity, productName, category });
       }
       return newMap;
     });
@@ -100,7 +115,7 @@ export const PantryScreen: React.FC = () => {
       const newMap = new Map(prev);
       const existing = newMap.get(productId);
       if (quantity > 0) {
-        newMap.set(productId, { quantity, expiryDate: existing?.expiryDate });
+        newMap.set(productId, { quantity, expiryDate: existing?.expiryDate, productName: existing?.productName, category: existing?.category });
       } else {
         newMap.delete(productId);
       }
@@ -119,15 +134,30 @@ export const PantryScreen: React.FC = () => {
     });
   };
 
+  const handleDeleteItem = (productId: string, isExisting: boolean) => {
+    if (isExisting) {
+      deletePantryItem(productId);
+      return;
+    }
+
+    setQuantities((prev) => {
+      const newMap = new Map(prev);
+      newMap.delete(productId);
+      return newMap;
+    });
+  };
+
   const addSearchedProduct = (product: ProductSearchResult) => {
     setQuantities((prev) => {
       const newMap = new Map(prev);
       if (!newMap.has(product.product_id)) {
-        // Default to 500g or common package size
-        newMap.set(product.product_id, { quantity: 500 });
+        // Store product details along with quantity
+        newMap.set(product.product_id, { quantity: 500, productName: product.product_name, category: product.category });
       }
       return newMap;
     });
+    // Focus on this product so user can edit it
+    setFocusedProductId(product.product_id);
     setSearchQuery('');
     setSearchResults([]);
     setShowSearchResults(false);
@@ -136,17 +166,28 @@ export const PantryScreen: React.FC = () => {
 
   const handleSave = async () => {
     setIsSaving(true);
+    
     try {
-      const itemsArray = Array.from(quantities.entries()).map(([product_id, data]) => ({
-        product_id,
-        quantity_g: data.quantity,
-        expiry_date: data.expiryDate,
-      }));
+      // Only save items with positive quantity
+      const itemsArray = Array.from(quantities.entries())
+        .filter(([_, data]) => data.quantity > 0)
+        .map(([product_id, data]) => ({
+          product_id,
+          quantity_g: data.quantity,
+          expiry_date: data.expiryDate || undefined,
+        }));
       
+      console.log('Saving pantry:', JSON.stringify({ items: itemsArray }));
       await updatePantry(itemsArray);
-      Alert.alert('Success', 'Pantry updated successfully!');
+      showToast('Zapisano zmiany', 'success');
     } catch (err: any) {
-      Alert.alert('Error', err.message || 'Failed to update pantry');
+      console.error('Pantry save error:', err?.response?.data || err.message);
+      const errorDetail = err?.response?.data?.detail;
+      const errorMessage = errorDetail 
+        ? (typeof errorDetail === 'string' ? errorDetail : JSON.stringify(errorDetail))
+        : err?.message || 'Nie udało się zaktualizować spiżarni';
+      Alert.alert('Błąd', errorMessage);
+      showToast('Błąd zapisu', 'error');
     } finally {
       setIsSaving(false);
     }
@@ -156,7 +197,7 @@ export const PantryScreen: React.FC = () => {
     return (
       <View style={styles.centerContainer}>
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Loading pantry...</Text>
+        <Text style={styles.loadingText}>Ładowanie spiżarni...</Text>
       </View>
     );
   }
@@ -164,13 +205,34 @@ export const PantryScreen: React.FC = () => {
   if (error && staples.length === 0) {
     return (
       <View style={styles.centerContainer}>
-        <Text style={styles.errorText}>Error: {error}</Text>
+        <Text style={styles.errorText}>Błąd: {error}</Text>
       </View>
     );
   }
 
-  // Get products that are in the pantry (either from search or staples)
-  const pantryProducts = [
+  // Category to icon mapping
+  const getCategoryIcon = (category?: string): string => {
+    const iconMap: Record<string, string> = {
+      oil: '🫒',
+      condiment: '🧂',
+      spice: '🌶️',
+      herb: '🌿',
+      grain: '🌾',
+      dairy: '🥛',
+      protein: '🥚',
+      vegetable: '🥕',
+      fruit: '🍎',
+      meat: '🥩',
+      fish: '🐟',
+      beverage: '🥤',
+      other: '🥫',
+    };
+    return iconMap[category || 'other'] || '🥫';
+  };
+
+  // Get products that are in the pantry (either from staples or stored product details)
+  // If focusedProductId is set, show only that product
+  const allPantryProducts = [
     ...staples.filter(s => quantities.has(s.product_id)).map(s => ({
       product_id: s.product_id,
       product_name: s.product_name,
@@ -180,267 +242,125 @@ export const PantryScreen: React.FC = () => {
     })),
     ...Array.from(quantities.entries())
       .filter(([id]) => !staples.find(s => s.product_id === id))
-      .map(([product_id]) => ({
+      .map(([product_id, data]) => ({
         product_id,
-        product_name: searchResults.find(r => r.product_id === product_id)?.product_name || 'Unknown',
-        category: searchResults.find(r => r.product_id === product_id)?.category || 'other',
-        icon: '🥫',
+        product_name: data.productName || 'Nieznany',
+        category: data.category || 'other',
+        icon: getCategoryIcon(data.category),
         isStaple: false,
       }))
   ];
+  
+  // Filter to show only focused product, or all if no focus
+  const pantryProducts = focusedProductId 
+    ? allPantryProducts.filter(p => p.product_id === focusedProductId)
+    : allPantryProducts;
+
+  // Group products by category
+  const groupedByCategory: Record<string, typeof pantryProducts> = {};
+  for (const product of pantryProducts) {
+    const cat = product.category || 'other';
+    if (!groupedByCategory[cat]) groupedByCategory[cat] = [];
+    groupedByCategory[cat].push(product);
+  }
+  const categories = Object.keys(groupedByCategory).sort();
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.content}>
-        <Text style={styles.title}>My Pantry</Text>
-        <Text style={styles.subtitle}>
-          Add items you have at home. This helps reduce waste and grocery costs.
-        </Text>
+    <Screen scroll>
+      <ToastContainer />
+      <ScreenHeader
+        title="Spiżarnia"
+        subtitle="Dodaj produkty, które masz w domu. To pomoże zmniejszyć marnotrawstwo i koszty zakupów."
+      />
 
-        {/* Search Bar */}
-        <View style={styles.searchContainer}>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search for a product..."
-            placeholderTextColor={colors.textTertiary}
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            onFocus={() => searchResults.length > 0 && setShowSearchResults(true)}
-          />
-          {isSearching && <ActivityIndicator size="small" color={colors.primary} style={styles.searchLoader} />}
-        </View>
+      <PantryToolbar
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        isSearching={isSearching}
+        onSave={handleSave}
+        isSaving={isSaving}
+      />
 
-        {/* Search Results Dropdown */}
-        {showSearchResults && searchResults.length > 0 && (
-          <View style={styles.searchResultsContainer}>
-            {searchResults.map((product) => (
-              <TouchableOpacity
-                key={product.product_id}
-                style={styles.searchResultItem}
-                onPress={() => addSearchedProduct(product)}
-              >
-                <Text style={styles.searchResultName}>{product.product_name}</Text>
-                <Text style={styles.searchResultCategory}>{product.category}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
-
-        <View style={styles.counterContainer}>
-          <Text style={styles.counterText}>
-            {quantities.size} items in pantry
-          </Text>
-        </View>
-
-        {/* Pantry Items */}
-        {pantryProducts.length > 0 ? (
-          <View style={styles.itemsList}>
-            {pantryProducts.map((product) => (
-              <PantryItemCard
-                key={product.product_id}
-                productId={product.product_id}
-                productName={product.product_name}
-                category={product.category}
-                icon={product.icon}
-                quantity={quantities.get(product.product_id)?.quantity}
-                expiryDate={quantities.get(product.product_id)?.expiryDate}
-                onToggle={() => toggleItem(product.product_id, 500)}
-                onQuantityChange={(qty) => updateQuantity(product.product_id, qty)}
-                onExpiryDateChange={(date) => updateExpiryDate(product.product_id, date)}
-              />
-            ))}
-          </View>
-        ) : (
-          <View style={styles.emptyState}>
-            <Text style={styles.emptyIcon}>🛒</Text>
-            <Text style={styles.emptyText}>
-              Search for products above to add them to your pantry
-            </Text>
-          </View>
-        )}
-
-        {/* Quick Add Section - Available Staples */}
-        {staples.length > 0 && (
-          <View style={styles.staplesSection}>
-            <Text style={styles.sectionTitle}>Quick Add from Staples</Text>
-            <View style={styles.staplesGrid}>
-              {staples.map((staple) => (
-                <TouchableOpacity
-                  key={staple.product_id}
-                  style={[
-                    styles.stapleChip,
-                    quantities.has(staple.product_id) && styles.stapleChipSelected
-                  ]}
-                  onPress={() => toggleItem(staple.product_id, staple.default_quantity_g)}
-                >
-                  <Text style={styles.stapleIcon}>{staple.icon}</Text>
-                  <Text 
-                    style={[
-                      styles.stapleName,
-                      quantities.has(staple.product_id) && styles.stapleNameSelected
-                    ]}
-                    numberOfLines={1}
-                  >
-                    {staple.product_name}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-        )}
-      </ScrollView>
-
-      <View style={styles.footer}>
-        <TouchableOpacity
-          style={[styles.saveButton, isSaving && styles.saveButtonDisabled]}
-          onPress={handleSave}
-          disabled={isSaving}
-        >
-          {isSaving ? (
-            <ActivityIndicator color={colors.white} />
-          ) : (
-            <Text style={styles.saveButtonText}>Save Changes</Text>
-          )}
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
-
-interface PantryItemCardProps {
-  productId: string;
-  productName: string;
-  category: string;
-  icon: string;
-  quantity: number | undefined;
-  expiryDate: string | undefined;
-  onToggle: () => void;
-  onQuantityChange: (quantity: number) => void;
-  onExpiryDateChange: (date: string) => void;
-}
-
-const PantryItemCard: React.FC<PantryItemCardProps> = ({ 
-  productName,
-  category,
-  icon,
-  quantity,
-  expiryDate,
-  onToggle, 
-  onQuantityChange,
-  onExpiryDateChange 
-}) => {
-  const [isEditingQty, setIsEditingQty] = useState(false);
-  const [tempQty, setTempQty] = useState('');
-  const [isEditingExpiry, setIsEditingExpiry] = useState(false);
-  const [tempExpiry, setTempExpiry] = useState('');
-  const isSelected = quantity !== undefined && quantity > 0;
-
-  const handleQtyPress = () => {
-    if (isSelected) {
-      setTempQty(quantity?.toString() || '');
-      setIsEditingQty(true);
-    }
-  };
-
-  const handleQtySubmit = () => {
-    const newQty = parseFloat(tempQty);
-    if (!isNaN(newQty) && newQty > 0) {
-      onQuantityChange(newQty);
-    }
-    setIsEditingQty(false);
-  };
-
-  const handleExpiryPress = () => {
-    if (isSelected) {
-      setTempExpiry(expiryDate || '');
-      setIsEditingExpiry(true);
-    }
-  };
-
-  const handleExpirySubmit = () => {
-    // Validate date format (YYYY-MM-DD)
-    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-    if (dateRegex.test(tempExpiry)) {
-      onExpiryDateChange(tempExpiry);
-    } else if (tempExpiry === '') {
-      onExpiryDateChange('');
-    }
-    setIsEditingExpiry(false);
-  };
-
-  return (
-    <View style={[styles.itemCard, isSelected && styles.itemCardSelected]}>
-      <View style={styles.itemHeader}>
-        <Text style={styles.itemIcon}>{icon}</Text>
-        <View style={styles.itemInfo}>
-          <Text style={styles.itemName} numberOfLines={1}>{productName}</Text>
-          <Text style={styles.itemCategory}>{category}</Text>
-        </View>
-        <TouchableOpacity onPress={onToggle} style={styles.removeButton}>
-          <Text style={styles.removeButtonText}>×</Text>
-        </TouchableOpacity>
-      </View>
-
-      {isSelected && (
-        <View style={styles.itemDetails}>
-          <View style={styles.quantityRow}>
-            <Text style={styles.detailLabel}>Amount:</Text>
-            {isEditingQty ? (
-              <TextInput
-                style={styles.detailInput}
-                value={tempQty}
-                onChangeText={setTempQty}
-                onBlur={handleQtySubmit}
-                onSubmitEditing={handleQtySubmit}
-                keyboardType="numeric"
-                autoFocus
-                selectTextOnFocus
-              />
-            ) : (
-              <TouchableOpacity onPress={handleQtyPress}>
-                <Text style={styles.detailValue}>{Math.round(quantity || 0)}g</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-
-          <View style={styles.expiryRow}>
-            <Text style={styles.detailLabel}>Expiry:</Text>
-            {isEditingExpiry ? (
-              <TextInput
-                style={styles.detailInput}
-                value={tempExpiry}
-                onChangeText={setTempExpiry}
-                onBlur={handleExpirySubmit}
-                onSubmitEditing={handleExpirySubmit}
-                placeholder="YYYY-MM-DD"
-                placeholderTextColor={colors.textTertiary}
-              />
-            ) : (
-              <TouchableOpacity onPress={handleExpiryPress}>
-                <Text style={[styles.detailValue, !expiryDate && styles.detailPlaceholder]}>
-                  {expiryDate || 'Add date'}
-                </Text>
-              </TouchableOpacity>
-            )}
-          </View>
+      {showSearchResults && searchResults.length > 0 && (
+        <View style={styles.searchResultsContainer}>
+          {searchResults.map((product) => (
+            <TouchableOpacity
+              key={product.product_id}
+              style={styles.searchResultItem}
+              onPress={() => addSearchedProduct(product)}
+            >
+              <Text style={styles.searchResultName}>{product.product_name}</Text>
+              <Text style={styles.searchResultCategory}>{translateCategory(product.category)}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
       )}
-    </View>
+
+      {focusedProductId && (
+        <TouchableOpacity
+          style={styles.exitFocusButton}
+          onPress={() => setFocusedProductId(null)}
+        >
+          <Text style={styles.exitFocusText}>Pokaż wszystkie produkty</Text>
+        </TouchableOpacity>
+      )}
+
+      <View style={styles.counterContainer}>
+        <Text style={styles.counterText}>{quantities.size} produktów w spiżarni</Text>
+      </View>
+
+      {pantryProducts.length > 0 ? (
+        <PantryCategoryBoard
+          categories={categories}
+          groupedProducts={groupedByCategory}
+          quantities={quantities}
+          existingItemIds={existingItemIds}
+          onToggle={toggleItem}
+          onDelete={handleDeleteItem}
+          onQuantityChange={updateQuantity}
+          onExpiryDateChange={updateExpiryDate}
+        />
+      ) : (
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyIcon}>🛒</Text>
+          <Text style={styles.emptyText}>
+            Wyszukaj produkty powyżej, aby dodać je do spiżarni
+          </Text>
+        </View>
+      )}
+
+      {staples.length > 0 && (
+        <Section title="Szybkie dodawanie z produktów podstawowych">
+          <View style={styles.staplesGrid}>
+            {staples.map((staple) => (
+              <TouchableOpacity
+                key={staple.product_id}
+                style={[
+                  styles.stapleChip,
+                  quantities.has(staple.product_id) && styles.stapleChipSelected,
+                ]}
+                onPress={() => toggleItem(staple.product_id, staple.default_quantity_g, staple.product_name, staple.category)}
+              >
+                <Text style={styles.stapleIcon}>{staple.icon}</Text>
+                <Text
+                  style={[
+                    styles.stapleName,
+                    quantities.has(staple.product_id) && styles.stapleNameSelected,
+                  ]}
+                  numberOfLines={1}
+                >
+                  {staple.product_name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </Section>
+      )}
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  content: {
-    padding: spacing.screenPadding,
-    paddingBottom: spacing.xl,
-  },
   centerContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -457,36 +377,6 @@ const styles = StyleSheet.create({
     color: colors.error,
     textAlign: 'center',
     paddingHorizontal: spacing.lg,
-  },
-  title: {
-    fontSize: typography.fontSize.xxxl,
-    fontWeight: typography.fontWeight.bold,
-    color: colors.textPrimary,
-    marginBottom: spacing.sm,
-  },
-  subtitle: {
-    fontSize: typography.fontSize.md,
-    color: colors.textSecondary,
-    marginBottom: spacing.lg,
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.surface,
-    borderRadius: spacing.borderRadius,
-    paddingHorizontal: spacing.md,
-    marginBottom: spacing.sm,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  searchInput: {
-    flex: 1,
-    height: 44,
-    fontSize: typography.fontSize.md,
-    color: colors.textPrimary,
-  },
-  searchLoader: {
-    marginLeft: spacing.sm,
   },
   searchResultsContainer: {
     backgroundColor: colors.surface,
@@ -510,6 +400,20 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.sm,
     color: colors.textSecondary,
   },
+  exitFocusButton: {
+    backgroundColor: colors.secondary + '20',
+    padding: spacing.md,
+    borderRadius: spacing.borderRadius,
+    marginBottom: spacing.md,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.secondary,
+  },
+  exitFocusText: {
+    color: colors.secondary,
+    fontSize: typography.fontSize.md,
+    fontWeight: typography.fontWeight.medium,
+  },
   counterContainer: {
     backgroundColor: colors.primary + '15',
     padding: spacing.md,
@@ -521,92 +425,6 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.md,
     fontWeight: typography.fontWeight.semiBold,
     color: colors.primary,
-  },
-  itemsList: {
-    marginBottom: spacing.lg,
-  },
-  itemCard: {
-    backgroundColor: colors.surface,
-    borderRadius: spacing.borderRadius,
-    padding: spacing.md,
-    marginBottom: spacing.md,
-    borderWidth: 2,
-    borderColor: colors.border,
-  },
-  itemCardSelected: {
-    borderColor: colors.primary,
-  },
-  itemHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  itemIcon: {
-    fontSize: 28,
-    marginRight: spacing.sm,
-  },
-  itemInfo: {
-    flex: 1,
-  },
-  itemName: {
-    fontSize: typography.fontSize.md,
-    color: colors.textPrimary,
-    fontWeight: typography.fontWeight.semiBold,
-  },
-  itemCategory: {
-    fontSize: typography.fontSize.sm,
-    color: colors.textSecondary,
-    textTransform: 'capitalize',
-  },
-  removeButton: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: colors.error + '20',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  removeButtonText: {
-    fontSize: 20,
-    color: colors.error,
-    fontWeight: typography.fontWeight.bold,
-  },
-  itemDetails: {
-    marginTop: spacing.md,
-    paddingTop: spacing.md,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-  },
-  quantityRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: spacing.sm,
-  },
-  expiryRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  detailLabel: {
-    fontSize: typography.fontSize.sm,
-    color: colors.textSecondary,
-    width: 60,
-  },
-  detailValue: {
-    fontSize: typography.fontSize.sm,
-    color: colors.primary,
-    fontWeight: typography.fontWeight.semiBold,
-  },
-  detailPlaceholder: {
-    color: colors.textTertiary,
-    fontStyle: 'italic',
-  },
-  detailInput: {
-    fontSize: typography.fontSize.sm,
-    color: colors.primary,
-    fontWeight: typography.fontWeight.semiBold,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.primary,
-    paddingVertical: 2,
-    minWidth: 80,
   },
   emptyState: {
     alignItems: 'center',
@@ -620,15 +438,6 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.md,
     color: colors.textSecondary,
     textAlign: 'center',
-  },
-  staplesSection: {
-    marginTop: spacing.md,
-  },
-  sectionTitle: {
-    fontSize: typography.fontSize.md,
-    fontWeight: typography.fontWeight.semiBold,
-    color: colors.textPrimary,
-    marginBottom: spacing.md,
   },
   staplesGrid: {
     flexDirection: 'row',
@@ -661,25 +470,5 @@ const styles = StyleSheet.create({
   stapleNameSelected: {
     color: colors.primary,
     fontWeight: typography.fontWeight.medium,
-  },
-  footer: {
-    padding: spacing.screenPadding,
-    backgroundColor: colors.surface,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-  },
-  saveButton: {
-    backgroundColor: colors.primary,
-    borderRadius: spacing.borderRadius,
-    padding: spacing.md,
-    alignItems: 'center',
-  },
-  saveButtonDisabled: {
-    opacity: 0.6,
-  },
-  saveButtonText: {
-    color: colors.white,
-    fontSize: typography.fontSize.md,
-    fontWeight: typography.fontWeight.semiBold,
   },
 });

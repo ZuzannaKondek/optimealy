@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import { Input } from '../../components/common/Input';
 import { Button } from '../../components/common/Button';
-import { colors, spacing, typography } from '../../theme';
+import { Screen } from '../../components/layout/Screen';
+import { ScreenHeader } from '../../components/layout/ScreenHeader';
+import { Section } from '../../components/layout/Section';
 import { authService } from '../../services/authService';
 
 export const ChangePasswordScreen: React.FC = () => {
@@ -12,57 +14,39 @@ export const ChangePasswordScreen: React.FC = () => {
 
   const onSubmit = async () => {
     if (newPassword.length < 8) {
-      Alert.alert('Validation', 'New password must be at least 8 characters');
+      Alert.alert('Walidacja', 'Nowe hasło musi zawierać co najmniej 8 znaków');
       return;
     }
     setIsSubmitting(true);
     try {
       await authService.updatePassword({ current_password: currentPassword, new_password: newPassword });
-      Alert.alert('Success', 'Password updated');
+      Alert.alert('Sukces', 'Hasło zaktualizowane');
       setCurrentPassword('');
       setNewPassword('');
     } catch (e: any) {
-      Alert.alert('Error', e?.response?.data?.detail || 'Failed to update password');
+      Alert.alert('Błąd', e?.response?.data?.detail || 'Nie udało się zaktualizować hasła');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Change Password</Text>
-      <Text style={styles.subtitle}>For security, enter your current password first.</Text>
-
-      <Input
-        label="Current password"
-        value={currentPassword}
-        onChangeText={setCurrentPassword}
-        secureTextEntry
+    <Screen>
+      <ScreenHeader
+        title="Zmień hasło"
+        subtitle="Ze względów bezpieczeństwa najpierw wprowadź swoje obecne hasło."
       />
-      <Input label="New password" value={newPassword} onChangeText={setNewPassword} secureTextEntry />
-
-      <Button title="Update password" onPress={onSubmit} loading={isSubmitting} />
-    </View>
+      <Section title="Zmiana hasła">
+        <Input
+          label="Obecne hasło"
+          value={currentPassword}
+          onChangeText={setCurrentPassword}
+          secureTextEntry
+        />
+        <Input label="Nowe hasło" value={newPassword} onChangeText={setNewPassword} secureTextEntry />
+        <Button title="Zaktualizuj hasło" onPress={onSubmit} loading={isSubmitting} />
+      </Section>
+    </Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-    padding: spacing.screenPadding,
-    paddingTop: spacing.lg,
-  },
-  title: {
-    fontSize: typography.fontSize.xxxl,
-    fontWeight: typography.fontWeight.bold,
-    color: colors.textPrimary,
-    marginBottom: spacing.xs,
-  },
-  subtitle: {
-    fontSize: typography.fontSize.md,
-    color: colors.textSecondary,
-    marginBottom: spacing.lg,
-  },
-});
 

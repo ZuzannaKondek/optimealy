@@ -16,6 +16,21 @@ import type {
   GroceryList,
 } from '../../shared/types/api-contracts';
 
+type ToggleMealCompleteResponse = {
+  message?: string;
+  completion?: {
+    id: string;
+    completed_at: string;
+  };
+  pantry_updated?: boolean;
+  deducted_ingredients?: Record<string, number>;
+  updated_pantry?: Array<{
+    product_id: string;
+    quantity_g: number;
+    product_name: string;
+  }>;
+};
+
 export const planService = {
   /**
    * Create a new optimized meal plan.
@@ -112,6 +127,13 @@ export const planService = {
     return response.data;
   },
 
+  /**
+   * Delete a single item from the grocery list.
+   */
+  async deleteGroceryItem(planId: string, itemId: string): Promise<void> {
+    await apiClient.delete(`/meal-plans/${planId}/grocery/items/${itemId}`);
+  },
+
   async getActivePlan(): Promise<MealPlanSummary | null> {
     const response = await apiClient.get<MealPlanSummary>('/meal-plans/active');
     return response.data;
@@ -122,12 +144,21 @@ export const planService = {
     return response.data;
   },
 
-  async toggleMealComplete(mealId: string, completed: boolean): Promise<void> {
+  async toggleMealComplete(
+    mealId: string,
+    completed: boolean
+  ): Promise<ToggleMealCompleteResponse> {
     if (completed) {
-      await apiClient.post(`/meal-plans/meals/${mealId}/complete`);
-      return;
+      const response = await apiClient.post<ToggleMealCompleteResponse>(
+        `/meal-plans/meals/${mealId}/complete`
+      );
+      return response.data;
     }
-    await apiClient.delete(`/meal-plans/meals/${mealId}/complete`);
+
+    const response = await apiClient.delete<ToggleMealCompleteResponse>(
+      `/meal-plans/meals/${mealId}/complete`
+    );
+    return response.data;
   },
 
   async activatePlan(planId: string): Promise<MealPlanDetail> {
@@ -136,7 +167,8 @@ export const planService = {
   },
 
   async cancelPlan(planId: string): Promise<MealPlanDetail> {
-    const response = await apiClient.post<MealPlanDetail>(`/meal-plans/${planId}/cancel`);
-    return response.data;
+    const response = await apiClient.post<{ plan_id: string; execution_status: string }>(`/meal-plans/${planId}/cancel`);
+    // Fetch the full plan detail after cancel
+    return await apiClient.get<MealPlanDetail>(`/meal-plans/${planId}`).then(r => r.data);
   },
 };

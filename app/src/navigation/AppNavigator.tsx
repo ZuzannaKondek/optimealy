@@ -71,7 +71,7 @@ export const AppNavigator: React.FC = () => {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Loading OptiMeal...</Text>
+        <Text style={styles.loadingText}>Ładowanie OptiMeal...</Text>
       </View>
     );
   }

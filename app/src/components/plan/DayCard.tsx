@@ -27,10 +27,10 @@ export const DayCard: React.FC<Props> = ({ day, onPress }) => {
       activeOpacity={0.8}
       style={styles.card}
       accessibilityRole="button"
-      accessibilityLabel={`Day ${day.day_number} details`}
+      accessibilityLabel={`Dzień ${day.day_number} szczegóły`}
     >
       <View style={styles.headerRow}>
-        <Text style={styles.title}>Day {day.day_number}</Text>
+        <Text style={styles.title}>Dzień {day.day_number}</Text>
         <Text style={styles.date}>{day.menu_date}</Text>
       </View>
 
@@ -39,8 +39,8 @@ export const DayCard: React.FC<Props> = ({ day, onPress }) => {
           {formatCalories(day.actual_calories)} ({formatPct(calVar)})
         </Text>
         <Text style={styles.meta}>
-          P {formatNutritionalValue(day.actual_protein_g, unitPreference)} • C{' '}
-          {formatNutritionalValue(day.actual_carbs_g, unitPreference)} • F{' '}
+          B {formatNutritionalValue(day.actual_protein_g, unitPreference)} • W{' '}
+          {formatNutritionalValue(day.actual_carbs_g, unitPreference)} • T{' '}
           {formatNutritionalValue(day.actual_fat_g, unitPreference)}
         </Text>
       </View>

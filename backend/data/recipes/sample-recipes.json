@@ -1,8 +1,8 @@
 [
   {
-    "name": "Oatmeal with Berries",
-    "description": "Healthy breakfast oatmeal topped with fresh berries",
-    "instructions": "1. Cook oats with water or milk. 2. Top with fresh berries. 3. Add honey if desired.",
+    "name": "Płatki Owsiane Z Jagodami",
+    "description": "Zdrowe płatki owsiane śniadaniowe zwieńczone świeżymi jagodami",
+    "instructions": "1. Ugotuj płatki owsiane na wodzie lub mleku. 2. Posyp świeżymi jagodami. 3. W razie potrzeby dodaj miód.",
     "meal_types": [
       "breakfast"
     ],
@@ -45,9 +45,9 @@
     ]
   },
   {
-    "name": "Scrambled Eggs with Toast",
-    "description": "Classic scrambled eggs served with whole grain toast",
-    "instructions": "1. Beat eggs with salt and pepper. 2. Scramble in butter. 3. Serve with toasted bread.",
+    "name": "Jajecznica Z Tostami",
+    "description": "Klasyczna jajecznica podawana z tostami pełnoziarnistymi",
+    "instructions": "1. Ubij jajka solą i pieprzem. 2. Rozetrzeć na maśle. 3. Podawać z tostowym pieczywem.",
     "meal_types": [
       "breakfast"
     ],
@@ -85,9 +85,9 @@
     ]
   },
   {
-    "name": "Greek Yogurt Parfait",
-    "description": "Layered yogurt with fresh fruits and granola",
-    "instructions": "1. Layer Greek yogurt with fruits. 2. Top with granola and honey.",
+    "name": "Parfait z jogurtu greckiego",
+    "description": "Jogurt warstwowy ze świeżymi owocami i granolą",
+    "instructions": "1. Jogurt grecki ułóż warstwami owoców. 2. Posyp granolą i miodem.",
     "meal_types": [
       "breakfast"
     ],
@@ -130,9 +130,9 @@
     ]
   },
   {
-    "name": "Avocado Toast",
-    "description": "Whole grain toast topped with mashed avocado",
-    "instructions": "1. Toast bread. 2. Mash avocado with lemon juice. 3. Spread on toast and season.",
+    "name": "Tost z awokado",
+    "description": "Tost pełnoziarnisty z dodatkiem puree z awokado",
+    "instructions": "1. Chleb tostowy. 2. Rozgnieć awokado sokiem z cytryny. 3. Posmaruj tostami i dopraw.",
     "meal_types": [
       "breakfast"
     ],
@@ -170,9 +170,9 @@
     ]
   },
   {
-    "name": "Pancakes",
-    "description": "Fluffy pancakes served with maple syrup",
-    "instructions": "1. Mix flour, eggs, milk. 2. Cook pancakes in butter. 3. Serve with syrup.",
+    "name": "Naleśniki",
+    "description": "Puszyste naleśniki podawane z syropem klonowym",
+    "instructions": "1. Wymieszaj mąkę, jajka, mleko. 2. Smażyć naleśniki na maśle. 3. Podawać z syropem.",
     "meal_types": [
       "breakfast"
     ],
@@ -214,9 +214,9 @@
     ]
   },
   {
-    "name": "French Toast",
-    "description": "Bread dipped in egg mixture and pan-fried",
-    "instructions": "1. Dip bread in egg and milk mixture. 2. Fry in butter. 3. Serve with syrup.",
+    "name": "Tosty Francuskie",
+    "description": "Chleb maczany w mieszance jajecznej i smażony na patelni",
+    "instructions": "1. Zanurz chleb w mieszance jaj i mleka. 2. Smażyć na maśle. 3. Podawać z syropem.",
     "meal_types": [
       "breakfast"
     ],
@@ -258,9 +258,9 @@
     ]
   },
   {
-    "name": "Breakfast Burrito",
-    "description": "Scrambled eggs, cheese, and vegetables wrapped in tortilla",
-    "instructions": "1. Scramble eggs with vegetables. 2. Add cheese. 3. Wrap in tortilla.",
+    "name": "Burito na śniadanie",
+    "description": "Jajecznica, ser i warzywa zawijane w tortillę",
+    "instructions": "1. Jajecznica z warzywami. 2. Dodaj ser. 3. Zawiń w tortillę.",
     "meal_types": [
       "breakfast"
     ],
@@ -308,9 +308,9 @@
     ]
   },
   {
-    "name": "Smoothie Bowl",
-    "description": "Thick smoothie topped with fresh fruits and seeds",
-    "instructions": "1. Blend frozen fruits with yogurt. 2. Pour into bowl. 3. Top with fresh fruits and seeds.",
+    "name": "Miska na smoothie",
+    "description": "Gęsty smoothie z dodatkiem świeżych owoców i nasion",
+    "instructions": "1. Zmiksuj mrożone owoce z jogurtem. 2. Wlać do miski. 3. Posyp świeżymi owocami i nasionami.",
     "meal_types": [
       "breakfast"
     ],
@@ -353,9 +353,9 @@
     ]
   },
   {
-    "name": "Breakfast Quinoa",
-    "description": "Warm quinoa porridge with fruits and nuts",
-    "instructions": "1. Cook quinoa in milk. 2. Add fruits and nuts. 3. Sweeten with honey.",
+    "name": "Quinoa śniadaniowa",
+    "description": "Ciepła owsianka quinoa z owocami i orzechami",
+    "instructions": "1. Ugotuj komosę ryżową w mleku. 2. Dodaj owoce i orzechy. 3. Dosłodzić miodem.",
     "meal_types": [
       "breakfast"
     ],
@@ -404,9 +404,9 @@
     ]
   },
   {
-    "name": "Egg and Vegetable Scramble",
-    "description": "Scrambled eggs with mixed vegetables",
-    "instructions": "1. Sauté vegetables. 2. Add beaten eggs. 3. Scramble until cooked.",
+    "name": "Jajko-Warzywna Jajecznica",
+    "description": "Jajecznica z mieszanką warzyw",
+    "instructions": "1. Podsmaż warzywa. 2. Dodaj ubite jajka. 3. Mieszaj, aż będzie ugotowana.",
     "meal_types": [
       "breakfast"
     ],
@@ -455,9 +455,9 @@
     ]
   },
   {
-    "name": "Chia Pudding",
-    "description": "Creamy chia seed pudding with fruits",
-    "instructions": "1. Mix chia seeds with milk. 2. Refrigerate overnight. 3. Top with fruits.",
+    "name": "Budyń Chia",
+    "description": "Kremowy budyń z nasion chia i owocami",
+    "instructions": "1. Wymieszaj nasiona chia z mlekiem. 2. Przechowywać w lodówce przez noc. 3. Posyp owocami.",
     "meal_types": [
       "breakfast"
     ],
@@ -501,9 +501,9 @@
     ]
   },
   {
-    "name": "Breakfast Hash",
-    "description": "Potatoes, eggs, and vegetables cooked together",
-    "instructions": "1. Cook diced potatoes. 2. Add vegetables. 3. Top with fried eggs.",
+    "name": "Hash śniadaniowy",
+    "description": "Ziemniaki, jajka i warzywa gotowane razem",
+    "instructions": "1. Ugotuj pokrojone w kostkę ziemniaki. 2. Dodaj warzywa. 3. Na wierzch połóż jajka sadzone.",
     "meal_types": [
       "breakfast"
     ],
@@ -551,9 +551,9 @@
     ]
   },
   {
-    "name": "Bagel with Cream Cheese",
-    "description": "Toasted bagel spread with cream cheese",
-    "instructions": "1. Toast bagel. 2. Spread cream cheese. 3. Add optional toppings.",
+    "name": "Bajgiel z serkiem śmietankowym",
+    "description": "Tostowy bajgiel posmarowany serkiem śmietankowym",
+    "instructions": "1. Tostowy bajgiel. 2. Posmaruj serkiem śmietankowym. 3. Dodaj opcjonalne dodatki.",
     "meal_types": [
       "breakfast"
     ],
@@ -585,9 +585,9 @@
     ]
   },
   {
-    "name": "Breakfast Smoothie",
-    "description": "Protein-rich smoothie with fruits and yogurt",
-    "instructions": "1. Blend fruits with yogurt and milk. 2. Add protein powder if desired. 3. Serve cold.",
+    "name": "Koktajl śniadaniowy",
+    "description": "Bogate w białko smoothie z owocami i jogurtem",
+    "instructions": "1. Zmiksuj owoce z jogurtem i mlekiem. 2. W razie potrzeby dodaj proszek białkowy. 3. Podawać na zimno.",
     "meal_types": [
       "breakfast"
     ],
@@ -630,9 +630,9 @@
     ]
   },
   {
-    "name": "Breakfast Tacos",
-    "description": "Soft tacos filled with scrambled eggs and vegetables",
-    "instructions": "1. Scramble eggs with vegetables. 2. Warm tortillas. 3. Fill and serve.",
+    "name": "Tacos na śniadanie",
+    "description": "Miękkie tacos wypełnione jajecznicą i warzywami",
+    "instructions": "1. Jajecznica z warzywami. 2. Ciepłe tortille. 3. Napełnij i podawaj.",
     "meal_types": [
       "breakfast"
     ],
@@ -680,9 +680,9 @@
     ]
   },
   {
-    "name": "Overnight Oats",
-    "description": "Oats soaked overnight with fruits and yogurt",
-    "instructions": "1. Mix oats with milk and yogurt. 2. Add fruits. 3. Refrigerate overnight.",
+    "name": "Nocne płatki owsiane",
+    "description": "Płatki owsiane namoczone przez noc z owocami i jogurtem",
+    "instructions": "1. Wymieszaj płatki owsiane z mlekiem i jogurtem. 2. Dodaj owoce. 3. Przechowywać w lodówce przez noc.",
     "meal_types": [
       "breakfast"
     ],
@@ -730,9 +730,9 @@
     ]
   },
   {
-    "name": "Breakfast Sandwich",
-    "description": "Egg, cheese, and vegetables on English muffin",
-    "instructions": "1. Cook egg. 2. Toast muffin. 3. Assemble sandwich with cheese and vegetables.",
+    "name": "Kanapka śniadaniowa",
+    "description": "Jajko, ser i warzywa na angielskiej muffince",
+    "instructions": "1. Ugotuj jajko. 2. Babeczka tostowa. 3. Złóż kanapkę z serem i warzywami.",
     "meal_types": [
       "breakfast"
     ],
@@ -780,9 +780,9 @@
     ]
   },
   {
-    "name": "Fruit Salad",
-    "description": "Mixed fresh fruits with honey and mint",
-    "instructions": "1. Cut fruits into pieces. 2. Mix together. 3. Drizzle with honey and mint.",
+    "name": "Sałatka owocowa",
+    "description": "Mieszane świeże owoce z miodem i miętą",
+    "instructions": "1. Pokrój owoce na kawałki. 2. Wymieszaj razem. 3. Skropić miodem i miętą.",
     "meal_types": [
       "breakfast"
     ],
@@ -831,9 +831,9 @@
     ]
   },
   {
-    "name": "Breakfast Wrap",
-    "description": "Scrambled eggs and vegetables wrapped in tortilla",
-    "instructions": "1. Scramble eggs with vegetables. 2. Warm tortilla. 3. Wrap and serve.",
+    "name": "Opakowanie śniadaniowe",
+    "description": "Jajecznica z warzywami zawinięta w tortillę",
+    "instructions": "1. Jajecznica z warzywami. 2. Ciepła tortilla. 3. Zawiń i podawaj.",
     "meal_types": [
       "breakfast"
     ],
@@ -881,9 +881,9 @@
     ]
   },
   {
-    "name": "Grilled Chicken Salad",
-    "description": "Fresh salad with grilled chicken breast",
-    "instructions": "1. Season and grill chicken breast. 2. Chop vegetables. 3. Toss everything with olive oil and lemon juice.",
+    "name": "Sałatka z Grillowanym Kurczakiem",
+    "description": "Świeża sałatka z grillowaną piersią kurczaka",
+    "instructions": "1. Doprawiamy i grillujemy pierś z kurczaka. 2. Posiekaj warzywa. 3. Wszystko wymieszaj z oliwą i sokiem z cytryny.",
     "meal_types": [
       "lunch",
       "dinner"
@@ -932,9 +932,9 @@
     ]
   },
   {
-    "name": "Spaghetti Bolognese",
-    "description": "Classic Italian pasta with meat sauce",
-    "instructions": "1. Cook pasta. 2. Brown ground beef with onions and garlic. 3. Add tomato sauce and simmer. 4. Serve over pasta.",
+    "name": "Spaghetti po bolońsku",
+    "description": "Klasyczny włoski makaron z sosem mięsnym",
+    "instructions": "1. Ugotuj makaron. 2. Zrumienić mieloną wołowinę z cebulą i czosnkiem. 3. Dodaj sos pomidorowy i gotuj na wolnym ogniu. 4. Podawaj z makaronem.",
     "meal_types": [
       "lunch",
       "dinner"
@@ -980,9 +980,9 @@
     ]
   },
   {
-    "name": "Caesar Salad",
-    "description": "Classic Caesar salad with romaine lettuce and parmesan",
-    "instructions": "1. Wash and chop romaine lettuce. 2. Make Caesar dressing. 3. Toss with croutons and parmesan.",
+    "name": "Sałatka cesarska",
+    "description": "Klasyczna sałatka Cezar z sałatą rzymską i parmezanem",
+    "instructions": "1. Umyj i posiekaj sałatę rzymską. 2. Przygotuj sos Cezar. 3. Wymieszać z grzankami i parmezanem.",
     "meal_types": [
       "lunch"
     ],
@@ -1024,9 +1024,9 @@
     ]
   },
   {
-    "name": "Chicken Wrap",
-    "description": "Grilled chicken with vegetables in a tortilla wrap",
-    "instructions": "1. Grill chicken and slice. 2. Warm tortilla. 3. Fill with chicken and vegetables. 4. Roll and serve.",
+    "name": "Okład z kurczaka",
+    "description": "Grillowany kurczak z warzywami w opakowaniu tortilla",
+    "instructions": "1. Grilluj kurczaka i pokrój go. 2. Ciepła tortilla. 3. Napełnij kurczakiem i warzywami. 4. Zwiń i podawaj.",
     "meal_types": [
       "lunch"
     ],
@@ -1073,9 +1073,9 @@
     ]
   },
   {
-    "name": "Quinoa Bowl",
-    "description": "Quinoa topped with vegetables, beans, and tahini dressing",
-    "instructions": "1. Cook quinoa. 2. Prepare vegetables. 3. Top quinoa with vegetables and beans. 4. Drizzle with tahini.",
+    "name": "Miska z komosą ryżową",
+    "description": "Quinoa z warzywami, fasolą i dressingiem tahini",
+    "instructions": "1. Ugotuj komosę ryżową. 2. Przygotuj warzywa. 3. Komosa ryżowa z warzywami i fasolą. 4. Skropić tahini.",
     "meal_types": [
       "lunch"
     ],
@@ -1124,9 +1124,9 @@
     ]
   },
   {
-    "name": "Turkey Sandwich",
-    "description": "Sliced turkey with vegetables on whole grain bread",
-    "instructions": "1. Slice turkey. 2. Toast bread. 3. Layer turkey and vegetables. 4. Serve.",
+    "name": "Kanapka z Indykiem",
+    "description": "Plasterki indyka z warzywami na pieczywie pełnoziarnistym",
+    "instructions": "1. Pokrój indyka w plasterki. 2. Chleb tostowy. 3. Ułóż warstwami indyka i warzywa. 4. Podawaj.",
     "meal_types": [
       "lunch"
     ],
@@ -1173,9 +1173,9 @@
     ]
   },
   {
-    "name": "Vegetable Stir Fry",
-    "description": "Mixed vegetables stir-fried with soy sauce",
-    "instructions": "1. Cut vegetables. 2. Heat oil in pan. 3. Stir-fry vegetables. 4. Add soy sauce and serve.",
+    "name": "Smażyć warzywa",
+    "description": "Mieszanka warzyw smażona z sosem sojowym",
+    "instructions": "1. Pokrój warzywa. 2. Rozgrzej olej na patelni. 3. Smażyć warzywa. 4. Dodaj sos sojowy i podawaj.",
     "meal_types": [
       "lunch",
       "dinner"
@@ -1225,9 +1225,9 @@
     ]
   },
   {
-    "name": "Salmon Salad",
-    "description": "Grilled salmon over mixed greens",
-    "instructions": "1. Grill salmon. 2. Prepare salad greens. 3. Top with salmon and dressing.",
+    "name": "Sałatka z Łososiem",
+    "description": "Łosoś z grilla na mieszanych warzywach",
+    "instructions": "1. Grilluj łososia. 2. Przygotuj zieloną sałatę. 3. Na wierzch połóż łososia i dressing.",
     "meal_types": [
       "lunch",
       "dinner"
@@ -1276,9 +1276,9 @@
     ]
   },
   {
-    "name": "Pasta Primavera",
-    "description": "Pasta with fresh spring vegetables",
-    "instructions": "1. Cook pasta. 2. Sauté vegetables. 3. Toss pasta with vegetables and olive oil.",
+    "name": "Makaron Primavera",
+    "description": "Makaron ze świeżymi wiosennymi warzywami",
+    "instructions": "1. Ugotuj makaron. 2. Podsmaż warzywa. 3. Wymieszaj makaron z warzywami i oliwą z oliwek.",
     "meal_types": [
       "lunch",
       "dinner"
@@ -1326,9 +1326,9 @@
     ]
   },
   {
-    "name": "Bean Burrito",
-    "description": "Black beans and vegetables in a tortilla",
-    "instructions": "1. Warm beans. 2. Warm tortilla. 3. Fill with beans and vegetables. 4. Roll and serve.",
+    "name": "Burrito Fasolowe",
+    "description": "Czarna fasola i warzywa w tortilli",
+    "instructions": "1. Ciepła fasola. 2. Ciepła tortilla. 3. Wypełnij fasolą i warzywami. 4. Zwiń i podawaj.",
     "meal_types": [
       "lunch"
     ],
@@ -1376,9 +1376,9 @@
     ]
   },
   {
-    "name": "Chicken Caesar Wrap",
-    "description": "Grilled chicken Caesar salad in a wrap",
-    "instructions": "1. Grill chicken. 2. Prepare Caesar salad. 3. Wrap in tortilla.",
+    "name": "Wrap z kurczakiem Cezar",
+    "description": "Sałatka Cezar z grillowanym kurczakiem w opakowaniu",
+    "instructions": "1. Grilluj kurczaka. 2. Przygotuj sałatkę Cezar. 3. Zawiń w tortillę.",
     "meal_types": [
       "lunch"
     ],
@@ -1425,9 +1425,9 @@
     ]
   },
   {
-    "name": "Tuna Salad",
-    "description": "Tuna mixed with vegetables and mayonnaise",
-    "instructions": "1. Mix tuna with mayonnaise. 2. Add vegetables. 3. Serve on bread or greens.",
+    "name": "Sałatka z Tuńczyka",
+    "description": "Tuńczyk zmieszany z warzywami i majonezem",
+    "instructions": "1. Wymieszaj tuńczyka z majonezem. 2. Dodaj warzywa. 3. Podawaj na chlebie lub warzywach.",
     "meal_types": [
       "lunch"
     ],
@@ -1474,9 +1474,9 @@
     ]
   },
   {
-    "name": "Greek Salad",
-    "description": "Traditional Greek salad with feta cheese",
-    "instructions": "1. Chop vegetables. 2. Add feta cheese. 3. Dress with olive oil and lemon.",
+    "name": "Sałatka grecka",
+    "description": "Tradycyjna sałatka grecka z serem feta",
+    "instructions": "1. Posiekaj warzywa. 2. Dodaj ser feta. 3. Ubierz się w oliwę z oliwek i cytrynę.",
     "meal_types": [
       "lunch"
     ],
@@ -1524,9 +1524,9 @@
     ]
   },
   {
-    "name": "Chicken Quesadilla",
-    "description": "Grilled chicken and cheese in a tortilla",
-    "instructions": "1. Cook chicken. 2. Fill tortilla with chicken and cheese. 3. Cook until crispy.",
+    "name": "Quesadilla z kurczakiem",
+    "description": "Grillowany kurczak i ser w tortilli",
+    "instructions": "1. Ugotuj kurczaka. 2. Napełnij tortillę kurczakiem i serem. 3. Gotuj, aż będą chrupiące.",
     "meal_types": [
       "lunch"
     ],
@@ -1568,9 +1568,9 @@
     ]
   },
   {
-    "name": "Lentil Soup",
-    "description": "Hearty lentil soup with vegetables",
-    "instructions": "1. Sauté vegetables. 2. Add lentils and broth. 3. Simmer until tender.",
+    "name": "Zupa z soczewicy",
+    "description": "Pożywna zupa z soczewicy z warzywami",
+    "instructions": "1. Podsmaż warzywa. 2. Dodaj soczewicę i bulion. 3. Gotować do miękkości.",
     "meal_types": [
       "lunch",
       "dinner"
@@ -1620,9 +1620,9 @@
     ]
   },
   {
-    "name": "Caprese Salad",
-    "description": "Fresh mozzarella, tomatoes, and basil",
-    "instructions": "1. Slice tomatoes and mozzarella. 2. Arrange with basil. 3. Drizzle with olive oil.",
+    "name": "Sałatka Caprese",
+    "description": "Świeża mozzarella, pomidory i bazylia",
+    "instructions": "1. Pokrój pomidory i mozzarellę w plasterki. 2. Ułóż z bazylią. 3. Skropić oliwą z oliwek.",
     "meal_types": [
       "lunch"
     ],
@@ -1665,9 +1665,9 @@
     ]
   },
   {
-    "name": "Chicken Noodle Soup",
-    "description": "Classic chicken soup with noodles",
-    "instructions": "1. Cook chicken in broth. 2. Add vegetables and noodles. 3. Simmer until done.",
+    "name": "Zupa Z Kurczaka Makaronem",
+    "description": "Klasyczny rosół z makaronem",
+    "instructions": "1. Ugotuj kurczaka w bulionie. 2. Dodaj warzywa i makaron. 3. Gotuj na wolnym ogniu, aż będzie gotowe.",
     "meal_types": [
       "lunch",
       "dinner"
@@ -1715,9 +1715,9 @@
     ]
   },
   {
-    "name": "Hummus and Vegetables",
-    "description": "Fresh hummus served with raw vegetables",
-    "instructions": "1. Make hummus from chickpeas. 2. Cut vegetables. 3. Serve together.",
+    "name": "Hummus i Warzywa",
+    "description": "Świeży hummus podawany z surowymi warzywami",
+    "instructions": "1. Zrób hummus z ciecierzycy. 2. Pokrój warzywa. 3. Podawajcie razem.",
     "meal_types": [
       "lunch"
     ],
@@ -1766,9 +1766,9 @@
     ]
   },
   {
-    "name": "Shrimp Salad",
-    "description": "Grilled shrimp over mixed greens",
-    "instructions": "1. Grill shrimp. 2. Prepare salad. 3. Top with shrimp and dressing.",
+    "name": "Sałatka Z Krewetek",
+    "description": "Grillowane krewetki na mieszanych warzywach",
+    "instructions": "1. Grilluj krewetki. 2. Przygotuj sałatkę. 3. Na wierzch połóż krewetki i sos.",
     "meal_types": [
       "lunch",
       "dinner"
@@ -1817,9 +1817,9 @@
     ]
   },
   {
-    "name": "Grilled Salmon with Vegetables",
-    "description": "Pan-seared salmon with roasted vegetables",
-    "instructions": "1. Season and grill salmon. 2. Roast vegetables. 3. Serve together.",
+    "name": "Łosoś Grillowany Z Warzywami",
+    "description": "Łosoś smażony na patelni z pieczonymi warzywami",
+    "instructions": "1. Doprawić i grillować łososia. 2. Pieczone warzywa. 3. Podawajcie razem.",
     "meal_types": [
       "dinner"
     ],
@@ -1867,9 +1867,9 @@
     ]
   },
   {
-    "name": "Beef Stir Fry",
-    "description": "Beef and vegetables stir-fried with soy sauce",
-    "instructions": "1. Slice beef. 2. Stir-fry with vegetables. 3. Add soy sauce and serve over rice.",
+    "name": "Smażona wołowina",
+    "description": "Wołowina i warzywa smażone z sosem sojowym",
+    "instructions": "1. Pokrój wołowinę. 2. Smażyć z warzywami. 3. Dodaj sos sojowy i podawaj z ryżem.",
     "meal_types": [
       "dinner"
     ],
@@ -1916,9 +1916,9 @@
     ]
   },
   {
-    "name": "Chicken Curry",
-    "description": "Spiced chicken curry with vegetables",
-    "instructions": "1. Cook chicken with spices. 2. Add vegetables and coconut milk. 3. Simmer until done.",
+    "name": "Curry z kurczaka",
+    "description": "Pikantne curry z kurczaka z warzywami",
+    "instructions": "1. Ugotuj kurczaka z przyprawami. 2. Dodaj warzywa i mleko kokosowe. 3. Gotuj na wolnym ogniu, aż będzie gotowe.",
     "meal_types": [
       "dinner"
     ],
@@ -1966,9 +1966,9 @@
     ]
   },
   {
-    "name": "Vegetable Lasagna",
-    "description": "Layered pasta with vegetables and cheese",
-    "instructions": "1. Cook pasta sheets. 2. Layer with vegetables and cheese. 3. Bake until golden.",
+    "name": "Lasagne Warzywna",
+    "description": "Makaron warstwowy z warzywami i serem",
+    "instructions": "1. Ugotuj arkusze makaronu. 2. Ułóż warstwę warzyw i sera. 3. Piec na złoty kolor.",
     "meal_types": [
       "dinner"
     ],
@@ -2015,9 +2015,9 @@
     ]
   },
   {
-    "name": "Pork Tenderloin with Roasted Vegetables",
-    "description": "Herb-crusted pork with seasonal vegetables",
-    "instructions": "1. Season pork. 2. Roast pork and vegetables. 3. Rest and serve.",
+    "name": "Polędwiczka Wieprzowa Z Pieczonymi Warzywami",
+    "description": "Wieprzowina w ziołowej panierce z sezonowymi warzywami",
+    "instructions": "1. Przypraw wieprzowinę. 2. Pieczona wieprzowina i warzywa. 3. Odpocznij i służ.",
     "meal_types": [
       "dinner"
     ],
@@ -2065,9 +2065,9 @@
     ]
   },
   {
-    "name": "Shrimp Scampi",
-    "description": "Garlic shrimp with pasta",
-    "instructions": "1. Cook pasta. 2. Sauté shrimp with garlic. 3. Toss with pasta and serve.",
+    "name": "Krewetki Scampi",
+    "description": "Krewetki czosnkowe z makaronem",
+    "instructions": "1. Ugotuj makaron. 2. Podsmaż krewetki z czosnkiem. 3. Wymieszać z makaronem i podawać.",
     "meal_types": [
       "dinner"
     ],
@@ -2114,9 +2114,9 @@
     ]
   },
   {
-    "name": "Turkey Meatballs",
-    "description": "Herbed turkey meatballs with marinara sauce",
-    "instructions": "1. Mix ground turkey with herbs. 2. Form meatballs. 3. Cook in sauce.",
+    "name": "Klopsiki z Indyka",
+    "description": "Ziołowe klopsiki z indyka z sosem marinara",
+    "instructions": "1. Wymieszaj mielonego indyka z ziołami. 2. Uformuj klopsiki. 3. Gotuj w sosie.",
     "meal_types": [
       "dinner"
     ],
@@ -2163,9 +2163,9 @@
     ]
   },
   {
-    "name": "Vegetable Curry",
-    "description": "Mixed vegetables in curry sauce",
-    "instructions": "1. Sauté vegetables. 2. Add curry spices. 3. Simmer with coconut milk.",
+    "name": "Curry warzywne",
+    "description": "Mieszanka warzyw w sosie curry",
+    "instructions": "1. Podsmaż warzywa. 2. Dodaj przyprawy curry. 3. Zagotować na mleku kokosowym.",
     "meal_types": [
       "dinner"
     ],
@@ -2214,9 +2214,9 @@
     ]
   },
   {
-    "name": "Baked Cod",
-    "description": "Herb-baked cod with vegetables",
-    "instructions": "1. Season cod. 2. Bake with vegetables. 3. Serve hot.",
+    "name": "Pieczony dorsz",
+    "description": "Dorsz pieczony w ziołach z warzywami",
+    "instructions": "1. Dorsz sezonowy. 2. Piec z warzywami. 3. Podawaj gorące.",
     "meal_types": [
       "dinner"
     ],
@@ -2264,9 +2264,9 @@
     ]
   },
   {
-    "name": "Chicken Fajitas",
-    "description": "Spiced chicken and vegetables in tortillas",
-    "instructions": "1. Cook chicken and vegetables. 2. Warm tortillas. 3. Serve with toppings.",
+    "name": "Kurczak Fajitas",
+    "description": "Pikantny kurczak i warzywa w tortillach",
+    "instructions": "1. Ugotuj kurczaka i warzywa. 2. Ciepłe tortille. 3. Podawać z dodatkami.",
     "meal_types": [
       "dinner"
     ],
@@ -2313,9 +2313,9 @@
     ]
   },
   {
-    "name": "Lamb Chops with Mint",
-    "description": "Grilled lamb chops with mint sauce",
-    "instructions": "1. Season lamb. 2. Grill to desired doneness. 3. Serve with mint sauce.",
+    "name": "Kotleciki Jagnięce Z Miętą",
+    "description": "Grillowane kotlety jagnięce z sosem miętowym",
+    "instructions": "1. Przypraw jagnięcinę. 2. Grilluj do pożądanego stopnia wysmażenia. 3. Podawać z sosem miętowym.",
     "meal_types": [
       "dinner"
     ],
@@ -2363,9 +2363,9 @@
     ]
   },
   {
-    "name": "Stuffed Bell Peppers",
-    "description": "Bell peppers stuffed with rice and vegetables",
-    "instructions": "1. Cook rice. 2. Mix with vegetables. 3. Stuff peppers and bake.",
+    "name": "Nadziewane Papryki",
+    "description": "Papryka faszerowana ryżem i warzywami",
+    "instructions": "1. Ugotuj ryż. 2. Wymieszaj z warzywami. 3. Nadziewamy paprykę i pieczemy.",
     "meal_types": [
       "dinner"
     ],
@@ -2412,9 +2412,9 @@
     ]
   },
   {
-    "name": "Tofu Stir Fry",
-    "description": "Crispy tofu with vegetables and rice",
-    "instructions": "1. Pan-fry tofu. 2. Stir-fry vegetables. 3. Serve over rice.",
+    "name": "Smażyć Tofu",
+    "description": "Chrupiące tofu z warzywami i ryżem",
+    "instructions": "1. Smażyć tofu na patelni. 2. Smażyć warzywa. 3. Podawaj z ryżem.",
     "meal_types": [
       "dinner"
     ],
@@ -2463,9 +2463,9 @@
     ]
   },
   {
-    "name": "Chicken Parmesan",
-    "description": "Breaded chicken with marinara and cheese",
-    "instructions": "1. Bread chicken. 2. Bake with sauce and cheese. 3. Serve over pasta.",
+    "name": "Kurczak z parmezanem",
+    "description": "Panierowany kurczak z marinarą i serem",
+    "instructions": "1. Kurczak chlebowy. 2. Piec z sosem i serem. 3. Podawaj z makaronem.",
     "meal_types": [
       "dinner"
     ],
@@ -2512,9 +2512,9 @@
     ]
   },
   {
-    "name": "Ratatouille",
-    "description": "Provençal stewed vegetable dish",
-    "instructions": "1. Slice vegetables. 2. Layer and bake. 3. Serve hot or cold.",
+    "name": "Ratatuj",
+    "description": "Prowansalskie danie z duszonych warzyw",
+    "instructions": "1. Pokrój warzywa. 2. Ułóż warstwami i upiecz. 3. Podawać na gorąco lub na zimno.",
     "meal_types": [
       "dinner"
     ],
@@ -2563,9 +2563,9 @@
     ]
   },
   {
-    "name": "Trail Mix",
-    "description": "Mixed nuts, seeds, and dried fruits",
-    "instructions": "1. Combine nuts and seeds. 2. Add dried fruits. 3. Mix well.",
+    "name": "Mieszanka szlaków",
+    "description": "Mieszanka orzechów, nasion i suszonych owoców",
+    "instructions": "1. Połącz orzechy i nasiona. 2. Dodaj suszone owoce. 3. Dobrze wymieszaj.",
     "meal_types": [
       "snack"
     ],
@@ -2609,9 +2609,9 @@
     ]
   },
   {
-    "name": "Apple with Peanut Butter",
-    "description": "Sliced apple served with peanut butter",
-    "instructions": "1. Slice apple. 2. Serve with peanut butter for dipping.",
+    "name": "Jabłko z Masłem Orzechowym",
+    "description": "Plasterki jabłka podawane z masłem orzechowym",
+    "instructions": "1. Pokrój jabłko. 2. Podawać z masłem orzechowym do maczania.",
     "meal_types": [
       "snack"
     ],
@@ -2645,9 +2645,9 @@
     ]
   },
   {
-    "name": "Greek Yogurt with Berries",
-    "description": "Greek yogurt topped with fresh berries",
-    "instructions": "1. Scoop yogurt into bowl. 2. Top with fresh berries. 3. Optional: drizzle with honey.",
+    "name": "Jogurt Grecki Z Jagodami",
+    "description": "Jogurt grecki z dodatkiem świeżych jagód",
+    "instructions": "1. Do miski włóż jogurt. 2. Posyp świeżymi jagodami. 3. Opcjonalnie: skrop miodem.",
     "meal_types": [
       "snack"
     ],
@@ -2686,9 +2686,9 @@
     ]
   },
   {
-    "name": "Vegetable Sticks with Hummus",
-    "description": "Fresh vegetables with homemade hummus",
-    "instructions": "1. Cut vegetables into sticks. 2. Make hummus. 3. Serve together.",
+    "name": "Paluszki Warzywne Z Hummusem",
+    "description": "Świeże warzywa z domowym hummusem",
+    "instructions": "1. Warzywa pokroić w słupki. 2. Zrób hummus. 3. Podawajcie razem.",
     "meal_types": [
       "snack"
     ],
@@ -2732,9 +2732,9 @@
     ]
   },
   {
-    "name": "Energy Balls",
-    "description": "No-bake energy balls with dates and nuts",
-    "instructions": "1. Blend dates and nuts. 2. Form into balls. 3. Refrigerate.",
+    "name": "Kulki Energii",
+    "description": "Kulki energetyczne bez pieczenia z daktylami i orzechami",
+    "instructions": "1. Zmiksuj daktyle i orzechy. 2. Uformuj kulki. 3. Przechowywać w lodówce.",
     "meal_types": [
       "snack"
     ],
@@ -2778,9 +2778,9 @@
     ]
   },
   {
-    "name": "American Overnight Oats with Oranges and Peanuts",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Mix oats and milk. 2. Stir in honey. 3. Refrigerate overnight. 4. Top with fruit and nuts.",
+    "name": "Amerykańskie nocne płatki owsiane z pomarańczami i orzeszkami ziemnymi",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Wymieszaj płatki owsiane i mleko. 2. Wymieszaj miód. 3. Przechowywać w lodówce przez noc. 4. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -2827,9 +2827,9 @@
     ]
   },
   {
-    "name": "Asian Overnight Oats with Mangoes and Almonds",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Mix oats and milk. 2. Stir in honey. 3. Refrigerate overnight. 4. Top with fruit and nuts.",
+    "name": "Azjatyckie nocne płatki owsiane z mango i migdałami",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Wymieszaj płatki owsiane i mleko. 2. Wymieszaj miód. 3. Przechowywać w lodówce przez noc. 4. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -2876,9 +2876,9 @@
     ]
   },
   {
-    "name": "Asian Overnight Oats with Apples and Chia Seeds",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Mix oats and milk. 2. Stir in honey. 3. Refrigerate overnight. 4. Top with fruit and nuts.",
+    "name": "Azjatyckie płatki owsiane z jabłkami i nasionami Chia",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Wymieszaj płatki owsiane i mleko. 2. Wymieszaj miód. 3. Przechowywać w lodówce przez noc. 4. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -2925,9 +2925,9 @@
     ]
   },
   {
-    "name": "Indian Veggie Egg Scramble with Bell Peppers and Onion",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Sauté vegetables in oil. 2. Add beaten eggs. 3. Cook gently until set. 4. Season and serve.",
+    "name": "Indyjska jajecznica wegetariańska z papryką i cebulą",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Podsmaż warzywa na oleju. 2. Dodaj ubite jajka. 3. Gotuj delikatnie, aż zgęstnieje. 4. Dopraw i podawaj.",
     "meal_types": [
       "breakfast"
     ],
@@ -2981,9 +2981,9 @@
     ]
   },
   {
-    "name": "American Overnight Oats with Mangoes and Walnuts",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Mix oats and milk. 2. Stir in honey. 3. Refrigerate overnight. 4. Top with fruit and nuts.",
+    "name": "Amerykańskie płatki owsiane z mango i orzechami włoskimi",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Wymieszaj płatki owsiane i mleko. 2. Wymieszaj miód. 3. Przechowywać w lodówce przez noc. 4. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -3031,9 +3031,9 @@
     ]
   },
   {
-    "name": "Asian Avocado Toast with Spinach",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Toast bread. 2. Mash avocado with lemon, salt, and pepper. 3. Spread on toast and top with vegetables.",
+    "name": "Azjatyckie tosty z awokado i szpinakiem",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Chleb tostowy. 2. Rozgnieć awokado z cytryną, solą i pieprzem. 3. Posmaruj tostami i posyp warzywami.",
     "meal_types": [
       "breakfast"
     ],
@@ -3086,9 +3086,9 @@
     ]
   },
   {
-    "name": "Mexican Breakfast Quinoa with Apples and Walnuts",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Simmer quinoa in milk until tender. 2. Stir in cinnamon and honey. 3. Top with fruit and nuts.",
+    "name": "Meksykańska quinoa śniadaniowa z jabłkami i orzechami włoskimi",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Komosę gotujemy w mleku do miękkości. 2. Wymieszaj cynamon i miód. 3. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -3141,9 +3141,9 @@
     ]
   },
   {
-    "name": "American Veggie Egg Scramble with Bell Peppers and Onion",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Sauté vegetables in oil. 2. Add beaten eggs. 3. Cook gently until set. 4. Season and serve.",
+    "name": "Amerykańska jajecznica wegetariańska z papryką i cebulą",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Podsmaż warzywa na oleju. 2. Dodaj ubite jajka. 3. Gotuj delikatnie, aż zgęstnieje. 4. Dopraw i podawaj.",
     "meal_types": [
       "breakfast"
     ],
@@ -3197,9 +3197,9 @@
     ]
   },
   {
-    "name": "Mexican Yogurt Bowl with Apples and Mangoes",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Add yogurt to a bowl. 2. Top with fruit and nuts. 3. Drizzle with honey.",
+    "name": "Meksykańska miska jogurtowa z jabłkami i mango",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Do miski dodaj jogurt. 2. Posyp owocami i orzechami. 3. Skropić miodem.",
     "meal_types": [
       "breakfast"
     ],
@@ -3248,9 +3248,9 @@
     ]
   },
   {
-    "name": "Asian Veggie Egg Scramble with Kale and Tomatoes",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Sauté vegetables in oil. 2. Add beaten eggs. 3. Cook gently until set. 4. Season and serve.",
+    "name": "Azjatycka jajecznica wegetariańska z jarmużem i pomidorami",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Podsmaż warzywa na oleju. 2. Dodaj ubite jajka. 3. Gotuj delikatnie, aż zgęstnieje. 4. Dopraw i podawaj.",
     "meal_types": [
       "breakfast"
     ],
@@ -3304,9 +3304,9 @@
     ]
   },
   {
-    "name": "Mediterranean Breakfast Quinoa with Kiwi and Almonds",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Simmer quinoa in milk until tender. 2. Stir in cinnamon and honey. 3. Top with fruit and nuts.",
+    "name": "Śródziemnomorska Quinoa śniadaniowa z kiwi i migdałami",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Komosę gotujemy w mleku do miękkości. 2. Wymieszaj cynamon i miód. 3. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -3359,9 +3359,9 @@
     ]
   },
   {
-    "name": "Asian Veggie Egg Scramble with Kale and Onion",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Sauté vegetables in oil. 2. Add beaten eggs. 3. Cook gently until set. 4. Season and serve.",
+    "name": "Azjatycka jajecznica wegetariańska z jarmużem i cebulą",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Podsmaż warzywa na oleju. 2. Dodaj ubite jajka. 3. Gotuj delikatnie, aż zgęstnieje. 4. Dopraw i podawaj.",
     "meal_types": [
       "breakfast"
     ],
@@ -3415,9 +3415,9 @@
     ]
   },
   {
-    "name": "Mediterranean Avocado Toast with Onion",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Toast bread. 2. Mash avocado with lemon, salt, and pepper. 3. Spread on toast and top with vegetables.",
+    "name": "Śródziemnomorskie tosty z awokado i cebulą",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Chleb tostowy. 2. Rozgnieć awokado z cytryną, solą i pieprzem. 3. Posmaruj tostami i posyp warzywami.",
     "meal_types": [
       "breakfast"
     ],
@@ -3470,9 +3470,9 @@
     ]
   },
   {
-    "name": "Indian Yogurt Bowl with Mangoes and Oranges",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Add yogurt to a bowl. 2. Top with fruit and nuts. 3. Drizzle with honey.",
+    "name": "Indyjska miska jogurtowa z mango i pomarańczami",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Do miski dodaj jogurt. 2. Posyp owocami i orzechami. 3. Skropić miodem.",
     "meal_types": [
       "breakfast"
     ],
@@ -3521,9 +3521,9 @@
     ]
   },
   {
-    "name": "American Overnight Oats with Strawberries and Cashews",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Mix oats and milk. 2. Stir in honey. 3. Refrigerate overnight. 4. Top with fruit and nuts.",
+    "name": "Amerykańskie nocne płatki owsiane z truskawkami i orzechami nerkowca",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Wymieszaj płatki owsiane i mleko. 2. Wymieszaj miód. 3. Przechowywać w lodówce przez noc. 4. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -3571,9 +3571,9 @@
     ]
   },
   {
-    "name": "French Avocado Toast with Mushrooms",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Toast bread. 2. Mash avocado with lemon, salt, and pepper. 3. Spread on toast and top with vegetables.",
+    "name": "Francuskie Tosty Z Awokado Z Pieczarkami",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Chleb tostowy. 2. Rozgnieć awokado z cytryną, solą i pieprzem. 3. Posmaruj tostami i posyp warzywami.",
     "meal_types": [
       "breakfast"
     ],
@@ -3626,9 +3626,9 @@
     ]
   },
   {
-    "name": "Indian Overnight Oats with Oranges and Sunflower Seeds",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Mix oats and milk. 2. Stir in honey. 3. Refrigerate overnight. 4. Top with fruit and nuts.",
+    "name": "Indyjskie płatki owsiane z pomarańczami i nasionami słonecznika",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Wymieszaj płatki owsiane i mleko. 2. Wymieszaj miód. 3. Przechowywać w lodówce przez noc. 4. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -3675,9 +3675,9 @@
     ]
   },
   {
-    "name": "Asian Yogurt Bowl with Bananas and Kiwi",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Add yogurt to a bowl. 2. Top with fruit and nuts. 3. Drizzle with honey.",
+    "name": "Azjatycka miska jogurtowa z bananami i kiwi",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Do miski dodaj jogurt. 2. Posyp owocami i orzechami. 3. Skropić miodem.",
     "meal_types": [
       "breakfast"
     ],
@@ -3726,9 +3726,9 @@
     ]
   },
   {
-    "name": "Mediterranean Breakfast Quinoa with Bananas and Sunflower Seeds",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Simmer quinoa in milk until tender. 2. Stir in cinnamon and honey. 3. Top with fruit and nuts.",
+    "name": "Śródziemnomorska Quinoa śniadaniowa z bananami i nasionami słonecznika",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Komosę gotujemy w mleku do miękkości. 2. Wymieszaj cynamon i miód. 3. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -3781,9 +3781,9 @@
     ]
   },
   {
-    "name": "American Avocado Toast with Spinach",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Toast bread. 2. Mash avocado with lemon, salt, and pepper. 3. Spread on toast and top with vegetables.",
+    "name": "Amerykańskie tosty z awokado i szpinakiem",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Chleb tostowy. 2. Rozgnieć awokado z cytryną, solą i pieprzem. 3. Posmaruj tostami i posyp warzywami.",
     "meal_types": [
       "breakfast"
     ],
@@ -3836,9 +3836,9 @@
     ]
   },
   {
-    "name": "American Breakfast Quinoa with Strawberries and Flax Seeds",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Simmer quinoa in milk until tender. 2. Stir in cinnamon and honey. 3. Top with fruit and nuts.",
+    "name": "Amerykańska Quinoa śniadaniowa z truskawkami i nasionami lnu",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Komosę gotujemy w mleku do miękkości. 2. Wymieszaj cynamon i miód. 3. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -3891,9 +3891,9 @@
     ]
   },
   {
-    "name": "Asian Avocado Toast with Tomatoes",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Toast bread. 2. Mash avocado with lemon, salt, and pepper. 3. Spread on toast and top with vegetables.",
+    "name": "Azjatyckie tosty z awokado i pomidorami",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Chleb tostowy. 2. Rozgnieć awokado z cytryną, solą i pieprzem. 3. Posmaruj tostami i posyp warzywami.",
     "meal_types": [
       "breakfast"
     ],
@@ -3946,9 +3946,9 @@
     ]
   },
   {
-    "name": "Indian Breakfast Quinoa with Apples and Pumpkin Seeds",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Simmer quinoa in milk until tender. 2. Stir in cinnamon and honey. 3. Top with fruit and nuts.",
+    "name": "Indyjska Quinoa śniadaniowa z jabłkami i pestkami dyni",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Komosę gotujemy w mleku do miękkości. 2. Wymieszaj cynamon i miód. 3. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -4002,9 +4002,9 @@
     ]
   },
   {
-    "name": "American Avocado Toast with Tomatoes",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Toast bread. 2. Mash avocado with lemon, salt, and pepper. 3. Spread on toast and top with vegetables.",
+    "name": "Amerykańskie Tosty Z Awokado Z Pomidorami",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Chleb tostowy. 2. Rozgnieć awokado z cytryną, solą i pieprzem. 3. Posmaruj tostami i posyp warzywami.",
     "meal_types": [
       "breakfast"
     ],
@@ -4057,9 +4057,9 @@
     ]
   },
   {
-    "name": "Mediterranean Breakfast Quinoa with Apples and Almonds",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Simmer quinoa in milk until tender. 2. Stir in cinnamon and honey. 3. Top with fruit and nuts.",
+    "name": "Śródziemnomorska Quinoa śniadaniowa z jabłkami i migdałami",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Komosę gotujemy w mleku do miękkości. 2. Wymieszaj cynamon i miód. 3. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -4112,9 +4112,9 @@
     ]
   },
   {
-    "name": "Mexican Overnight Oats with Strawberries and Peanuts",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Mix oats and milk. 2. Stir in honey. 3. Refrigerate overnight. 4. Top with fruit and nuts.",
+    "name": "Meksykańskie nocne płatki owsiane z truskawkami i orzeszkami ziemnymi",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Wymieszaj płatki owsiane i mleko. 2. Wymieszaj miód. 3. Przechowywać w lodówce przez noc. 4. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -4162,9 +4162,9 @@
     ]
   },
   {
-    "name": "Asian Breakfast Quinoa with Pineapple and Peanuts",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Simmer quinoa in milk until tender. 2. Stir in cinnamon and honey. 3. Top with fruit and nuts.",
+    "name": "Azjatycka Quinoa śniadaniowa z ananasem i orzeszkami ziemnymi",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Komosę gotujemy w mleku do miękkości. 2. Wymieszaj cynamon i miód. 3. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -4218,9 +4218,9 @@
     ]
   },
   {
-    "name": "Mexican Avocado Toast with Bell Peppers",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Toast bread. 2. Mash avocado with lemon, salt, and pepper. 3. Spread on toast and top with vegetables.",
+    "name": "Meksykańskie tosty z awokado i papryką",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Chleb tostowy. 2. Rozgnieć awokado z cytryną, solą i pieprzem. 3. Posmaruj tostami i posyp warzywami.",
     "meal_types": [
       "breakfast"
     ],
@@ -4273,9 +4273,9 @@
     ]
   },
   {
-    "name": "American Overnight Oats with Mangoes and Sunflower Seeds",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Mix oats and milk. 2. Stir in honey. 3. Refrigerate overnight. 4. Top with fruit and nuts.",
+    "name": "Amerykańskie płatki owsiane z mango i nasionami słonecznika",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Wymieszaj płatki owsiane i mleko. 2. Wymieszaj miód. 3. Przechowywać w lodówce przez noc. 4. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -4322,9 +4322,9 @@
     ]
   },
   {
-    "name": "French Veggie Egg Scramble with Tomatoes and Bell Peppers",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Sauté vegetables in oil. 2. Add beaten eggs. 3. Cook gently until set. 4. Season and serve.",
+    "name": "Francuska jajecznica wegetariańska z pomidorami i papryką",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Podsmaż warzywa na oleju. 2. Dodaj ubite jajka. 3. Gotuj delikatnie, aż zgęstnieje. 4. Dopraw i podawaj.",
     "meal_types": [
       "breakfast"
     ],
@@ -4378,9 +4378,9 @@
     ]
   },
   {
-    "name": "American Breakfast Quinoa with Blueberries and Almonds",
-    "description": "A quick, balanced breakfast with mixed flavors.",
-    "instructions": "1. Simmer quinoa in milk until tender. 2. Stir in cinnamon and honey. 3. Top with fruit and nuts.",
+    "name": "Amerykańska Quinoa śniadaniowa z jagodami i migdałami",
+    "description": "Szybkie, zbilansowane śniadanie z mieszanką smaków.",
+    "instructions": "1. Komosę gotujemy w mleku do miękkości. 2. Wymieszaj cynamon i miód. 3. Posyp owocami i orzechami.",
     "meal_types": [
       "breakfast"
     ],
@@ -4433,9 +4433,9 @@
     ]
   },
   {
-    "name": "Middle Eastern Cod Fillet Salad with Bell Peppers and Carrots",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Chop vegetables. 3. Toss with olive oil and lemon juice.",
+    "name": "Sałatka z filetu z dorsza na Bliskim Wschodzie, z papryką i marchewką",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Posiekaj warzywa. 3. Wymieszaj z oliwą z oliwek i sokiem z cytryny.",
     "meal_types": [
       "lunch"
     ],
@@ -4488,9 +4488,9 @@
     ]
   },
   {
-    "name": "Middle Eastern Cod Fillet Wrap with Mushrooms and Cucumber",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Warm tortilla. 3. Add fillings and roll into a wrap.",
+    "name": "Bliskowschodni wrap z filetem z dorsza z grzybami i ogórkiem",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Ciepła tortilla. 3. Dodać nadzienie i zawinąć w rulon.",
     "meal_types": [
       "lunch"
     ],
@@ -4538,9 +4538,9 @@
     ]
   },
   {
-    "name": "American Chicken Breast Wrap with Tomatoes and Broccoli",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Warm tortilla. 3. Add fillings and roll into a wrap.",
+    "name": "Amerykański wrap z piersią kurczaka z pomidorami i brokułami",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Ciepła tortilla. 3. Dodać nadzienie i zawinąć w rulon.",
     "meal_types": [
       "lunch"
     ],
@@ -4587,9 +4587,9 @@
     ]
   },
   {
-    "name": "Mediterranean Turkey Breast Salad with Cucumber and Zucchini",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Chop vegetables. 3. Toss with olive oil and lemon juice.",
+    "name": "Sałatka Śródziemnomorska z Piersi Indyka Z Ogórkiem I Cukinią",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Posiekaj warzywa. 3. Wymieszaj z oliwą z oliwek i sokiem z cytryny.",
     "meal_types": [
       "lunch"
     ],
@@ -4641,9 +4641,9 @@
     ]
   },
   {
-    "name": "American Cod Fillet Grain Bowl with Broccoli and Bell Peppers",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook grain. 2. Cook protein and vegetables. 3. Assemble bowl and drizzle with dressing.",
+    "name": "Miska z filetem z dorsza amerykańskiego z brokułami i papryką",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Ugotuj ziarno. 2. Ugotuj białko i warzywa. 3. Złożyć miskę i skropić dressingiem.",
     "meal_types": [
       "lunch"
     ],
@@ -4696,9 +4696,9 @@
     ]
   },
   {
-    "name": "Asian Salmon Fillet Vegetable Soup with Cucumber and Tomatoes",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Sauté onion and vegetables. 2. Add broth and protein. 3. Simmer until tender and serve.",
+    "name": "Zupa azjatycka z filetem z łososia z ogórkiem i pomidorami",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Podsmaż cebulę i warzywa. 2. Dodaj bulion i białko. 3. Gotować do miękkości i podawać.",
     "meal_types": [
       "lunch"
     ],
@@ -4751,9 +4751,9 @@
     ]
   },
   {
-    "name": "Asian Salmon Fillet Salad with Onion and Bell Peppers",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Chop vegetables. 3. Toss with olive oil and lemon juice.",
+    "name": "Sałatka z filetem z łososia azjatyckiego z cebulą i papryką",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Posiekaj warzywa. 3. Wymieszaj z oliwą z oliwek i sokiem z cytryny.",
     "meal_types": [
       "lunch"
     ],
@@ -4806,9 +4806,9 @@
     ]
   },
   {
-    "name": "Asian Shrimp Grain Bowl with Cucumber and Bell Peppers",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook grain. 2. Cook protein and vegetables. 3. Assemble bowl and drizzle with dressing.",
+    "name": "Azjatycka miska z krewetkami zbożowymi z ogórkiem i papryką",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Ugotuj ziarno. 2. Ugotuj białko i warzywa. 3. Złożyć miskę i skropić dressingiem.",
     "meal_types": [
       "lunch"
     ],
@@ -4861,9 +4861,9 @@
     ]
   },
   {
-    "name": "Asian Tempeh Wrap with Broccoli and Cucumber",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Warm tortilla. 3. Add fillings and roll into a wrap.",
+    "name": "Azjatycki Wrap Tempeh Z Brokułami I Ogórkiem",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Ciepła tortilla. 3. Dodać nadzienie i zawinąć w rulon.",
     "meal_types": [
       "lunch"
     ],
@@ -4912,9 +4912,9 @@
     ]
   },
   {
-    "name": "American Cod Fillet Grain Bowl with Carrots and Tomatoes",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook grain. 2. Cook protein and vegetables. 3. Assemble bowl and drizzle with dressing.",
+    "name": "Miska z filetem z dorsza amerykańskiego z marchewką i pomidorami",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Ugotuj ziarno. 2. Ugotuj białko i warzywa. 3. Złożyć miskę i skropić dressingiem.",
     "meal_types": [
       "lunch"
     ],
@@ -4967,9 +4967,9 @@
     ]
   },
   {
-    "name": "Middle Eastern Chicken Breast Vegetable Soup with Cucumber and Tomatoes",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Sauté onion and vegetables. 2. Add broth and protein. 3. Simmer until tender and serve.",
+    "name": "Bliskowschodnia zupa jarzynowa z piersi kurczaka z ogórkiem i pomidorami",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Podsmaż cebulę i warzywa. 2. Dodaj bulion i białko. 3. Gotować do miękkości i podawać.",
     "meal_types": [
       "lunch"
     ],
@@ -5021,9 +5021,9 @@
     ]
   },
   {
-    "name": "Mexican Tofu Vegetable Soup with Tomatoes and Onion",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Sauté onion and vegetables. 2. Add broth and protein. 3. Simmer until tender and serve.",
+    "name": "Meksykańska Zupa Jarzynowa Tofu Z Pomidorami i Cebulą",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Podsmaż cebulę i warzywa. 2. Dodaj bulion i białko. 3. Gotować do miękkości i podawać.",
     "meal_types": [
       "lunch"
     ],
@@ -5077,9 +5077,9 @@
     ]
   },
   {
-    "name": "Mediterranean Cod Fillet Wrap with Bell Peppers and Cucumber",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Warm tortilla. 3. Add fillings and roll into a wrap.",
+    "name": "Śródziemnomorski wrap z filetem z dorsza z papryką i ogórkiem",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Ciepła tortilla. 3. Dodać nadzienie i zawinąć w rulon.",
     "meal_types": [
       "lunch"
     ],
@@ -5127,9 +5127,9 @@
     ]
   },
   {
-    "name": "Indian Tempeh Vegetable Soup with Carrots and Cucumber",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Sauté onion and vegetables. 2. Add broth and protein. 3. Simmer until tender and serve.",
+    "name": "Indyjska Zupa Jarzynowa Tempeh Z Marchewką i Ogórkiem",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Podsmaż cebulę i warzywa. 2. Dodaj bulion i białko. 3. Gotować do miękkości i podawać.",
     "meal_types": [
       "lunch"
     ],
@@ -5183,9 +5183,9 @@
     ]
   },
   {
-    "name": "Middle Eastern Tempeh Salad with Broccoli and Bell Peppers",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Chop vegetables. 3. Toss with olive oil and lemon juice.",
+    "name": "Bliskowschodnia sałatka tempeh z brokułami i papryką",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Posiekaj warzywa. 3. Wymieszaj z oliwą z oliwek i sokiem z cytryny.",
     "meal_types": [
       "lunch"
     ],
@@ -5239,9 +5239,9 @@
     ]
   },
   {
-    "name": "French Shrimp Wrap with Cucumber and Mushrooms",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Warm tortilla. 3. Add fillings and roll into a wrap.",
+    "name": "Francuski Wrap Krewetkowy Z Ogórkiem I Pieczarkami",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Ciepła tortilla. 3. Dodać nadzienie i zawinąć w rulon.",
     "meal_types": [
       "lunch"
     ],
@@ -5289,9 +5289,9 @@
     ]
   },
   {
-    "name": "Indian Turkey Breast Grain Bowl with Bell Peppers and Broccoli",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook grain. 2. Cook protein and vegetables. 3. Assemble bowl and drizzle with dressing.",
+    "name": "Indyjska miska z piersi indyka z papryką i brokułami",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Ugotuj ziarno. 2. Ugotuj białko i warzywa. 3. Złożyć miskę i skropić dressingiem.",
     "meal_types": [
       "lunch"
     ],
@@ -5343,9 +5343,9 @@
     ]
   },
   {
-    "name": "Indian Turkey Breast Vegetable Soup with Zucchini and Carrots",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Sauté onion and vegetables. 2. Add broth and protein. 3. Simmer until tender and serve.",
+    "name": "Indyjska zupa jarzynowa z piersi indyka z cukinią i marchewką",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Podsmaż cebulę i warzywa. 2. Dodaj bulion i białko. 3. Gotować do miękkości i podawać.",
     "meal_types": [
       "lunch"
     ],
@@ -5397,9 +5397,9 @@
     ]
   },
   {
-    "name": "Italian Cod Fillet Wrap with Cucumber and Zucchini",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Warm tortilla. 3. Add fillings and roll into a wrap.",
+    "name": "Włoski wrap z filetem z dorsza z ogórkiem i cukinią",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Ciepła tortilla. 3. Dodać nadzienie i zawinąć w rulon.",
     "meal_types": [
       "lunch"
     ],
@@ -5447,9 +5447,9 @@
     ]
   },
   {
-    "name": "Asian Cod Fillet Wrap with Broccoli and Onion",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Warm tortilla. 3. Add fillings and roll into a wrap.",
+    "name": "Azjatycki wrap z filetem z dorsza z brokułami i cebulą",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Ciepła tortilla. 3. Dodać nadzienie i zawinąć w rulon.",
     "meal_types": [
       "lunch"
     ],
@@ -5497,9 +5497,9 @@
     ]
   },
   {
-    "name": "French Shrimp Salad with Tomatoes and Onion",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Chop vegetables. 3. Toss with olive oil and lemon juice.",
+    "name": "Francuska Sałatka Z Krewetek Z Pomidorami I Cebulą",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Posiekaj warzywa. 3. Wymieszaj z oliwą z oliwek i sokiem z cytryny.",
     "meal_types": [
       "lunch"
     ],
@@ -5552,9 +5552,9 @@
     ]
   },
   {
-    "name": "Indian Chickpeas Vegetable Soup with Mushrooms and Broccoli",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Sauté onion and vegetables. 2. Add broth and protein. 3. Simmer until tender and serve.",
+    "name": "Indyjska Zupa Jarzynowa Z Ciecierzycy Z Grzybami I Brokułami",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Podsmaż cebulę i warzywa. 2. Dodaj bulion i białko. 3. Gotować do miękkości i podawać.",
     "meal_types": [
       "lunch"
     ],
@@ -5606,9 +5606,9 @@
     ]
   },
   {
-    "name": "Mexican Shrimp Grain Bowl with Broccoli and Tomatoes",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook grain. 2. Cook protein and vegetables. 3. Assemble bowl and drizzle with dressing.",
+    "name": "Meksykańska miska z krewetkami, brokułami i pomidorami",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Ugotuj ziarno. 2. Ugotuj białko i warzywa. 3. Złożyć miskę i skropić dressingiem.",
     "meal_types": [
       "lunch"
     ],
@@ -5661,9 +5661,9 @@
     ]
   },
   {
-    "name": "American Tempeh Grain Bowl with Cucumber and Carrots",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook grain. 2. Cook protein and vegetables. 3. Assemble bowl and drizzle with dressing.",
+    "name": "Amerykańska miska zbożowa Tempeh z ogórkiem i marchewką",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Ugotuj ziarno. 2. Ugotuj białko i warzywa. 3. Złożyć miskę i skropić dressingiem.",
     "meal_types": [
       "lunch"
     ],
@@ -5717,9 +5717,9 @@
     ]
   },
   {
-    "name": "Middle Eastern Tempeh Vegetable Soup with Bell Peppers and Zucchini",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Sauté onion and vegetables. 2. Add broth and protein. 3. Simmer until tender and serve.",
+    "name": "Bliskowschodnia zupa jarzynowa Tempeh z papryką i cukinią",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Podsmaż cebulę i warzywa. 2. Dodaj bulion i białko. 3. Gotować do miękkości i podawać.",
     "meal_types": [
       "lunch"
     ],
@@ -5773,9 +5773,9 @@
     ]
   },
   {
-    "name": "Mexican Chicken Breast Vegetable Soup with Onion and Mushrooms",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Sauté onion and vegetables. 2. Add broth and protein. 3. Simmer until tender and serve.",
+    "name": "Meksykańska Zupa Jarzynowa Z Piersi Kurczaka Z Cebulą I Pieczarkami",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Podsmaż cebulę i warzywa. 2. Dodaj bulion i białko. 3. Gotować do miękkości i podawać.",
     "meal_types": [
       "lunch"
     ],
@@ -5827,9 +5827,9 @@
     ]
   },
   {
-    "name": "Indian Cod Fillet Vegetable Soup with Mushrooms and Cucumber",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Sauté onion and vegetables. 2. Add broth and protein. 3. Simmer until tender and serve.",
+    "name": "Indyjska zupa jarzynowa z filetem z dorsza z grzybami i ogórkiem",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Podsmaż cebulę i warzywa. 2. Dodaj bulion i białko. 3. Gotować do miękkości i podawać.",
     "meal_types": [
       "lunch"
     ],
@@ -5882,9 +5882,9 @@
     ]
   },
   {
-    "name": "Asian Tempeh Vegetable Soup with Carrots and Onion",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Sauté onion and vegetables. 2. Add broth and protein. 3. Simmer until tender and serve.",
+    "name": "Azjatycka zupa jarzynowa Tempeh z marchewką i cebulą",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Podsmaż cebulę i warzywa. 2. Dodaj bulion i białko. 3. Gotować do miękkości i podawać.",
     "meal_types": [
       "lunch"
     ],
@@ -5938,9 +5938,9 @@
     ]
   },
   {
-    "name": "Mediterranean Tofu Salad with Zucchini and Broccoli",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Chop vegetables. 3. Toss with olive oil and lemon juice.",
+    "name": "Śródziemnomorska Sałatka Tofu Z Cukinią I Brokułami",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Posiekaj warzywa. 3. Wymieszaj z oliwą z oliwek i sokiem z cytryny.",
     "meal_types": [
       "lunch"
     ],
@@ -5994,9 +5994,9 @@
     ]
   },
   {
-    "name": "Indian Cod Fillet Vegetable Soup with Tomatoes and Bell Peppers",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Sauté onion and vegetables. 2. Add broth and protein. 3. Simmer until tender and serve.",
+    "name": "Indyjska zupa jarzynowa z filetem z dorsza z pomidorami i papryką",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Podsmaż cebulę i warzywa. 2. Dodaj bulion i białko. 3. Gotować do miękkości i podawać.",
     "meal_types": [
       "lunch"
     ],
@@ -6049,9 +6049,9 @@
     ]
   },
   {
-    "name": "French Chicken Breast Vegetable Soup with Broccoli and Bell Peppers",
-    "description": "A satisfying midday meal with mixed cuisines.",
-    "instructions": "1. Sauté onion and vegetables. 2. Add broth and protein. 3. Simmer until tender and serve.",
+    "name": "Francuska Zupa Jarzynowa Z Piersi Kurczaka Z Brokułami I Papryką",
+    "description": "Satysfakcjonujący posiłek południowy z kuchnią mieszaną.",
+    "instructions": "1. Podsmaż cebulę i warzywa. 2. Dodaj bulion i białko. 3. Gotować do miękkości i podawać.",
     "meal_types": [
       "lunch"
     ],
@@ -6103,9 +6103,9 @@
     ]
   },
   {
-    "name": "Italian Light Shrimp Stir Fry with Spinach and Mushrooms",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook base. 2. Stir-fry vegetables and protein in oil. 3. Add sauce. 4. Serve over base.",
+    "name": "Włoskie lekkie krewetki Stir Fry ze szpinakiem i grzybami",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Baza kuchenna. 2. Smażyć warzywa i białko na oleju. 3. Dodaj sos. 4. Podawać na bazie.",
     "meal_types": [
       "dinner"
     ],
@@ -6158,9 +6158,9 @@
     ]
   },
   {
-    "name": "Japanese Light Chicken Breast Salad with Bell Peppers and Spinach",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Chop vegetables. 3. Toss with olive oil and lemon. 4. Serve.",
+    "name": "Japońska lekka sałatka z piersi kurczaka z papryką i szpinakiem",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Posiekaj warzywa. 3. Wymieszaj z oliwą z oliwek i cytryną. 4. Podawaj.",
     "meal_types": [
       "dinner"
     ],
@@ -6213,9 +6213,9 @@
     ]
   },
   {
-    "name": "American Light Chickpeas Stir Fry with Carrots and Bok Choy",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook base. 2. Stir-fry vegetables and protein in oil. 3. Add sauce. 4. Serve over base.",
+    "name": "Amerykańska lekka ciecierzyca smażona z marchewką i bok choy",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Baza kuchenna. 2. Smażyć warzywa i białko na oleju. 3. Dodaj sos. 4. Podawać na bazie.",
     "meal_types": [
       "dinner"
     ],
@@ -6267,9 +6267,9 @@
     ]
   },
   {
-    "name": "French Light Tofu Stir Fry with Cauliflower and Broccoli",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook base. 2. Stir-fry vegetables and protein in oil. 3. Add sauce. 4. Serve over base.",
+    "name": "Francuskie lekkie smażone tofu z kalafiorem i brokułami",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Baza kuchenna. 2. Smażyć warzywa i białko na oleju. 3. Dodaj sos. 4. Podawać na bazie.",
     "meal_types": [
       "dinner"
     ],
@@ -6324,9 +6324,9 @@
     ]
   },
   {
-    "name": "Italian Light Chicken Breast Salad with Zucchini and Bok Choy",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Chop vegetables. 3. Toss with olive oil and lemon. 4. Serve.",
+    "name": "Włoska lekka sałatka z piersi kurczaka z cukinią i bok choy",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Posiekaj warzywa. 3. Wymieszaj z oliwą z oliwek i cytryną. 4. Podawaj.",
     "meal_types": [
       "dinner"
     ],
@@ -6378,9 +6378,9 @@
     ]
   },
   {
-    "name": "Asian Light Tempeh Stir Fry with Bok Choy and Cauliflower",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook base. 2. Stir-fry vegetables and protein in oil. 3. Add sauce. 4. Serve over base.",
+    "name": "Azjatycka lekka tempeh smażona z Bok Choy i kalafiorem",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Baza kuchenna. 2. Smażyć warzywa i białko na oleju. 3. Dodaj sos. 4. Podawać na bazie.",
     "meal_types": [
       "dinner"
     ],
@@ -6434,9 +6434,9 @@
     ]
   },
   {
-    "name": "French Light Broth Bowl with Shrimp, Bok Choy, and Carrots",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Bring broth to a simmer with ginger and soy sauce. 2. Add vegetables and protein. 3. Simmer briefly and serve.",
+    "name": "Miska na lekki bulion francuski z krewetkami, bok choy i marchewką",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Zagotuj bulion z imbirem i sosem sojowym. 2. Dodaj warzywa i białko. 3. Chwilę dusić i podawać.",
     "meal_types": [
       "dinner"
     ],
@@ -6489,9 +6489,9 @@
     ]
   },
   {
-    "name": "Mediterranean Light Broth Bowl with Chicken Breast, Carrots, and Spinach",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Bring broth to a simmer with ginger and soy sauce. 2. Add vegetables and protein. 3. Simmer briefly and serve.",
+    "name": "Lekki bulion śródziemnomorski z piersią kurczaka, marchewką i szpinakiem",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Zagotuj bulion z imbirem i sosem sojowym. 2. Dodaj warzywa i białko. 3. Chwilę dusić i podawać.",
     "meal_types": [
       "dinner"
     ],
@@ -6543,9 +6543,9 @@
     ]
   },
   {
-    "name": "French Light Tofu Stir Fry with Bell Peppers and Zucchini",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook base. 2. Stir-fry vegetables and protein in oil. 3. Add sauce. 4. Serve over base.",
+    "name": "Francuskie lekkie smażone tofu z papryką i cukinią",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Baza kuchenna. 2. Smażyć warzywa i białko na oleju. 3. Dodaj sos. 4. Podawać na bazie.",
     "meal_types": [
       "dinner"
     ],
@@ -6599,9 +6599,9 @@
     ]
   },
   {
-    "name": "Thai Light Greek Yogurt Stir Fry with Bell Peppers and Cauliflower",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook base. 2. Stir-fry vegetables and protein in oil. 3. Add sauce. 4. Serve over base.",
+    "name": "Tajski lekki jogurt grecki smażony z papryką i kalafiorem",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Baza kuchenna. 2. Smażyć warzywa i białko na oleju. 3. Dodaj sos. 4. Podawać na bazie.",
     "meal_types": [
       "dinner"
     ],
@@ -6654,9 +6654,9 @@
     ]
   },
   {
-    "name": "Japanese Light Broth Bowl with Chickpeas, Carrots, and Broccoli",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Bring broth to a simmer with ginger and soy sauce. 2. Add vegetables and protein. 3. Simmer briefly and serve.",
+    "name": "Japońska miska na lekki rosół z ciecierzycą, marchewką i brokułami",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Zagotuj bulion z imbirem i sosem sojowym. 2. Dodaj warzywa i białko. 3. Chwilę dusić i podawać.",
     "meal_types": [
       "dinner"
     ],
@@ -6708,9 +6708,9 @@
     ]
   },
   {
-    "name": "Asian Light Salmon Fillet Stir Fry with Spinach and Carrots",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook base. 2. Stir-fry vegetables and protein in oil. 3. Add sauce. 4. Serve over base.",
+    "name": "Azjatycki lekki filet z łososia smażony ze szpinakiem i marchewką",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Baza kuchenna. 2. Smażyć warzywa i białko na oleju. 3. Dodaj sos. 4. Podawać na bazie.",
     "meal_types": [
       "dinner"
     ],
@@ -6763,9 +6763,9 @@
     ]
   },
   {
-    "name": "Italian Light Broth Bowl with Greek Yogurt, Cauliflower, and Mushrooms",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Bring broth to a simmer with ginger and soy sauce. 2. Add vegetables and protein. 3. Simmer briefly and serve.",
+    "name": "Włoski lekki bulion z jogurtem greckim, kalafiorem i grzybami",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Zagotuj bulion z imbirem i sosem sojowym. 2. Dodaj warzywa i białko. 3. Chwilę dusić i podawać.",
     "meal_types": [
       "dinner"
     ],
@@ -6819,9 +6819,9 @@
     ]
   },
   {
-    "name": "Indian Light Cod Fillet Stir Fry with Bell Peppers and Carrots",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook base. 2. Stir-fry vegetables and protein in oil. 3. Add sauce. 4. Serve over base.",
+    "name": "Indyjski lekki filet z dorsza z papryką i marchewką",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Baza kuchenna. 2. Smażyć warzywa i białko na oleju. 3. Dodaj sos. 4. Podawać na bazie.",
     "meal_types": [
       "dinner"
     ],
@@ -6873,9 +6873,9 @@
     ]
   },
   {
-    "name": "Italian Light Tofu Stir Fry with Zucchini and Bok Choy",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook base. 2. Stir-fry vegetables and protein in oil. 3. Add sauce. 4. Serve over base.",
+    "name": "Włoskie lekkie smażone tofu z cukinią i bok choy",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Baza kuchenna. 2. Smażyć warzywa i białko na oleju. 3. Dodaj sos. 4. Podawać na bazie.",
     "meal_types": [
       "dinner"
     ],
@@ -6930,9 +6930,9 @@
     ]
   },
   {
-    "name": "Italian Light Shrimp Stir Fry with Carrots and Bok Choy",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook base. 2. Stir-fry vegetables and protein in oil. 3. Add sauce. 4. Serve over base.",
+    "name": "Włoskie lekkie krewetki smażone z marchewką i bok choy",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Baza kuchenna. 2. Smażyć warzywa i białko na oleju. 3. Dodaj sos. 4. Podawać na bazie.",
     "meal_types": [
       "dinner"
     ],
@@ -6985,9 +6985,9 @@
     ]
   },
   {
-    "name": "Japanese Light Chicken Breast Salad with Spinach and Mushrooms",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Chop vegetables. 3. Toss with olive oil and lemon. 4. Serve.",
+    "name": "Japońska lekka sałatka z piersi kurczaka ze szpinakiem i grzybami",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Posiekaj warzywa. 3. Wymieszaj z oliwą z oliwek i cytryną. 4. Podawaj.",
     "meal_types": [
       "dinner"
     ],
@@ -7039,9 +7039,9 @@
     ]
   },
   {
-    "name": "Mediterranean Light Greek Yogurt Stir Fry with Bok Choy and Carrots",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook base. 2. Stir-fry vegetables and protein in oil. 3. Add sauce. 4. Serve over base.",
+    "name": "Śródziemnomorski lekki jogurt grecki smażony z Bok Choy i marchewką",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Baza kuchenna. 2. Smażyć warzywa i białko na oleju. 3. Dodaj sos. 4. Podawać na bazie.",
     "meal_types": [
       "dinner"
     ],
@@ -7094,9 +7094,9 @@
     ]
   },
   {
-    "name": "French Light Broth Bowl with Shrimp, Bell Peppers, and Mushrooms",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Bring broth to a simmer with ginger and soy sauce. 2. Add vegetables and protein. 3. Simmer briefly and serve.",
+    "name": "Lekki bulion francuski z krewetkami, papryką i grzybami",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Zagotuj bulion z imbirem i sosem sojowym. 2. Dodaj warzywa i białko. 3. Chwilę dusić i podawać.",
     "meal_types": [
       "dinner"
     ],
@@ -7149,9 +7149,9 @@
     ]
   },
   {
-    "name": "American Light Broth Bowl with Tofu, Mushrooms, and Bell Peppers",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Bring broth to a simmer with ginger and soy sauce. 2. Add vegetables and protein. 3. Simmer briefly and serve.",
+    "name": "Amerykańska miska na lekki rosół z tofu, grzybami i papryką",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Zagotuj bulion z imbirem i sosem sojowym. 2. Dodaj warzywa i białko. 3. Chwilę dusić i podawać.",
     "meal_types": [
       "dinner"
     ],
@@ -7206,9 +7206,9 @@
     ]
   },
   {
-    "name": "Mediterranean Light Chicken Breast Salad with Bell Peppers and Mushrooms",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Chop vegetables. 3. Toss with olive oil and lemon. 4. Serve.",
+    "name": "Lekka śródziemnomorska sałatka z piersi kurczaka z papryką i grzybami",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Posiekaj warzywa. 3. Wymieszaj z oliwą z oliwek i cytryną. 4. Podawaj.",
     "meal_types": [
       "dinner"
     ],
@@ -7261,9 +7261,9 @@
     ]
   },
   {
-    "name": "Japanese Light Shrimp Salad with Spinach and Cauliflower",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Chop vegetables. 3. Toss with olive oil and lemon. 4. Serve.",
+    "name": "Japońska lekka sałatka z krewetek ze szpinakiem i kalafiorem",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Posiekaj warzywa. 3. Wymieszaj z oliwą z oliwek i cytryną. 4. Podawaj.",
     "meal_types": [
       "dinner"
     ],
@@ -7315,9 +7315,9 @@
     ]
   },
   {
-    "name": "Mexican Light Chicken Breast Salad with Zucchini and Cauliflower",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Chop vegetables. 3. Toss with olive oil and lemon. 4. Serve.",
+    "name": "Lekka sałatka meksykańska z piersi kurczaka z cukinią i kalafiorem",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Posiekaj warzywa. 3. Wymieszaj z oliwą z oliwek i cytryną. 4. Podawaj.",
     "meal_types": [
       "dinner"
     ],
@@ -7369,9 +7369,9 @@
     ]
   },
   {
-    "name": "Japanese Light Broth Bowl with Salmon Fillet, Bell Peppers, and Zucchini",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Bring broth to a simmer with ginger and soy sauce. 2. Add vegetables and protein. 3. Simmer briefly and serve.",
+    "name": "Japońska miska na lekki rosół z filetem z łososia, papryką i cukinią",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Zagotuj bulion z imbirem i sosem sojowym. 2. Dodaj warzywa i białko. 3. Chwilę dusić i podawać.",
     "meal_types": [
       "dinner"
     ],
@@ -7423,9 +7423,9 @@
     ]
   },
   {
-    "name": "Asian Light Tofu Salad with Mushrooms and Bell Peppers",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Chop vegetables. 3. Toss with olive oil and lemon. 4. Serve.",
+    "name": "Azjatycka lekka sałatka z tofu, grzybami i papryką",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Posiekaj warzywa. 3. Wymieszaj z oliwą z oliwek i cytryną. 4. Podawaj.",
     "meal_types": [
       "dinner"
     ],
@@ -7479,9 +7479,9 @@
     ]
   },
   {
-    "name": "Mexican Light Greek Yogurt Stir Fry with Spinach and Bok Choy",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook base. 2. Stir-fry vegetables and protein in oil. 3. Add sauce. 4. Serve over base.",
+    "name": "Meksykański lekki jogurt grecki ze szpinakiem i bok choy",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. Baza kuchenna. 2. Smażyć warzywa i białko na oleju. 3. Dodaj sos. 4. Podawać na bazie.",
     "meal_types": [
       "dinner"
     ],
@@ -7534,9 +7534,9 @@
     ]
   },
   {
-    "name": "Mediterranean Light Cod Fillet Salad with Bell Peppers and Carrots",
-    "description": "A lighter late meal (supper) with varied cuisines.",
-    "instructions": "1. Cook protein if needed. 2. Chop vegetables. 3. Toss with olive oil and lemon. 4. Serve.",
+    "name": "Śródziemnomorska lekka sałatka z filetu z dorsza z papryką i marchewką",
+    "description": "Lżejszy późny posiłek (kolacja) z różnorodną kuchnią.",
+    "instructions": "1. W razie potrzeby ugotuj białko. 2. Posiekaj warzywa. 3. Wymieszaj z oliwą z oliwek i cytryną. 4. Podawaj.",
     "meal_types": [
       "dinner"
     ],
@@ -7589,9 +7589,9 @@
     ]
   },
   {
-    "name": "Mediterranean Yogurt Parfait with Pears, Bananas, and Peanuts",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Layer yogurt and fruit. 2. Drizzle with honey. 3. Top with nuts.",
+    "name": "Parfait jogurtowy śródziemnomorski z gruszkami, bananami i orzeszkami ziemnymi",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Ułóż warstwę jogurtu i owoców. 2. Skropić miodem. 3. Posyp orzechami.",
     "meal_types": [
       "snack"
     ],
@@ -7640,9 +7640,9 @@
     ]
   },
   {
-    "name": "Italian Baked Apple with Honey and Cinnamon",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Slice fruit. 2. Bake until tender. 3. Drizzle with honey, sprinkle cinnamon, and top with walnuts.",
+    "name": "Włoskie pieczone jabłko z miodem i cynamonem",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Pokrój owoce. 2. Piec do miękkości. 3. Skropić miodem, posypać cynamonem i posypać orzechami włoskimi.",
     "meal_types": [
       "snack"
     ],
@@ -7685,9 +7685,9 @@
     ]
   },
   {
-    "name": "Asian Date and Almonds Dessert Bites",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Blend dates and nuts. 2. Form into bite-size balls. 3. Roll in coconut and chill.",
+    "name": "Azjatycki deser z daktyliami i migdałami",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Zmiksuj daktyle i orzechy. 2. Uformuj kulki wielkości kęsa. 3. Obtocz w kokosie i ostudź.",
     "meal_types": [
       "snack"
     ],
@@ -7731,9 +7731,9 @@
     ]
   },
   {
-    "name": "Italian Date and Almonds Dessert Bites",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Blend dates and nuts. 2. Form into bite-size balls. 3. Roll in coconut and chill.",
+    "name": "Włoski deser z daktylami i migdałami",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Zmiksuj daktyle i orzechy. 2. Uformuj kulki wielkości kęsa. 3. Obtocz w kokosie i ostudź.",
     "meal_types": [
       "snack"
     ],
@@ -7777,9 +7777,9 @@
     ]
   },
   {
-    "name": "Asian Chia Pudding with Mangoes and Coconut",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Mix chia seeds, milk, and honey. 2. Refrigerate until thick. 3. Top with fruit and coconut.",
+    "name": "Azjatycki pudding chia z mango i kokosem",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Wymieszaj nasiona chia, mleko i miód. 2. Przechowywać w lodówce, aż masa zgęstnieje. 3. Posyp owocami i kokosem.",
     "meal_types": [
       "snack"
     ],
@@ -7828,9 +7828,9 @@
     ]
   },
   {
-    "name": "American Date and Almonds Dessert Bites",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Blend dates and nuts. 2. Form into bite-size balls. 3. Roll in coconut and chill.",
+    "name": "Amerykański deser z daktyliami i migdałami",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Zmiksuj daktyle i orzechy. 2. Uformuj kulki wielkości kęsa. 3. Obtocz w kokosie i ostudź.",
     "meal_types": [
       "snack"
     ],
@@ -7874,9 +7874,9 @@
     ]
   },
   {
-    "name": "Middle Eastern Yogurt Parfait with Grapes, Strawberries, and Peanuts",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Layer yogurt and fruit. 2. Drizzle with honey. 3. Top with nuts.",
+    "name": "Bliskowschodni parfait jogurtowy z winogronami, truskawkami i orzeszkami ziemnymi",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Ułóż warstwę jogurtu i owoców. 2. Skropić miodem. 3. Posyp orzechami.",
     "meal_types": [
       "snack"
     ],
@@ -7925,9 +7925,9 @@
     ]
   },
   {
-    "name": "French Chia Pudding with Bananas and Coconut",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Mix chia seeds, milk, and honey. 2. Refrigerate until thick. 3. Top with fruit and coconut.",
+    "name": "Francuski pudding chia z bananami i kokosem",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Wymieszaj nasiona chia, mleko i miód. 2. Przechowywać w lodówce, aż masa zgęstnieje. 3. Posyp owocami i kokosem.",
     "meal_types": [
       "snack"
     ],
@@ -7976,9 +7976,9 @@
     ]
   },
   {
-    "name": "Mediterranean Baked Pear with Honey and Cinnamon",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Slice fruit. 2. Bake until tender. 3. Drizzle with honey, sprinkle cinnamon, and top with walnuts.",
+    "name": "Śródziemnomorska Pieczona Gruszka Z Miodem i Cynamonem",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Pokrój owoce. 2. Piec do miękkości. 3. Skropić miodem, posypać cynamonem i posypać orzechami włoskimi.",
     "meal_types": [
       "snack"
     ],
@@ -8021,9 +8021,9 @@
     ]
   },
   {
-    "name": "Italian Chia Pudding with Kiwi and Coconut",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Mix chia seeds, milk, and honey. 2. Refrigerate until thick. 3. Top with fruit and coconut.",
+    "name": "Włoski budyń chia z kiwi i kokosem",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Wymieszaj nasiona chia, mleko i miód. 2. Przechowywać w lodówce, aż masa zgęstnieje. 3. Posyp owocami i kokosem.",
     "meal_types": [
       "snack"
     ],
@@ -8072,9 +8072,9 @@
     ]
   },
   {
-    "name": "Italian Date and Cashews Dessert Bites",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Blend dates and nuts. 2. Form into bite-size balls. 3. Roll in coconut and chill.",
+    "name": "Włoski deser z daktylami i orzechami nerkowca",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Zmiksuj daktyle i orzechy. 2. Uformuj kulki wielkości kęsa. 3. Obtocz w kokosie i ostudź.",
     "meal_types": [
       "snack"
     ],
@@ -8118,9 +8118,9 @@
     ]
   },
   {
-    "name": "Italian Baked Pear with Honey and Cinnamon",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Slice fruit. 2. Bake until tender. 3. Drizzle with honey, sprinkle cinnamon, and top with walnuts.",
+    "name": "Włoska pieczona gruszka z miodem i cynamonem",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Pokrój owoce. 2. Piec do miękkości. 3. Skropić miodem, posypać cynamonem i posypać orzechami włoskimi.",
     "meal_types": [
       "snack"
     ],
@@ -8163,9 +8163,9 @@
     ]
   },
   {
-    "name": "Italian Chia Pudding with Kiwi and Coconut (Variation 2)",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Mix chia seeds, milk, and honey. 2. Refrigerate until thick. 3. Top with fruit and coconut.",
+    "name": "Włoski Pudding Chia Z Kiwi I Kokosem (Odmiana 2)",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Wymieszaj nasiona chia, mleko i miód. 2. Przechowywać w lodówce, aż masa zgęstnieje. 3. Posyp owocami i kokosem.",
     "meal_types": [
       "snack"
     ],
@@ -8214,9 +8214,9 @@
     ]
   },
   {
-    "name": "Italian Baked Pear with Honey and Cinnamon (Variation 2)",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Slice fruit. 2. Bake until tender. 3. Drizzle with honey, sprinkle cinnamon, and top with walnuts.",
+    "name": "Włoska Pieczona Gruszka Z Miodem i Cynamonem (Odmiana 2)",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Pokrój owoce. 2. Piec do miękkości. 3. Skropić miodem, posypać cynamonem i posypać orzechami włoskimi.",
     "meal_types": [
       "snack"
     ],
@@ -8259,9 +8259,9 @@
     ]
   },
   {
-    "name": "French Baked Pear with Honey and Cinnamon",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Slice fruit. 2. Bake until tender. 3. Drizzle with honey, sprinkle cinnamon, and top with walnuts.",
+    "name": "Francuska pieczona gruszka z miodem i cynamonem",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Pokrój owoce. 2. Piec do miękkości. 3. Skropić miodem, posypać cynamonem i posypać orzechami włoskimi.",
     "meal_types": [
       "snack"
     ],
@@ -8304,9 +8304,9 @@
     ]
   },
   {
-    "name": "Asian Baked Pear with Honey and Cinnamon",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Slice fruit. 2. Bake until tender. 3. Drizzle with honey, sprinkle cinnamon, and top with walnuts.",
+    "name": "Azjatycka pieczona gruszka z miodem i cynamonem",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Pokrój owoce. 2. Piec do miękkości. 3. Skropić miodem, posypać cynamonem i posypać orzechami włoskimi.",
     "meal_types": [
       "snack"
     ],
@@ -8349,9 +8349,9 @@
     ]
   },
   {
-    "name": "Asian Date and Coconut Dessert Bites",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Blend dates and nuts. 2. Form into bite-size balls. 3. Roll in coconut and chill.",
+    "name": "Azjatyckie dania z daktyli i deserów kokosowych",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Zmiksuj daktyle i orzechy. 2. Uformuj kulki wielkości kęsa. 3. Obtocz w kokosie i ostudź.",
     "meal_types": [
       "snack"
     ],
@@ -8395,9 +8395,9 @@
     ]
   },
   {
-    "name": "Asian Yogurt Parfait with Pineapple, Bananas, and Peanuts",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Layer yogurt and fruit. 2. Drizzle with honey. 3. Top with nuts.",
+    "name": "Azjatyckie parfait jogurtowe z ananasem, bananami i orzeszkami ziemnymi",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Ułóż warstwę jogurtu i owoców. 2. Skropić miodem. 3. Posyp orzechami.",
     "meal_types": [
       "snack"
     ],
@@ -8446,9 +8446,9 @@
     ]
   },
   {
-    "name": "French Yogurt Parfait with Apples, Bananas, and Cashews",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Layer yogurt and fruit. 2. Drizzle with honey. 3. Top with nuts.",
+    "name": "Francuskie parfait jogurtowe z jabłkami, bananami i orzechami nerkowca",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Ułóż warstwę jogurtu i owoców. 2. Skropić miodem. 3. Posyp orzechami.",
     "meal_types": [
       "snack"
     ],
@@ -8497,9 +8497,9 @@
     ]
   },
   {
-    "name": "Italian Chia Pudding with Pineapple and Coconut",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Mix chia seeds, milk, and honey. 2. Refrigerate until thick. 3. Top with fruit and coconut.",
+    "name": "Włoski budyń chia z ananasem i kokosem",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Wymieszaj nasiona chia, mleko i miód. 2. Przechowywać w lodówce, aż masa zgęstnieje. 3. Posyp owocami i kokosem.",
     "meal_types": [
       "snack"
     ],
@@ -8548,9 +8548,9 @@
     ]
   },
   {
-    "name": "French Chia Pudding with Bananas and Coconut (Variation 2)",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Mix chia seeds, milk, and honey. 2. Refrigerate until thick. 3. Top with fruit and coconut.",
+    "name": "Francuski Pudding Chia Z Bananami I Kokosem (Odmiana 2)",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Wymieszaj nasiona chia, mleko i miód. 2. Przechowywać w lodówce, aż masa zgęstnieje. 3. Posyp owocami i kokosem.",
     "meal_types": [
       "snack"
     ],
@@ -8599,9 +8599,9 @@
     ]
   },
   {
-    "name": "Middle Eastern Chia Pudding with Pineapple and Coconut",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Mix chia seeds, milk, and honey. 2. Refrigerate until thick. 3. Top with fruit and coconut.",
+    "name": "Bliskowschodni pudding chia z ananasem i kokosem",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Wymieszaj nasiona chia, mleko i miód. 2. Przechowywać w lodówce, aż masa zgęstnieje. 3. Posyp owocami i kokosem.",
     "meal_types": [
       "snack"
     ],
@@ -8650,9 +8650,9 @@
     ]
   },
   {
-    "name": "American Date and Cashews Dessert Bites",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Blend dates and nuts. 2. Form into bite-size balls. 3. Roll in coconut and chill.",
+    "name": "Amerykański deser z daktylami i orzechami nerkowca",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Zmiksuj daktyle i orzechy. 2. Uformuj kulki wielkości kęsa. 3. Obtocz w kokosie i ostudź.",
     "meal_types": [
       "snack"
     ],
@@ -8696,9 +8696,9 @@
     ]
   },
   {
-    "name": "Mediterranean Yogurt Parfait with Grapes, Mangoes, and Peanuts",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Layer yogurt and fruit. 2. Drizzle with honey. 3. Top with nuts.",
+    "name": "Parfait jogurtowy śródziemnomorski z winogronami, mango i orzeszkami ziemnymi",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Ułóż warstwę jogurtu i owoców. 2. Skropić miodem. 3. Posyp orzechami.",
     "meal_types": [
       "snack"
     ],
@@ -8747,9 +8747,9 @@
     ]
   },
   {
-    "name": "Italian Baked Apple with Honey and Cinnamon (Variation 2)",
-    "description": "A dessert-style snack with a mixed cuisine influence.",
-    "instructions": "1. Slice fruit. 2. Bake until tender. 3. Drizzle with honey, sprinkle cinnamon, and top with walnuts.",
+    "name": "Włoskie Pieczone Jabłko Z Miodem i Cynamonem (Odmiana 2)",
+    "description": "Przekąska w stylu deserowym z wpływami kuchni mieszanej.",
+    "instructions": "1. Pokrój owoce. 2. Piec do miękkości. 3. Skropić miodem, posypać cynamonem i posypać orzechami włoskimi.",
     "meal_types": [
       "snack"
     ],

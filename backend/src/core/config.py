@@ -1,4 +1,5 @@
 """Application configuration using pydantic-settings."""
+
 from typing import List
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -27,6 +28,11 @@ class Settings(BaseSettings):
         "http://localhost:8081",
         "http://localhost:19006",
         "http://localhost:19000",
+        "http://localhost:19001",
+        "http://localhost:19002",
+        "exp://localhost:19000",
+        "exp://localhost:19001",
+        "exp://localhost:19002",
     ]
 
     # Optimization Settings

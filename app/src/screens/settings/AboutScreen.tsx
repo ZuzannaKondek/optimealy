@@ -3,7 +3,10 @@
  * Replace AUTHOR_NAME and PROMOTOR_TITLE_NAME with your details.
  */
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
+import { Screen } from '../../components/layout/Screen';
+import { ScreenHeader } from '../../components/layout/ScreenHeader';
+import { Section } from '../../components/layout/Section';
 import { colors, spacing, typography } from '../../theme';
 
 const AUTHOR_NAME = '[Imię Nazwisko]';
@@ -11,36 +14,24 @@ const PROMOTOR_TITLE_NAME = '[tytuł, imię i nazwisko promotora]';
 
 export const AboutScreen: React.FC = () => {
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>O serwisie</Text>
-      <Text style={styles.paragraph}>
-        Autorem niniejszego serwisu jest {AUTHOR_NAME}.
-      </Text>
-      <Text style={styles.paragraph}>
-        Serwis ten stanowi integralną część pracy licencjackiej (kierunek:
-        elektroniczne przetwarzanie informacji), przygotowanej pod kierunkiem{' '}
-        {PROMOTOR_TITLE_NAME} na Wydziale Zarządzania i Komunikacji Społecznej
-        Uniwersytetu Jagiellońskiego.
-      </Text>
-    </ScrollView>
+    <Screen>
+      <ScreenHeader title="O serwisie" />
+      <Section title="O serwisie">
+        <Text style={styles.paragraph}>
+          Autorem niniejszego serwisu jest {AUTHOR_NAME}.
+        </Text>
+        <Text style={styles.paragraph}>
+          Serwis ten stanowi integralną część pracy licencjackiej (kierunek:
+          elektroniczne przetwarzanie informacji), przygotowanej pod kierunkiem{' '}
+          {PROMOTOR_TITLE_NAME} na Wydziale Zarządzania i Komunikacji Społecznej
+          Uniwersytetu Jagiellońskiego.
+        </Text>
+      </Section>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  content: {
-    padding: spacing.screenPadding,
-    paddingBottom: spacing.xl,
-  },
-  title: {
-    fontSize: typography.fontSize.xxl,
-    fontWeight: typography.fontWeight.bold,
-    color: colors.textPrimary,
-    marginBottom: spacing.md,
-  },
   paragraph: {
     fontSize: typography.fontSize.md,
     color: colors.textPrimary,

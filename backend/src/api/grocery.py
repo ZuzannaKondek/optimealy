@@ -11,7 +11,7 @@ from sqlalchemy.orm import selectinload
 from src.api.middleware.auth import get_current_user
 from src.database.connection import get_db
 from src.models.grocery import GroceryList, GroceryItem
-from src.models.meal_plan import DailyMenu, Meal
+from src.models.meal_plan import DailyMenu, Meal, MealPlan
 from src.models.recipe import Recipe
 from src.models.recipe_ingredient import RecipeIngredient
 from src.models.product import Product
@@ -145,3 +145,42 @@ async def get_grocery_list(
         estimated_total_waste_g=float(grocery_list.estimated_total_waste_g or 0.0),
         items=items,
     )
+
+
+@router.delete("/{plan_id}/grocery/items/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_grocery_item(
+    plan_id: str,
+    item_id: str,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Delete a single item from the grocery list.
+    """
+    from uuid import UUID
+
+    try:
+        uuid_item_id = UUID(item_id)
+        uuid_plan_id = UUID(plan_id)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid ID format")
+
+    # Verify the grocery item belongs to this plan and user
+    stmt = (
+        select(GroceryItem)
+        .join(GroceryList, GroceryItem.grocery_list_id == GroceryList.id)
+        .join(MealPlan, GroceryList.meal_plan_id == MealPlan.id)
+        .where(
+            GroceryItem.id == uuid_item_id,
+            GroceryList.meal_plan_id == uuid_plan_id,
+            MealPlan.user_id == current_user.id,
+        )
+    )
+    result = await db.execute(stmt)
+    grocery_item = result.scalar_one_or_none()
+
+    if not grocery_item:
+        raise HTTPException(status_code=404, detail="Grocery item not found")
+
+    await db.delete(grocery_item)
+    await db.commit()

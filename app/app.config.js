@@ -1,6 +1,6 @@
 export default {
   expo: {
-    name: 'OptiMeal',
+    name: 'OptiMealy',
     slug: 'optimealy',
     version: '0.1.0',
     sdkVersion: '54.0.0',

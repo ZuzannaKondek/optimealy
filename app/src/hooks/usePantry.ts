@@ -49,7 +49,7 @@ export const usePantry = () => {
       setState((prev) => ({
         ...prev,
         isLoading: false,
-        error: error.message || 'Failed to fetch pantry',
+        error: error.message || 'Nie udało się pobrać spiżarni',
       }));
       throw error;
     }
@@ -72,7 +72,7 @@ export const usePantry = () => {
       setState((prev) => ({
         ...prev,
         isLoading: false,
-        error: error.message || 'Failed to fetch staples',
+        error: error.message || 'Nie udało się pobrać produktów podstawowych',
       }));
       throw error;
     }
@@ -95,7 +95,7 @@ export const usePantry = () => {
       setState((prev) => ({
         ...prev,
         isLoading: false,
-        error: error.message || 'Failed to update pantry',
+        error: error.message || 'Nie udało się zaktualizować spiżarni',
       }));
       throw error;
     }
@@ -113,11 +113,39 @@ export const usePantry = () => {
     }
   }, []);
 
+  /**
+   * Delete a single pantry item by product ID
+   */
+  const deletePantryItem = useCallback(async (productId: string) => {
+    setState((prev) => ({ ...prev, isLoading: true, error: null }));
+
+    try {
+      await pantryService.deletePantryItem(productId);
+      
+      // Update local state immediately (remove from items array)
+      setState((prev) => ({
+        ...prev,
+        items: prev.items.filter((item) => item.product_id !== productId),
+        isLoading: false,
+      }));
+      
+      return true;
+    } catch (error: any) {
+      setState((prev) => ({
+        ...prev,
+        isLoading: false,
+        error: error.message || 'Nie udało się usunąć produktu ze spiżarni',
+      }));
+      throw error;
+    }
+  }, []);
+
   return {
     ...state,
     fetchPantry,
     fetchStaples,
     updatePantry,
     searchProducts,
+    deletePantryItem,
   };
 };

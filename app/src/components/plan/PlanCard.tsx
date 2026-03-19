@@ -10,28 +10,32 @@ type Props = {
 
 export const PlanCard: React.FC<Props> = ({ plan, onPress }) => {
   const wasteText =
-    plan.estimated_food_waste_g != null ? `${Math.round(plan.estimated_food_waste_g)}g waste` : 'Waste: —';
+    plan.estimated_food_waste_g != null ? `${Math.round(plan.estimated_food_waste_g)}g odpadów` : 'Odpady: —';
 
   // Display execution status when available (draft/active/completed/cancelled), else optimization status
+  // Note: cancelled plans can be re-activated, so show as "Szkic" (Draft)
   const displayStatus =
     plan.execution_status === 'draft'
-      ? 'Draft'
+      ? 'Szkic'
       : plan.execution_status === 'active'
-      ? 'Active'
+      ? 'Aktywny'
       : plan.execution_status === 'completed'
-      ? 'Completed'
+      ? 'Zakończony'
       : plan.execution_status === 'cancelled'
-      ? 'Cancelled'
+      ? 'Szkic'  // Cancelled plans can be re-activated, treat as draft
       : plan.optimization_status;
 
   // Styling: prefer execution_status for user-facing state, fall back to optimization_status
+  // Note: cancelled plans can be re-activated, so style like draft
   const statusStyle =
     plan.execution_status === 'draft'
       ? styles.statusDefault
       : plan.execution_status === 'active'
       ? styles.statusCompleted
-      : plan.execution_status === 'completed' || plan.execution_status === 'cancelled'
+      : plan.execution_status === 'completed'
       ? styles.statusCompleted
+      : plan.execution_status === 'cancelled'
+      ? styles.statusDefault  // Cancelled plans can be re-activated, style like draft
       : plan.optimization_status === 'completed'
       ? styles.statusCompleted
       : plan.optimization_status === 'failed'
@@ -46,17 +50,17 @@ export const PlanCard: React.FC<Props> = ({ plan, onPress }) => {
       activeOpacity={0.8}
       style={styles.card}
       accessibilityRole="button"
-      accessibilityLabel={plan.name || `Meal plan starting ${plan.start_date}`}
+      accessibilityLabel={plan.name || `Plan posiłków rozpoczynający się ${plan.start_date}`}
     >
       <View style={styles.headerRow}>
         <Text style={styles.title}>
-          {plan.name || `${plan.start_date} • ${plan.duration_days} days`}
+          {plan.name || `${plan.start_date} • ${plan.duration_days} dni`}
         </Text>
         <Text style={[styles.status, statusStyle]}>{displayStatus}</Text>
       </View>
 
       <View style={styles.row}>
-        <Text style={styles.meta}>Target: {plan.target_calories_per_day} kcal/day</Text>
+        <Text style={styles.meta}>Cel: {plan.target_calories_per_day} kcal/dzień</Text>
       </View>
 
       <View style={styles.footerRow}>

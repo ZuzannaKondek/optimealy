@@ -14,6 +14,7 @@ import { StyleSheet } from 'react-native';
 // Context Providers
 import { AuthProvider } from './src/context/AuthContext';
 import { ThemeProvider } from './src/context/ThemeContext';
+import { ToastProvider } from './src/hooks/useToast';
 
 // Navigation
 import { AppNavigator } from './src/navigation/AppNavigator';
@@ -23,10 +24,12 @@ export default function App() {
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaProvider>
         <ThemeProvider>
-          <AuthProvider>
-            <AppNavigator />
-            <StatusBar style="auto" />
-          </AuthProvider>
+          <ToastProvider>
+            <AuthProvider>
+              <AppNavigator />
+              <StatusBar style="auto" />
+            </AuthProvider>
+          </ToastProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
