@@ -1,14 +1,13 @@
 """Recipe model for the recipe database."""
 from datetime import datetime
 from typing import List, Optional, TYPE_CHECKING, Dict
-from uuid import uuid4
+from uuid import UUID, uuid4
 import logging
 
 if TYPE_CHECKING:
     from src.models.recipe_ingredient import RecipeIngredient
     from src.models.meal_plan import Meal
-from sqlalchemy import String, Text, Integer, Float, DateTime, ARRAY, Index
-from sqlalchemy.dialects.postgresql import UUID, JSONB
+from sqlalchemy import String, Text, Integer, Float, DateTime, Index, JSON, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.database.connection import Base
@@ -25,7 +24,7 @@ class Recipe(Base):
 
     # Primary Key
     id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         primary_key=True,
         default=uuid4,
         index=True,
@@ -38,12 +37,13 @@ class Recipe(Base):
 
     # Classification
     meal_types: Mapped[List[str]] = mapped_column(
-        ARRAY(String(50)),
+        JSON,
         nullable=False,
+        default=list,
     )
     cuisine_type: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
     dietary_tags: Mapped[List[str]] = mapped_column(
-        ARRAY(String(50)),
+        JSON,
         nullable=False,
         default=list,
     )
@@ -99,8 +99,6 @@ class Recipe(Base):
 
     # Indexes
     __table_args__ = (
-        Index("idx_recipe_meal_types", "meal_types", postgresql_using="gin"),
-        Index("idx_recipe_dietary_tags", "dietary_tags", postgresql_using="gin"),
         Index("idx_recipe_popularity", "popularity_score"),
     )
 

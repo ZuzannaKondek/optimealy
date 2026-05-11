@@ -6,6 +6,7 @@ from collections import defaultdict
 from datetime import datetime
 import math
 from typing import Any, Dict, List, Optional
+from uuid import UUID
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -88,14 +89,17 @@ class GroceryService:
     async def generate_grocery_list(
         db: AsyncSession,
         *,
-        plan_id: str,
-        user_id: str,
+        plan_id: str | UUID,
+        user_id: str | UUID,
         exclude_owned: bool = False,
     ) -> GroceryList:
         """
         Generate (or regenerate) a grocery list for the given plan.
         """
-        stmt = select(MealPlan).where(MealPlan.id == plan_id, MealPlan.user_id == user_id)
+        plan_uuid = plan_id if isinstance(plan_id, UUID) else UUID(str(plan_id))
+        user_uuid = user_id if isinstance(user_id, UUID) else UUID(str(user_id))
+
+        stmt = select(MealPlan).where(MealPlan.id == plan_uuid, MealPlan.user_id == user_uuid)
         result = await db.execute(stmt)
         meal_plan = result.scalar_one_or_none()
         if meal_plan is None:
@@ -212,6 +216,11 @@ class GroceryService:
         grocery_list.estimated_total_cost = float(total_cost) if total_cost_has_value else None
 
         await db.commit()
-        await db.refresh(grocery_list)
 
-        return grocery_list
+        refreshed_stmt = (
+            select(GroceryList)
+            .where(GroceryList.id == grocery_list.id)
+            .options(selectinload(GroceryList.items))
+        )
+        refreshed_result = await db.execute(refreshed_stmt)
+        return refreshed_result.scalar_one()

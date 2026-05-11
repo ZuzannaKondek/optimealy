@@ -2,13 +2,12 @@
 
 from datetime import datetime, date
 from typing import Optional, List, TYPE_CHECKING
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 if TYPE_CHECKING:
     from src.models.grocery import GroceryList
     from src.models.meal_completion import MealCompletion
-from sqlalchemy import String, Integer, Numeric, Date, DateTime, ForeignKey, Index
-from sqlalchemy.dialects.postgresql import UUID, JSONB
+from sqlalchemy import String, Integer, Numeric, Date, DateTime, ForeignKey, Index, JSON, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.database.connection import Base
@@ -22,7 +21,7 @@ class MealPlan(Base):
 
     # Primary Key
     id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         primary_key=True,
         default=uuid4,
         index=True,
@@ -30,7 +29,7 @@ class MealPlan(Base):
 
     # Foreign Key
     user_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
@@ -50,7 +49,7 @@ class MealPlan(Base):
 
     # User Constraints
     user_constraints: Mapped[dict] = mapped_column(
-        JSONB,
+        JSON,
         nullable=False,
         default=dict,
     )
@@ -122,13 +121,6 @@ class MealPlan(Base):
         cascade="all, delete-orphan",
     )
 
-    # Indexes
-    __table_args__ = (
-        Index("idx_meal_plan_user_id", "user_id"),
-        Index("idx_meal_plan_created_at", "created_at"),
-        Index("idx_meal_plan_status", "optimization_status"),
-    )
-
     def __repr__(self) -> str:
         """String representation of MealPlan."""
         return (
@@ -144,14 +136,14 @@ class DailyMenu(Base):
 
     # Primary Key
     id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         primary_key=True,
         default=uuid4,
     )
 
     # Foreign Key
     meal_plan_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         ForeignKey("meal_plans.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
@@ -191,7 +183,6 @@ class DailyMenu(Base):
 
     # Indexes
     __table_args__ = (
-        Index("idx_daily_menu_meal_plan_id", "meal_plan_id"),
         Index("idx_daily_menu_day_number", "day_number"),
     )
 
@@ -210,20 +201,20 @@ class Meal(Base):
 
     # Primary Key
     id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         primary_key=True,
         default=uuid4,
     )
 
     # Foreign Keys
     daily_menu_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         ForeignKey("daily_menus.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
     )
     recipe_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         ForeignKey("recipes.id", ondelete="RESTRICT"),
         nullable=False,
     )
@@ -241,7 +232,7 @@ class Meal(Base):
 
     # Calculated Nutritional Information (for this meal)
     calculated_nutritional_info: Mapped[dict] = mapped_column(
-        JSONB,
+        JSON,
         nullable=False,
     )
 
@@ -267,7 +258,6 @@ class Meal(Base):
 
     # Indexes
     __table_args__ = (
-        Index("idx_meals_daily_menu_id", "daily_menu_id"),
         Index("idx_meals_recipe_id", "recipe_id"),
     )
 

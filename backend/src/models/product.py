@@ -2,15 +2,14 @@
 
 from datetime import datetime
 from typing import Optional, List, TYPE_CHECKING
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 if TYPE_CHECKING:
     from src.models.recipe_ingredient import RecipeIngredient
     from src.models.grocery import GroceryItem
     from src.models.user_ingredient_preference import UserIngredientPreference
     from src.models.product_alias import ProductAlias
-from sqlalchemy import String, Text, Integer, Numeric, DateTime, Index
-from sqlalchemy.dialects.postgresql import UUID, JSONB, ARRAY
+from sqlalchemy import String, Text, Integer, Numeric, DateTime, Index, JSON, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.database.connection import Base
@@ -24,7 +23,7 @@ class Product(Base):
 
     # Primary Key
     id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         primary_key=True,
         default=uuid4,
         index=True,
@@ -37,13 +36,13 @@ class Product(Base):
 
     # Nutritional Information (per 100g)
     nutritional_info_per_100g: Mapped[dict] = mapped_column(
-        JSONB,
+        JSON,
         nullable=False,
     )
 
     # Package Information
     common_package_sizes: Mapped[list] = mapped_column(
-        ARRAY(Numeric(10, 2)),
+        JSON,
         nullable=False,
         default=list,
     )
@@ -67,7 +66,7 @@ class Product(Base):
 
     # Unit Conversions
     unit_conversions: Mapped[dict] = mapped_column(
-        JSONB,
+        JSON,
         nullable=False,
         default=dict,
     )
@@ -106,7 +105,6 @@ class Product(Base):
 
     # Indexes
     __table_args__ = (
-        Index("idx_product_category", "category"),
         Index("idx_product_perishability", "perishability"),
     )
 

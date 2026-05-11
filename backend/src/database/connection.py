@@ -1,12 +1,14 @@
 """Database connection and session management."""
+import asyncio
+import logging
 from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase
 
 from src.core.config import settings
 
-# Convert postgresql:// to postgresql+asyncpg://
-DATABASE_URL = settings.DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://")
+DATABASE_URL = settings.DATABASE_URL
+logger = logging.getLogger(__name__)
 
 # Create async engine
 engine = create_async_engine(
@@ -55,8 +57,27 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
 
 async def init_db() -> None:
     """Initialize database (create all tables)."""
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    max_attempts = 10
+    delay_seconds = 2
+
+    for attempt in range(1, max_attempts + 1):
+        try:
+            async with engine.begin() as conn:
+                await conn.run_sync(Base.metadata.create_all)
+            return
+        except Exception:
+            if attempt == max_attempts:
+                raise
+
+            logger.warning(
+                "Database initialization failed; retrying in %s seconds "
+                "(attempt %s/%s)",
+                delay_seconds,
+                attempt,
+                max_attempts,
+                exc_info=True,
+            )
+            await asyncio.sleep(delay_seconds)
 
 
 async def close_db() -> None:

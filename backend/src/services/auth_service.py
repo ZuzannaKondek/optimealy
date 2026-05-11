@@ -1,5 +1,6 @@
 """Authentication service for user registration and login."""
 from typing import Optional, Dict, Any
+from uuid import UUID
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -119,7 +120,7 @@ class AuthService:
         }
 
     @staticmethod
-    async def get_user_by_id(db: AsyncSession, user_id: str) -> Optional[User]:
+    async def get_user_by_id(db: AsyncSession, user_id: str | UUID) -> Optional[User]:
         """
         Get a user by their ID.
         
@@ -130,7 +131,12 @@ class AuthService:
         Returns:
             The user if found, None otherwise
         """
-        result = await db.execute(select(User).where(User.id == user_id))
+        try:
+            user_uuid = user_id if isinstance(user_id, UUID) else UUID(user_id)
+        except (TypeError, ValueError):
+            return None
+
+        result = await db.execute(select(User).where(User.id == user_uuid))
         return result.scalar_one_or_none()
 
     @staticmethod

@@ -1,8 +1,7 @@
 """RecipeIngredient model linking recipes to products."""
 from datetime import datetime
-from uuid import uuid4
-from sqlalchemy import String, Numeric, Boolean, DateTime, ForeignKey, UniqueConstraint, Index
-from sqlalchemy.dialects.postgresql import UUID
+from uuid import UUID, uuid4
+from sqlalchemy import String, Numeric, Boolean, DateTime, ForeignKey, UniqueConstraint, Index, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.database.connection import Base
@@ -15,20 +14,20 @@ class RecipeIngredient(Base):
 
     # Primary Key
     id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         primary_key=True,
         default=uuid4,
     )
 
     # Foreign Keys
     recipe_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         ForeignKey("recipes.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
     )
     product_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         ForeignKey("products.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
@@ -64,8 +63,6 @@ class RecipeIngredient(Base):
     # Constraints
     __table_args__ = (
         UniqueConstraint("recipe_id", "product_id", name="uq_recipe_product"),
-        Index("idx_recipe_ingredient_recipe", "recipe_id"),
-        Index("idx_recipe_ingredient_product", "product_id"),
     )
 
     def __repr__(self) -> str:

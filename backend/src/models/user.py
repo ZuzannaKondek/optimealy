@@ -1,9 +1,8 @@
 """User model for authentication and profile management."""
 from datetime import datetime
 from typing import Optional, List, TYPE_CHECKING
-from uuid import uuid4
-from sqlalchemy import String, DateTime, Enum as SQLEnum
-from sqlalchemy.dialects.postgresql import UUID, JSONB
+from uuid import UUID, uuid4
+from sqlalchemy import String, DateTime, Enum as SQLEnum, JSON, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.database.connection import Base
@@ -20,7 +19,7 @@ class User(Base):
 
     # Primary Key
     id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         primary_key=True,
         default=uuid4,
         index=True,
@@ -47,7 +46,7 @@ class User(Base):
         default=UnitPreference.METRIC,
     )
     notification_settings: Mapped[dict] = mapped_column(
-        JSONB,
+        JSON,
         nullable=False,
         default=dict,
     )

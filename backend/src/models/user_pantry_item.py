@@ -8,9 +8,8 @@ from datetime import date, datetime
 from typing import Optional
 from uuid import UUID, uuid4
 
-from sqlalchemy import Date, DateTime, ForeignKey, Numeric, func
+from sqlalchemy import Date, DateTime, ForeignKey, Numeric, Uuid, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 
 from src.database.connection import Base
 
@@ -27,22 +26,21 @@ class UserPantryItem(Base):
 
     # Primary Key
     id: Mapped[UUID] = mapped_column(
-        PG_UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         primary_key=True,
         default=uuid4,
-        server_default=func.gen_random_uuid(),
     )
 
     # Foreign Keys
     user_id: Mapped[UUID] = mapped_column(
-        PG_UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
     )
 
     product_id: Mapped[UUID] = mapped_column(
-        PG_UUID(as_uuid=True), ForeignKey("products.id", ondelete="CASCADE"), nullable=False
+        Uuid(as_uuid=True), ForeignKey("products.id", ondelete="CASCADE"), nullable=False
     )
 
     # Quantity (in grams or ml)

@@ -102,13 +102,21 @@ class RecipeService:
         
         conditions = []
         
-        # Meal type filter (PostgreSQL array overlap operator)
         if meal_types:
-            conditions.append(Recipe.meal_types.op('&&')(meal_types))
+            conditions.append(
+                or_(*[
+                    func.JSON_CONTAINS(Recipe.meal_types, f'"{meal_type}"')
+                    for meal_type in meal_types
+                ])
+            )
         
-        # Dietary tags filter (PostgreSQL array overlap operator)
         if dietary_tags:
-            conditions.append(Recipe.dietary_tags.op('&&')(dietary_tags))
+            conditions.append(
+                or_(*[
+                    func.JSON_CONTAINS(Recipe.dietary_tags, f'"{tag}"')
+                    for tag in dietary_tags
+                ])
+            )
         
         # Cuisine type filter
         if cuisine_types:

@@ -9,6 +9,8 @@ type Props = {
   loading?: boolean;
   variant?: 'primary' | 'secondary';
   style?: ViewStyle;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
 };
 
 export const Button: React.FC<Props> = ({
@@ -18,6 +20,8 @@ export const Button: React.FC<Props> = ({
   loading,
   variant = 'primary',
   style,
+  accessibilityLabel,
+  accessibilityHint,
 }) => {
   const isDisabled = disabled || loading;
   const isPrimary = variant === 'primary';
@@ -34,6 +38,9 @@ export const Button: React.FC<Props> = ({
         style,
       ]}
       accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel || title}
+      accessibilityHint={accessibilityHint}
+      accessibilityState={{ disabled: isDisabled }}
     >
       {loading ? (
         <ActivityIndicator color={isPrimary ? colors.white : colors.primary} />

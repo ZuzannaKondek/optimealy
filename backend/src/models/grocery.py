@@ -1,13 +1,12 @@
 """GroceryList and GroceryItem models."""
 from datetime import datetime
 from typing import Optional, List, TYPE_CHECKING
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 if TYPE_CHECKING:
     from src.models.meal_plan import MealPlan
     from src.models.product import Product
-from sqlalchemy import String, Integer, Numeric, DateTime, ForeignKey, Index, UniqueConstraint
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import String, Integer, Numeric, DateTime, ForeignKey, Index, UniqueConstraint, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.database.connection import Base
@@ -21,14 +20,14 @@ class GroceryList(Base):
 
     # Primary Key
     id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         primary_key=True,
         default=uuid4,
     )
 
     # Foreign Key (One-to-One with MealPlan)
     meal_plan_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         ForeignKey("meal_plans.id", ondelete="CASCADE"),
         nullable=False,
         unique=True,
@@ -81,20 +80,20 @@ class GroceryItem(Base):
 
     # Primary Key
     id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         primary_key=True,
         default=uuid4,
     )
 
     # Foreign Keys
     grocery_list_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         ForeignKey("grocery_lists.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
     )
     product_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         ForeignKey("products.id", ondelete="RESTRICT"),
         nullable=False,
     )
@@ -141,7 +140,6 @@ class GroceryItem(Base):
 
     # Indexes
     __table_args__ = (
-        Index("idx_grocery_items_grocery_list_id", "grocery_list_id"),
         Index("idx_grocery_items_product_id", "product_id"),
     )
 

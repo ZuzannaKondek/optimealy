@@ -346,7 +346,16 @@ class MealPlanService:
 
             for recipe_data in recipes_data:
                 # Get recipe to calculate dish weight
-                recipe_id = recipe_data["recipe_id"]
+                try:
+                    recipe_id = (
+                        recipe_data["recipe_id"]
+                        if isinstance(recipe_data["recipe_id"], UUID)
+                        else UUID(str(recipe_data["recipe_id"]))
+                    )
+                except (KeyError, TypeError, ValueError) as exc:
+                    raise ValueError(
+                        f"Invalid recipe_id in optimization solution: {recipe_data.get('recipe_id')!r}"
+                    ) from exc
                 from sqlalchemy.orm import selectinload
                 from src.models.recipe_ingredient import RecipeIngredient
 
@@ -409,7 +418,7 @@ class MealPlanService:
         # Generate grocery list to get waste calculations
         try:
             grocery_list = await GroceryService.generate_grocery_list(
-                db, plan_id=str(meal_plan.id), user_id=str(meal_plan.user_id), exclude_owned=False
+                db, plan_id=meal_plan.id, user_id=meal_plan.user_id, exclude_owned=False
             )
 
             # Separate waste by perishability
@@ -575,7 +584,7 @@ class MealPlanService:
     @staticmethod
     async def get_user_meal_plans(
         db: AsyncSession,
-        user_id: str,
+        user_id: str | UUID,
         limit: int = 10,
         offset: int = 0,
         status: Optional[str] = None,
@@ -593,9 +602,11 @@ class MealPlanService:
         Returns:
             List of MealPlan objects
         """
+        user_uuid = user_id if isinstance(user_id, UUID) else UUID(str(user_id))
+
         stmt = (
             select(MealPlan)
-            .where(MealPlan.user_id == user_id)
+            .where(MealPlan.user_id == user_uuid)
             .order_by(MealPlan.created_at.desc())
             .limit(limit)
             .offset(offset)
@@ -610,8 +621,8 @@ class MealPlanService:
     @staticmethod
     async def get_meal_plan_by_id(
         db: AsyncSession,
-        plan_id: str,
-        user_id: str,
+        plan_id: str | UUID,
+        user_id: str | UUID,
     ) -> Optional[MealPlan]:
         """
         Get a meal plan by ID (ensuring it belongs to the user).
@@ -624,9 +635,12 @@ class MealPlanService:
         Returns:
             MealPlan object if found and authorized, None otherwise
         """
+        plan_uuid = plan_id if isinstance(plan_id, UUID) else UUID(str(plan_id))
+        user_uuid = user_id if isinstance(user_id, UUID) else UUID(str(user_id))
+
         stmt = select(MealPlan).where(
-            MealPlan.id == plan_id,
-            MealPlan.user_id == user_id,
+            MealPlan.id == plan_uuid,
+            MealPlan.user_id == user_uuid,
         )
         result = await db.execute(stmt)
         return result.scalar_one_or_none()
@@ -634,8 +648,8 @@ class MealPlanService:
     @staticmethod
     async def delete_meal_plan(
         db: AsyncSession,
-        plan_id: str,
-        user_id: str,
+        plan_id: str | UUID,
+        user_id: str | UUID,
     ) -> bool:
         """
         Delete a meal plan.

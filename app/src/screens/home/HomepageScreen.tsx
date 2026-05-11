@@ -8,9 +8,19 @@ export const HomepageScreen: React.FC = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
+    <View 
+      style={styles.container}
+      accessibilityRole="main"
+      accessibilityLabel="Strona główna"
+    >
       <View style={styles.content}>
-        <Text style={styles.title}>OptiMeal</Text>
+        <Text 
+          style={styles.title}
+          accessibilityRole="header"
+          accessibilityLevel={1}
+        >
+          OptiMeal
+        </Text>
         <Text style={styles.subtitle}>
           Stwórz zoptymalizowany plan posiłków, który spełni Twoje cele żywieniowe i zminimalizuje marnotrawstwo żywności.
         </Text>
@@ -22,12 +32,16 @@ export const HomepageScreen: React.FC = () => {
           onPress={() => navigation.navigate('Registration' as never)}
           variant="primary"
           style={styles.primaryButton}
+          accessibilityLabel="Załóż nowe konto"
+          accessibilityHint="Przejdź do formularza rejestracji"
         />
         <Button
           title="Zaloguj się"
           onPress={() => navigation.navigate('Login' as never)}
           variant="secondary"
           style={styles.secondaryButton}
+          accessibilityLabel="Zaloguj się do istniejącego konta"
+          accessibilityHint="Przejdź do formularza logowania"
         />
       </View>
     </View>

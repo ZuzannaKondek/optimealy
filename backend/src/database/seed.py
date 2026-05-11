@@ -11,11 +11,12 @@ import asyncio
 import json
 from pathlib import Path
 from typing import List, Dict, Any
+from uuid import UUID
 
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database.connection import AsyncSessionLocal
+from src.database.connection import AsyncSessionLocal, close_db
 from src.models.enums import MealType, RecipeDifficulty, ProductCategory, Perishability
 from src.models.product import Product
 from src.models.product_alias import ProductAlias
@@ -29,7 +30,7 @@ async def load_json_file(file_path: Path) -> List[Dict[str, Any]]:
         return json.load(f)
 
 
-async def _ensure_alias(db: AsyncSession, alias_value: str, product_id: str) -> None:
+async def _ensure_alias(db: AsyncSession, alias_value: str, product_id: UUID) -> None:
     """Ensure an alias entry exists for the provided value."""
 
     alias_key = canonicalize_string(alias_value)
@@ -69,7 +70,7 @@ async def seed_products(db: AsyncSession) -> Dict[str, Any]:
             canonical = product.canonical_key or canonicalize_string(product.name)
             if not product.canonical_key:
                 product.canonical_key = canonical
-            await _ensure_alias(db, product.name, str(product.id))
+            await _ensure_alias(db, product.name, product.id)
             lookup[canonical] = product
 
         await db.flush()
@@ -77,6 +78,7 @@ async def seed_products(db: AsyncSession) -> Dict[str, Any]:
 
     product_lookup: Dict[str, Product] = {}
     seen_names = set()
+    inserted_count = 0
 
     for product_data in products_data:
         product_name = product_data["name"]
@@ -111,14 +113,15 @@ async def seed_products(db: AsyncSession) -> Dict[str, Any]:
         db.add(product)
         await db.flush()
 
-        await _ensure_alias(db, product_name, str(product.id))
+        await _ensure_alias(db, product_name, product.id)
         for alias_value in product_data.get("aliases", []):
-            await _ensure_alias(db, alias_value, str(product.id))
+            await _ensure_alias(db, alias_value, product.id)
 
         product_lookup[canonical] = product
+        inserted_count += 1
 
     await db.flush()
-    print(f"✅ Seeded {len(products_data)} products")
+    print(f"✅ Seeded {inserted_count} products")
 
     return product_lookup
 
@@ -146,6 +149,8 @@ async def seed_recipes(db: AsyncSession, product_lookup: Dict[str, Any]) -> None
         print(
             f"ℹ️  {existing_count} recipes already exist, adding any missing recipes from seed data..."
         )
+
+    inserted_count = 0
 
     for recipe_data in recipes_data:
         # Check if recipe already exists
@@ -228,8 +233,10 @@ async def seed_recipes(db: AsyncSession, product_lookup: Dict[str, Any]) -> None
             db.add(ingredient)
             added_products.add(product.id)
 
+        inserted_count += 1
+
     await db.flush()
-    print(f"✅ Seeded {len(recipes_data)} recipes")
+    print(f"✅ Seeded {inserted_count} recipes")
 
 
 async def main() -> None:
@@ -251,6 +258,8 @@ async def main() -> None:
 
             traceback.print_exc()
             raise
+        finally:
+            await close_db()
 
 
 if __name__ == "__main__":

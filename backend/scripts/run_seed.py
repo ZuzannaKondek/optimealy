@@ -16,6 +16,8 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from sqlalchemy import text
+from sqlalchemy.ext.asyncio import create_async_engine
 
 # Determine backend root - works for both local (backend/) and Docker (/app)
 script_path = Path(__file__).resolve()
@@ -32,36 +34,24 @@ else:
     sys.path.insert(0, str(backend_root / "src"))
 
 
-def check_database_connection() -> bool:
+async def check_database_connection() -> bool:
     """Check if the database is accessible."""
+    db_url = os.environ.get("DATABASE_URL", "")
+
+    if not db_url:
+        print("❌ No DATABASE_URL found in environment")
+        return False
+
+    engine = create_async_engine(db_url, pool_pre_ping=True)
     try:
-        import psycopg2
-
-        # Get DATABASE_URL from environment (works in both Docker and local)
-        db_url = os.environ.get("DATABASE_URL", "")
-
-        if not db_url:
-            print("❌ No DATABASE_URL found in environment")
-            return False
-
-        # postgresql://user:pass@host:port/db
-        parts = db_url.replace("postgresql://", "").split("@")
-        user_pass = parts[0].split(":")
-        host_db = parts[1].split("/")
-        host_port = host_db[0].split(":")
-
-        conn = psycopg2.connect(
-            host=host_port[0],
-            port=int(host_port[1]) if len(host_port) > 1 else 5432,
-            database=host_db[1],
-            user=user_pass[0],
-            password=user_pass[1],
-        )
-        conn.close()
+        async with engine.connect() as conn:
+            await conn.execute(text("SELECT 1"))
         return True
     except Exception as e:
         print(f"❌ Cannot connect to database: {e}")
         return False
+    finally:
+        await engine.dispose()
 
 
 async def run_seed() -> int:
@@ -90,15 +80,6 @@ def run_migrations() -> int:
         # Docker: alembic is in backend/alembic
         alembic_cwd = backend_root.parent
 
-    # First, stamp to the merge revision to fix multiple heads issue
-    subprocess.run(
-        ["alembic", "stamp", "m9n0o1p2q3r4"],
-        cwd=alembic_cwd,
-        capture_output=True,
-        text=True,
-    )
-
-    # Now upgrade to head
     result = subprocess.run(
         ["alembic", "upgrade", "head"],
         cwd=alembic_cwd,
@@ -147,10 +128,10 @@ def main():
 
     # Check database connection
     if not args.no_check_db:
-        if not check_database_connection():
+        if not asyncio.run(check_database_connection()):
             print("\n❌ Please ensure:")
             print("   - Docker Compose is running: docker compose up -d db")
-            print("   - Or PostgreSQL is accessible")
+            print("   - Or MySQL is accessible")
             return 1
 
     # Run migrations if not skipped

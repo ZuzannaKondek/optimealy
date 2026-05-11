@@ -1,6 +1,7 @@
 """Grocery list API endpoints."""
 
 from typing import Dict, List, Optional, Set, Tuple
+from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from pydantic import BaseModel
@@ -61,10 +62,15 @@ async def get_grocery_list(
     Get (and generate if needed) the consolidated grocery list for a meal plan.
     """
     try:
+        plan_uuid = UUID(plan_id)
+    except ValueError:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid plan ID format")
+
+    try:
         await GroceryService.generate_grocery_list(
             db,
-            plan_id=plan_id,
-            user_id=str(current_user.id),
+            plan_id=plan_uuid,
+            user_id=current_user.id,
             exclude_owned=exclude_owned,
         )
     except ValueError as e:
@@ -72,7 +78,7 @@ async def get_grocery_list(
 
     stmt = (
         select(GroceryList)
-        .where(GroceryList.meal_plan_id == plan_id)
+        .where(GroceryList.meal_plan_id == plan_uuid)
         .options(selectinload(GroceryList.items).selectinload(GroceryItem.product))
     )
     result = await db.execute(stmt)
@@ -84,7 +90,7 @@ async def get_grocery_list(
     usage_stmt = (
         select(Meal)
         .join(DailyMenu, Meal.daily_menu_id == DailyMenu.id)
-        .where(DailyMenu.meal_plan_id == plan_id)
+        .where(DailyMenu.meal_plan_id == plan_uuid)
         .options(
             selectinload(Meal.recipe)
             .selectinload(Recipe.recipe_ingredients)

@@ -22,11 +22,9 @@ from src.models import *  # noqa: F401, F403
 target_metadata = Base.metadata
 
 # Override sqlalchemy.url with environment variable if available
-import os
 from src.core.config import settings
 
-# Convert postgresql:// to postgresql+asyncpg:// for async operations
-database_url = settings.DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://")
+database_url = settings.DATABASE_URL
 config.set_main_option("sqlalchemy.url", database_url)
 
 
@@ -42,9 +40,6 @@ def run_migrations_offline() -> None:
     script output.
     """
     url = config.get_main_option("sqlalchemy.url")
-    # Convert postgresql:// to postgresql+asyncpg:// for async operations
-    if url and url.startswith("postgresql://"):
-        url = url.replace("postgresql://", "postgresql+asyncpg://")
     context.configure(
         url=url,
         target_metadata=target_metadata,

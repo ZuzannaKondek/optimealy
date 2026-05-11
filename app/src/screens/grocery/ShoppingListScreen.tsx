@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Alert, Animated, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { planService } from '../../services/planService';
 import { pantryService } from '../../services/pantryService';
@@ -10,8 +10,6 @@ import { Screen } from '../../components/layout/Screen';
 import { ScreenHeader } from '../../components/layout/ScreenHeader';
 import { colors, spacing, typography } from '../../theme';
 import type { GroceryList, GroceryItem } from '../../types/models';
-
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 const categoryTranslations: Record<string, string> = {
   vegetable: 'Warzywa',
@@ -38,43 +36,6 @@ type RouteParams = {
   planId: string;
 };
 
-// Animated item wrapper for slide-out effect
-const AnimatedGroceryItem: React.FC<{
-  item: GroceryItem;
-  onPress: () => void;
-  onAnimationComplete: () => void;
-}> = ({ item, onPress, onAnimationComplete }) => {
-  const slideAnim = React.useRef(new Animated.Value(0)).current;
-  const opacityAnim = React.useRef(new Animated.Value(1)).current;
-
-  React.useEffect(() => {
-    Animated.parallel([
-      Animated.timing(slideAnim, {
-        toValue: -SCREEN_WIDTH,
-        duration: 300,
-        useNativeDriver: true,
-      }),
-      Animated.timing(opacityAnim, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }),
-    ]).start(() => {
-      onAnimationComplete();
-    });
-  }, [slideAnim, opacityAnim, onAnimationComplete]);
-
-  return (
-    <Animated.View
-      style={[
-        { transform: [{ translateX: slideAnim }], opacity: opacityAnim },
-      ]}
-    >
-      <GroceryItemCard item={item} onPress={onPress} />
-    </Animated.View>
-  );
-};
-
 export const ShoppingListScreen: React.FC<{ planId?: string }> = ({ planId: propPlanId }) => {
   const route = useRoute();
   // Use prop planId if provided (from wrapper), otherwise fall back to route params
@@ -84,7 +45,8 @@ export const ShoppingListScreen: React.FC<{ planId?: string }> = ({ planId: prop
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [groceryList, setGroceryList] = React.useState<GroceryList | null>(null);
-  const [removingItem, setRemovingItem] = React.useState<GroceryItem | null>(null);
+  const [hiddenProductIds, setHiddenProductIds] = React.useState<Set<string>>(() => new Set());
+  const [processingProductIds, setProcessingProductIds] = React.useState<Set<string>>(() => new Set());
 
   // Load grocery list on mount and when planId changes
   React.useEffect(() => {
@@ -92,6 +54,8 @@ export const ShoppingListScreen: React.FC<{ planId?: string }> = ({ planId: prop
     const load = async () => {
       setIsLoading(true);
       setError(null);
+      setHiddenProductIds(new Set());
+      setProcessingProductIds(new Set());
       try {
         const list = await planService.getGroceryList(planId, { groupBy: 'category' });
         if (!cancelled) setGroceryList(list);
@@ -109,28 +73,48 @@ export const ShoppingListScreen: React.FC<{ planId?: string }> = ({ planId: prop
   }, [planId]);
 
   const handleItemBought = async (item: GroceryItem) => {
-    // Start animation - don't refresh list yet
-    setRemovingItem(item);
-  };
+    if (!planId || processingProductIds.has(item.product_id)) return;
 
-  const handleAnimationComplete = async () => {
-    if (!removingItem) return;
-    
+    setHiddenProductIds((current) => {
+      const next = new Set(current);
+      next.add(item.product_id);
+      return next;
+    });
+    setProcessingProductIds((current) => {
+      const next = new Set(current);
+      next.add(item.product_id);
+      return next;
+    });
+
     try {
       await pantryService.updatePantry([
         {
-          product_id: removingItem.product_id,
-          quantity_g: removingItem.required_quantity_g,
+          product_id: item.product_id,
+          quantity_g: item.purchase_quantity_g,
         },
       ]);
-      Alert.alert('Sukces', `Dodano "${removingItem.product_name}" do spiżarni`);
+      Alert.alert('Sukces', `Dodano "${item.product_name}" do spiżarni`);
     } catch (e: any) {
+      setHiddenProductIds((current) => {
+        const next = new Set(current);
+        next.delete(item.product_id);
+        return next;
+      });
       Alert.alert('Błąd', e?.response?.data?.detail || 'Nie udało się dodać produktu do spiżarni');
+      return;
     } finally {
-      setRemovingItem(null);
-      // Reload the list
+      setProcessingProductIds((current) => {
+        const next = new Set(current);
+        next.delete(item.product_id);
+        return next;
+      });
+    }
+
+    try {
       const list = await planService.getGroceryList(planId, { groupBy: 'category' });
       setGroceryList(list);
+    } catch (e: any) {
+      setError(e?.response?.data?.detail || 'Nie udało się odświeżyć listy zakupów');
     }
   };
 
@@ -155,7 +139,9 @@ export const ShoppingListScreen: React.FC<{ planId?: string }> = ({ planId: prop
   }
 
   // Only show items that need to be bought (not already in pantry) - consistent with GroceryListScreen
-  const allItems = groceryList.items.filter((item: GroceryItem) => item.status !== 'already_have');
+  const allItems = groceryList.items.filter(
+    (item: GroceryItem) => item.status !== 'already_have' && !hiddenProductIds.has(item.product_id)
+  );
 
   // Group by category
   const grouped: Record<string, GroceryItem[]> = {};
@@ -203,22 +189,13 @@ export const ShoppingListScreen: React.FC<{ planId?: string }> = ({ planId: prop
         categories={categories}
         groupedItems={grouped}
         translateCategory={translateCategory}
-        renderItem={(item) =>
-          removingItem?.item_id === item.item_id ? (
-            <AnimatedGroceryItem
-              key={item.item_id}
-              item={item}
-              onPress={() => {}}
-              onAnimationComplete={handleAnimationComplete}
-            />
-          ) : (
-            <GroceryItemCard
-              key={item.item_id}
-              item={item}
-              onPress={() => handleItemBought(item)}
-            />
-          )
-        }
+        renderItem={(item) => (
+          <GroceryItemCard
+            key={item.item_id}
+            item={item}
+            onPress={() => handleItemBought(item)}
+          />
+        )}
       />
     </Screen>
   );

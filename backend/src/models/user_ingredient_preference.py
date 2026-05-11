@@ -1,8 +1,7 @@
 """UserIngredientPreference model for user ingredient constraints."""
 from datetime import datetime
-from uuid import uuid4
-from sqlalchemy import String, Numeric, DateTime, ForeignKey, Index
-from sqlalchemy.dialects.postgresql import UUID
+from uuid import UUID, uuid4
+from sqlalchemy import String, Numeric, DateTime, ForeignKey, Index, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.database.connection import Base
@@ -16,20 +15,20 @@ class UserIngredientPreference(Base):
 
     # Primary Key
     id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         primary_key=True,
         default=uuid4,
     )
 
     # Foreign Keys
     user_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
     )
     product_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+        Uuid(as_uuid=True),
         ForeignKey("products.id", ondelete="CASCADE"),
         nullable=False,
     )
@@ -61,7 +60,6 @@ class UserIngredientPreference(Base):
 
     # Indexes
     __table_args__ = (
-        Index("idx_user_ingredient_preferences_user_id", "user_id"),
         Index("idx_user_ingredient_preferences_product_id", "product_id"),
     )
 

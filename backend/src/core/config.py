@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     DEBUG: bool = True
 
     # Database
-    DATABASE_URL: str = "postgresql://optimeal_user:optimeal_password@localhost:5432/optimeal_db"
+    DATABASE_URL: str = "mysql+aiomysql://user:password@localhost:3306/dbname"
 
     # Security / JWT
     SECRET_KEY: str
